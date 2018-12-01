@@ -4,7 +4,7 @@ import pymysql.cursors
 
 def main():
 	headers = {'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
-	connect = connect()
+	connect = connect1()
 	#for i in range(1, 26):
 	for i in range(1, 2):
 		get_data(i, headers, connect)
@@ -67,7 +67,7 @@ def get_data(i, headers, connect):
 	# f.write(rs.text)
 	# f.close()
 
-def connect():
+def connect1():
 	connect = pymysql.Connect(
 		host='localhost',
 	    port=3306,
