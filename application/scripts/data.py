@@ -49,8 +49,8 @@ def get_data(i, headers, connect):
 		char_line = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[8]/span/text()')[0]
 		# char_polygon = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[8]/svg[@class="peity"]/polygon/@points')
 		# char_polyline = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[8]/svg/polyline/@points')
-		print(char_polygon)
-		print(char_polyline)
+		# print(char_polygon)
+		# print(char_polyline)
 
 		sql = "REPLACE INTO currency_data (name,icon,market_cap_usd,market_cap_cny,market_cap_btc,price_usd,price_cny,num,volume_usd,volume_cny,volume_btc,text_red,char_line) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
 		data = (name,icon,market_cap_usd,market_cap_cny,market_cap_btc,price_usd,price_cny,num,volume_usd,volume_cny,volume_btc,text_red,char_line)
