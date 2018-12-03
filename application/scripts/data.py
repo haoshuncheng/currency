@@ -31,6 +31,7 @@ def get_data(i, headers, connect):
 		icon = 'https:'+img[0]
 		#名称
 		name = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[2]/a/img/@alt')[0]
+		print(name)
 		#市值
 		market_cap_usd = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[3]/@data-usd')[0]
 		market_cap_cny = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[3]/@data-cny')[0]
