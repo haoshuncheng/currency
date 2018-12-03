@@ -41,9 +41,7 @@ def get_data(i, headers, connect):
 		#流通数量
 		num = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[5]/text()')
 		if len(num) <= 0:
-			print(tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[5]/text()'))
-			print(name)
-			sys.exit()
+			num = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[5]/a/text()')
 		num = num[0]
 		#成交额
 		volume_usd = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[6]/a/@data-usd')[0]
