@@ -58,7 +58,7 @@ def get_data(i, headers, connect):
 		# print(char_polyline)
 
 		sql = "REPLACE INTO currency_data (name,icon,market_cap_usd,market_cap_cny,market_cap_btc,price_usd,price_cny,num,volume_usd,volume_cny,volume_btc,text_red,char_line) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
-		data = (name,icon,market_cap_usd,market_cap_cny,market_cap_btc,price_usd,price_cny,num,volume_usd,volume_cny,volume_btc,text_red,char_line)
+		data = (str(name),str(icon),int(market_cap_usd),int(market_cap_cny),int(market_cap_btc),float(price_usd),float(price_cny),str(num),str(volume_usd),str(volume_cny),str(volume_btc),str(text_red),str(char_line))
 		connect['cur'].execute(sql % data)
 		connect['con'].commit()
 		print('成功插入', connect['cur'].rowcount, '条数据')
