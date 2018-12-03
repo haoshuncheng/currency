@@ -13,8 +13,8 @@ def main():
 	# f.close()
 
 def get_data(i, headers, connect):
-	#rs = requests.get('https://www.feixiaohao.com/list_'+str(i)+'.html', headers=headers)
-	rs = requests.get('https://www.feixiaohao.com/list_1.html', headers=headers)
+	rs = requests.get('https://www.feixiaohao.com/list_'+str(i)+'.html', headers=headers)
+	#rs = requests.get('https://www.feixiaohao.com/list_1.html', headers=headers)
 	print(rs.status_code)
 	if rs.status_code != 200:
 		print("数据请求失败\n")
