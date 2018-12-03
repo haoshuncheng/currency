@@ -30,28 +30,41 @@ def get_data(i, headers, connect):
 			continue
 		icon = 'https:'+img[0]
 		#名称
-		name = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[2]/a/img/@alt')[0]
+		name = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[2]/a/img/@alt')
+		if len(name) == 0 or name[0] == "":
+			continue
+		name = name[0]
 		print(name)
 		#市值
-		market_cap_usd = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[3]/@data-usd')[0]
-		market_cap_cny = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[3]/@data-cny')[0]
-		market_cap_btc = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[3]/@data-btc')[0]
+		market_cap_usd = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[3]/@data-usd')
+		market_cap_usd = market_cap_usd[0] if len(market_cap_usd)>=1 else ''
+		market_cap_cny = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[3]/@data-cny')
+		market_cap_cny = market_cap_cny[0] if len(market_cap_cny)>=1 else ''
+		market_cap_btc = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[3]/@data-btc')
+		market_cap_btc = market_cap_btc[0] if len(market_cap_btc)>=1 else ''
 		#价格
-		price_usd = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[4]/a/@data-usd')[0]
-		price_cny = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[4]/a/@data-cny')[0]
+		price_usd = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[4]/a/@data-usd')
+		price_usd = price_usd[0] if len(price_usd)>=1 else ''
+		price_cny = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[4]/a/@data-cny')
+		price_cny = price_cny[0] if len(price_cny)>=1 else ''
 		#流通数量
 		num = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[5]/text()')
 		if len(num) <= 0:
 			num = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[5]/a/text()')
-		num = num[0]
+		num = num[0] if len(num)>=1 else ''
 		#成交额
-		volume_usd = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[6]/a/@data-usd')[0]
-		volume_cny = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[6]/a/@data-cny')[0]
-		volume_btc = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[6]/a/@data-btc')[0]
+		volume_usd = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[6]/a/@data-usd')
+		volume_usd = volume_usd[0] if len(volume_usd)>=1 else ''
+		volume_cny = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[6]/a/@data-cny')
+		volume_cny = volume_cny[0] if len(volume_cny)>=1 else ''
+		volume_btc = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[6]/a/@data-btc')
+		volume_btc = volume_btc[0] if len(volume_btc)>=1 else ''
 		#涨幅
-		text_red = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[7]/span/text()')[0]
+		text_red = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[7]/span/text()')
+		text_red = text_red[0] if len(text_red)>=1 else ''
 		#价格趋势
-		char_line = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[8]/span/text()')[0]
+		char_line = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[8]/span/text()')
+		char_line = char_line[0] if len(char_line)>=1 else ''
 		# char_polygon = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[8]/svg[@class="peity"]/polygon/@points')
 		# char_polyline = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[8]/svg/polyline/@points')
 		# print(char_polygon)
