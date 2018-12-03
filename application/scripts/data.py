@@ -38,7 +38,12 @@ def get_data(i, headers, connect):
 		price_usd = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[4]/a/@data-usd')[0]
 		price_cny = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[4]/a/@data-cny')[0]
 		#流通数量
-		num = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[5]/text()')[0]
+		try:
+			num = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[5]/text()')[0]
+		except (OSError, TypeError) as reason:
+			print('错误的原因是:', str(reason))
+			print(tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[5]/text()'))
+			print(name)
 		#成交额
 		volume_usd = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[6]/a/@data-usd')[0]
 		volume_cny = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[6]/a/@data-cny')[0]
