@@ -76,7 +76,7 @@ def get_data(i, j, c_type, headers, connect):
 		
 
 
-		sql = "REPLACE INTO upanddowns (rank,href,icon,name,abbreviation,turnover,price,percentage,data_type,search_type,time_type,rp_date) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
+		sql = "REPLACE INTO upanddowns (rank,href,icon,name,abbreviation,turnover,price,percentage,data_type,search_type,time_type,rp_date) VALUES (%s,'%s','%s','%s','%s','%s','%s','%s','%s',%s,%s,'%s')"
 		# data = (str(name),str(icon),str(market_cap_usd),str(market_cap_cny),str(market_cap_btc),str(price_usd),str(price_cny),str(num),str(volume_usd),str(volume_cny),str(volume_btc),str(text_red),str(char_line))
 		connect['cur'].execute(sql,rec)
 		connect['con'].commit()
