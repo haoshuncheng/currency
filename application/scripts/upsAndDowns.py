@@ -10,9 +10,6 @@ def main():
 		for j in range(1,4):
 			for c_type in ['up','down']:
 				get_data(i, j, c_type, headers, connect)
-	# f = open('./abc.html', 'w', encoding='utf-8')
-	# f.write(rs.text)
-	# f.close()
 def getTime(days = 1,DateSplit=None):
     if not DateSplit:
         Datetype = "%Y%m%d"
@@ -28,15 +25,11 @@ def get_data(i, j, c_type, headers, connect):
 		print("数据请求失败\n")
 		return
 	tree = etree.HTML(rs.text)
-	# print(etree.tostring(tree))
 	r = tree.xpath('//table//tr')
-	# print(r)
 	for record in r:
-		# print(etree.tostring(record))
 		rank = record.xpath("./td[1]/span/text()")
 		if not rank:
 			continue
-		rec = []
 		rank = rank[0] if len(rank) else 0
 		href = record.xpath("./td[2]/a/@href")
 		href = href[0] if len(href) else ''
@@ -56,41 +49,11 @@ def get_data(i, j, c_type, headers, connect):
 		search_type = i 
 		time_type = j
 		rp_date = getTime(0,'-')
-
-		rec.append(rank)
-		rec.append(href)
-		rec.append(icon)
-		rec.append(name)
-		rec.append(abbreviation)
-		rec.append(turnover)
-		rec.append(price)
-		rec.append(percentage)
-		rec.append(data_type)
-		rec.append(search_type)
-		rec.append(time_type)
-		rec.append(rp_date)
-		print(rec)
-
-
-
-		
-
-
 		sql = "REPLACE INTO upanddowns (rank,href,icon,name,abbreviation,turnover,price,percentage,data_type,search_type,time_type,rp_date) VALUES (%s,'%s','%s','%s','%s','%s','%s','%s','%s',%s,%s,'%s')"
 		data = (rank,href,icon,name,abbreviation,turnover,price,percentage,data_type,search_type,time_type,rp_date)
 		connect['cur'].execute(sql % data)
 		connect['con'].commit()
 		print('成功插入', connect['cur'].rowcount, '条数据')
-		#print(alt)
-	#print(len(r))
-
-	# r = tree.xpath('//tr[@id="bitcoin"]/td[@class="change"]/span/@class')
-	# print(r)
-
-	# f = open('./abc.html', 'w', encoding='utf-8')
-	# f.write(rs.text)
-	# f.close()
-
 def connect1():
 	connect = pymysql.Connect(
 		host='localhost',
