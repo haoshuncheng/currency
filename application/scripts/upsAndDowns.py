@@ -24,9 +24,14 @@ def get_data(i, j, c_type, headers, connect):
 		return
 	tree = etree.HTML(rs.text)
 	print(tree)
-	r = tree.xpath('//table//tr')
-	print(r)
+	r = tree.xpath('//tbody//tr')
+
+	for record in r:
+		rank = record.xpath("./td[first()]/span/text()")
+		print(rank)
 	return
+	# print(r)
+	# return
 	#r = tree.xpath('//table[@id="table"]//tr/td[2]/a/img/@alt')
 	#print(r)
 	for k in range(1, len(r)):
