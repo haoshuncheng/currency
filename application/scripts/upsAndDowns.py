@@ -32,7 +32,7 @@ def get_data(i, j, c_type, headers, connect):
 	r = tree.xpath('//table//tr')
 	# print(r)
 	for record in r:
-		print(etree.tostring(record))
+		# print(etree.tostring(record))
 		rank = record.xpath("./td[1]/span/text()")
 		if not rank:
 			continue
