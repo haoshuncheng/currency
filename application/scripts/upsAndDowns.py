@@ -24,7 +24,7 @@ def get_data(i, j, c_type, headers, connect):
 		return
 	tree = etree.HTML(rs.text)
 	print(tree)
-	r = tree.xpath('//table/tbody//tr')
+	r = tree.xpath('//table//tr')
 	print(r)
 	return
 	#r = tree.xpath('//table[@id="table"]//tr/td[2]/a/img/@alt')
