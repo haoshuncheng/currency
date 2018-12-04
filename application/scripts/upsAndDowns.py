@@ -16,16 +16,14 @@ def main():
 
 def get_data(i, j, c_type, headers, connect):
 	url = 'https://api.feixiaohao.com/vol/maxchange/?datatype='+c_type+'&timetype='+str(j)+'&searchtype='+str(i)
-	print(url)
 	rs = requests.get(url, headers=headers)
 	print(rs.status_code)
 	if rs.status_code != 200:
 		print("数据请求失败\n")
 		return
 	tree = etree.HTML(rs.text)
-	print(tree)
 	r = tree.xpath('//tbody//tr')
-
+	print(r)
 	for record in r:
 		rank = record.xpath("./td[first()]/span/text()")
 		print(rank)
