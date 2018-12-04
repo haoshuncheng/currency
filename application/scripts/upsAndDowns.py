@@ -23,6 +23,7 @@ def get_data(i, j, c_type, headers, connect):
 		print("数据请求失败\n")
 		return
 	tree = etree.HTML(rs.text)
+	print(tree)
 	r = tree.xpath('//table/tbody/tr')
 	print(r)
 	return
