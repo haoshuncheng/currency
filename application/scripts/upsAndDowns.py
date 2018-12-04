@@ -56,6 +56,7 @@ def get_data(i, j, c_type, headers, connect):
 		search_type = i 
 		time_type = j
 		rp_date = getTime(0,'-')
+
 		rec.append(rank)
 		rec.append(href)
 		rec.append(icon)
@@ -67,18 +68,19 @@ def get_data(i, j, c_type, headers, connect):
 		rec.append(data_type)
 		rec.append(search_type)
 		rec.append(time_type)
-		print(rec)
+		rec.append(rp_date)
+		
 
 
 
 		
 
 
-		# sql = "REPLACE INTO currency_data (name,icon,market_cap_usd,market_cap_cny,market_cap_btc,price_usd,price_cny,num,volume_usd,volume_cny,volume_btc,text_red,char_line) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
+		sql = "REPLACE INTO upanddowns (rank,href,icon,name,abbreviation,turnover,price,percentage,data_type,search_type,time_type,rp_date) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
 		# data = (str(name),str(icon),str(market_cap_usd),str(market_cap_cny),str(market_cap_btc),str(price_usd),str(price_cny),str(num),str(volume_usd),str(volume_cny),str(volume_btc),str(text_red),str(char_line))
-		# connect['cur'].execute(sql % data)
-		# connect['con'].commit()
-		# print('成功插入', connect['cur'].rowcount, '条数据')
+		connect['cur'].execute(sql % data)
+		connect['con'].commit()
+		print('成功插入', connect['cur'].rowcount, '条数据')
 		#print(alt)
 	#print(len(r))
 
