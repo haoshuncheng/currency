@@ -70,7 +70,7 @@ def get_data(i, j, c_type, headers, connect):
 		rec.append(time_type)
 		rec.append(rp_date)
 		
-
+		print(rec)
 
 
 		
