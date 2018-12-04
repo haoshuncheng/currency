@@ -27,7 +27,7 @@ def get_data(i, j, c_type, headers, connect):
 	# print(r)
 	for record in r:
 		print(etree.tostring(record))
-		rank = record.xpath("./td[first()]/span/text()")
+		rank = record.xpath("./td[1]/span/text()")
 		print(rank)
 	return
 	# print(r)
