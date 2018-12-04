@@ -69,16 +69,16 @@ def get_data(i, j, c_type, headers, connect):
 		rec.append(search_type)
 		rec.append(time_type)
 		rec.append(rp_date)
-		
 		print(rec)
+
 
 
 		
 
 
 		sql = "REPLACE INTO upanddowns (rank,href,icon,name,abbreviation,turnover,price,percentage,data_type,search_type,time_type,rp_date) VALUES (%s,'%s','%s','%s','%s','%s','%s','%s','%s',%s,%s,'%s')"
-		# data = (str(name),str(icon),str(market_cap_usd),str(market_cap_cny),str(market_cap_btc),str(price_usd),str(price_cny),str(num),str(volume_usd),str(volume_cny),str(volume_btc),str(text_red),str(char_line))
-		connect['cur'].execute(sql,rec)
+		data = (rank,href,icon,name,abbreviation,turnover,price,percentage,data_type,search_type,time_type,rp_date)
+		connect['cur'].execute(sql % data)
 		connect['con'].commit()
 		print('成功插入', connect['cur'].rowcount, '条数据')
 		#print(alt)
