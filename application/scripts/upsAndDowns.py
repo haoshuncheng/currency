@@ -8,8 +8,8 @@ def main():
 	connect = connect1()
 	for i in range(1,3):
 		for j in range(1,4):
-			for c_type in ['up','down']
-			get_data(i, j, c_type, headers, connect)
+			for c_type in ['up','down']:
+				get_data(i, j, c_type, headers, connect)
 	# f = open('./abc.html', 'w', encoding='utf-8')
 	# f.write(rs.text)
 	# f.close()
