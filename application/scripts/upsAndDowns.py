@@ -22,11 +22,12 @@ def get_data(i, j, c_type, headers, connect):
 		print("数据请求失败\n")
 		return
 	tree = etree.HTML(rs.text)
-	r = tree.xpath('//tbody//tr')
-	print(r)
-	for record in r:
-		rank = record.xpath("./td[first()]/span/text()")
-		print(rank)
+	print(etree.toString(tree))
+	# r = tree.xpath('//tbody//tr')
+	# print(r)
+	# for record in r:
+	# 	rank = record.xpath("./td[first()]/span/text()")
+	# 	print(rank)
 	return
 	# print(r)
 	# return
