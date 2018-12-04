@@ -15,14 +15,15 @@ def main():
 	# f.close()
 
 def get_data(i, j, c_type, headers, connect):
-	rs = requests.get('https://api.feixiaohao.com/vol/maxchange/?datatype='+c_type+'&timetype='+str(j)+'&searchtype='+str(i), headers=headers)
+	url = 'https://api.feixiaohao.com/vol/maxchange/?datatype='+c_type+'&timetype='+str(j)+'&searchtype='+str(i)
+	print(url)
+	rs = requests.get(url, headers=headers)
 	print(rs.status_code)
 	if rs.status_code != 200:
 		print("数据请求失败\n")
 		return
 	tree = etree.HTML(rs.text)
 	r = tree.xpath('//table/tbody/tr')
-
 	print(r)
 	return
 	#r = tree.xpath('//table[@id="table"]//tr/td[2]/a/img/@alt')
