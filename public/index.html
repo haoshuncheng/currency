@@ -391,22 +391,43 @@
    <div class="top"></div>
   </div>
   <script src="./js/layer.js"></script>
-  <!-- <script src="../static.feixiaohao.com/Scripts/jquery.signalR-2.2.1.min.js" tppabs="https://static.feixiaohao.com/Scripts/jquery.signalR-2.2.1.min.js"></script> -->
   <script src="./js/jquery.peity.min.js"></script>
-  <!-- <script src="../static.feixiaohao.com/Scripts/autocomplete.js" tppabs="https://static.feixiaohao.com/Scripts/autocomplete.js"></script>
-  <script src="../static.feixiaohao.com/Scripts/common-1.1.js-v=1.691" tppabs="https://static.feixiaohao.com/Scripts/common-1.1.js?v=1.691"></script>
-  <script src="lcc/js" tppabs="https://www.feixiaohao.com/lcc/js"></script> -->
   <script>
-  $('.line').peity("line",{width:60,height:25,fill:'#EFF6FF',min:99999,strokeWidth:1});
-    /*loadglobalinfo_new();*/
-    /*startSocketHub(true);*/
+    $('.line').peity("line",{width:60,height:25,fill:'#EFF6FF',min:99999,strokeWidth:1});
   </script>
   <script src="./js/tablesort.js"></script>
-  <!-- <script src="../static.feixiaohao.com/Scripts/fxh3.js-v=1.992" tppabs="https://static.feixiaohao.com/Scripts/fxh3.js?v=1.992"></script> -->
   <script>
     new Tablesort(document.getElementById('table'));
     $('.line2').peity('line',{width:80,height:20,fill:'none',strokeWidth:1,min:10000,stroke:'#3499da'});
   </script>
-  <!-- <script>loadindexdaohang();loadnewconcept(0);</script> -->
+  <script type="text/javascript">
+    //获取行情数据
+    get_main_data(1, 1, 'cn');
+    /**
+     * 获取主数据 
+     * type：1为行情数据 2为交易所数据 
+     * page为页码
+     * lang: cn中文 us英文
+     */
+    function get_main_data(type, page, lang){
+      $.ajax({
+        url:"/Index/index",
+        data:{
+          'type':type,
+          'page':page,
+          'lang':lang
+        },
+        beforeSend:function(){
+          layer.load();
+          //$("#song_tables").append('<div class="loading js_loading"><em></em></div>');
+        },
+        success:function(e){
+          var rs = $.parseJSON(e);
+          layer.closeAll('loading');
+          console.log(rs);
+        }
+      });
+    }
+  </script>
  </body>
 </html>
