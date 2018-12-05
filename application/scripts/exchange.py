@@ -54,7 +54,7 @@ def get_data(i, headers, connect):
 		country = country[0] if len(country) else ''
 
 		transaction_types = record.xpath("./td[6]")[0]
-		transaction_types = tostring(transaction_types).replace("'","''")
+		transaction_types = tostring(transaction_types).encode('utf-8').replace("'","''")
 		# transaction_types = etree.tostring(transaction_types,print_pretty=True, method='html')
 
 		print(transaction_types)
