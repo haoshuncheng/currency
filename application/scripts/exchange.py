@@ -52,15 +52,15 @@ def get_data(i, headers, connect):
 		country = record.xpath("./td[5]/a/text()")
 		country = country[0] if len(country) else ''
 
-		transaction_types = record.xpath("./td[5]")
+		transaction_types = record.xpath("./td[6]/text()")[0]
 
 		print(transaction_types)
 		
 
-		stars = record.xpath("./td[6]/div/@class")
+		stars = record.xpath("./td[7]/div/@class")
 		stars = stars[0] if len(stars) else ''
 
-		follows = record.xpath("./td[6]/div/text()")
+		follows = record.xpath("./td[8]/div/text()")
 		follows = follows[0] if len(follows) else 0 
 
 		rp_date = getTime(0,'-')
