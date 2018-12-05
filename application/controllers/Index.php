@@ -8,7 +8,6 @@ class IndexController extends Yaf_Controller_Abstract {
      * lang: cn中文 us英文
      */
 	public function indexAction() {
-		echo phpinfo();die;
 		header("Content-type:text/html;charset=utf8");
 		if(!isset($_REQUEST['type']) || !$type = $_REQUEST['type']){
 			exit(json_encode(['status'=>0, 'msg'=>'not find type']));
@@ -22,6 +21,7 @@ class IndexController extends Yaf_Controller_Abstract {
 	  	if(!isset($_REQUEST['pageSize']) || !$pageSize = $_REQUEST['pageSize']){
 			$pageSize = 100;
 		}
+		echo "aaaaaaaa\n";
 		$start = ((int)$page - 1) * $pageSize;
 		$date = date("Y-m-d");
 		$date1 = date("Y-m-d", strtotime("-1 day"));
