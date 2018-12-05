@@ -402,6 +402,7 @@
     function get_main_data(type, page, lang){
       $.ajax({
         url:"/Index/index",
+        type:"POST",
         data:{
           'type':type,
           'page':page,
