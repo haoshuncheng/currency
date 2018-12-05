@@ -46,7 +46,7 @@ class IndexController extends Yaf_Controller_Abstract {
         if( is_array($data) ) {
             foreach ($data as $k => $v) {
                 if ( is_array($v) ) {
-                    $data[$k] = gbk_to_utf8($v);
+                    $data[$k] = $this->gbk_to_utf8($v);
                 } else {
                     $data[$k] = iconv('gbk', 'utf-8', $v);
                 }
