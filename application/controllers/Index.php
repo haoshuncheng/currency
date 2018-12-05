@@ -8,7 +8,7 @@ class IndexController extends Yaf_Controller_Abstract {
      * lang: cn中文 us英文
      */
 	public function indexAction() {
-		//header("Content-type:text/html;charset=utf8");
+		header("Content-type:text/html;charset=utf8");
 		if(!isset($_REQUEST['type']) || !$type = $_REQUEST['type']){
 			exit(json_encode(['status'=>0, 'msg'=>'not find type']));
 		}
