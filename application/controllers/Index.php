@@ -36,7 +36,7 @@ class IndexController extends Yaf_Controller_Abstract {
 
 		echo "<pre>";
 		print_r($rs);
-		var_dump($this->gbk_to_utf8($rs));
+		var_dump($this->characet($rs));
 		var_dump(mb_detect_encoding($rs[0]['name'], array('UTF-8','GBK','LATIN1','BIG5')));
 		var_dump(mb_detect_encoding($rs[0]['market_cap_usd'], array('UTF-8','GBK','LATIN1','BIG5')));
 		var_dump(mb_detect_encoding($rs[0]['market_cap_show'], array('UTF-8','GBK','LATIN1','BIG5')));
@@ -50,6 +50,24 @@ class IndexController extends Yaf_Controller_Abstract {
 	}
 
 
+	function gbk_to_utf81($data) {
+		if(!$data || empty($data)){
+			return false;
+		}if( is_array($data) ) {
+            foreach ($data as $k => $v) {
+                if ( is_array($v) ) {
+                    $data[$k] = $this->gbk_to_utf8($v);
+                } else {
+                    $data[$k] = iconv('gbk', 'utf-8', $v);
+                }
+            }
+            return $data;
+        } else {
+            $data = iconv('gbk', 'utf-8', $data);
+            return $data;
+        }
+	}
+
 	function gbk_to_utf8($data) {
 		if(!$data || empty($data)){
 			return false;
@@ -60,7 +78,7 @@ class IndexController extends Yaf_Controller_Abstract {
                 } else {
                     $fileType = mb_detect_encoding($data , array('UTF-8','GBK','LATIN1','BIG5')) ;   
 			        if( $fileType != 'UTF-8'){   
-			            $data = iconv($fileType, "UTF-8//ignore", $data);  
+			            $data[$k] = iconv($fileType, "UTF-8//ignore", $data);  
 			        } 
                 }
             }
