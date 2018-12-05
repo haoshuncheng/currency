@@ -420,7 +420,7 @@
           var str = "";
           $.each(rs.data, function(k,v){
             var num = parseInt(k) + 1;
-            str += '<tr><td>'+num+'</td><td><a href="javascript:;" target="_blank"> <img src="'+v.icon+'" tppabs="" />'+v.name+' </a></td><td class="market-cap" data-usd="" data-cny="" data-btc="">'+v.market_cap_cny+'</td><td><a href="javascript:;" target="_blank" class="price" data-usd="" data-cny="" data-btc="">'+v.price_cny+'</a></td><td>'+v.num+'</td><td><a href="javascript:;" target="_blank" class="volume" data-usd="" data-cny="" data-btc="">'+v.volume_cny+'</a></td><td class="change"><span class="new-text-red">'+v.text_red+'</span></td><td class="char"><span class="line2">'+v.char_line+'</span></td></tr>';
+            str += '<tr><td>'+num+'</td><td><a href="javascript:;" target="_blank"> <img src="'+v.icon+'" tppabs="" />'+v.name+' </a></td><td class="market-cap" data-usd="" data-cny="" data-btc="">'+v.market_cap_show+'</td><td><a href="javascript:;" target="_blank" class="price" data-usd="" data-cny="" data-btc="">'+v.price_show+'</a></td><td>'+v.num+'</td><td><a href="javascript:;" target="_blank" class="volume" data-usd="" data-cny="" data-btc="">'+v.volume_show+'</a></td><td class="change"><span class="new-text-red">'+v.text_red+'</span></td><td class="char"><span class="line2">'+v.char_line+'</span></td></tr>';
           });
           $("#table tbody").empty().append(str);
           show_line();
