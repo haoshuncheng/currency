@@ -36,6 +36,8 @@ class IndexController extends Yaf_Controller_Abstract {
 
 		echo "<pre>";
 		print_r($rs);
+		var_dump(mb_detect_encoding($rs[0]['name'], array('UTF-8','GBK','LATIN1','BIG5')));
+		var_dump(mb_detect_encoding($rs[0]['market_cap_usd'], array('UTF-8','GBK','LATIN1','BIG5')));
 		var_dump(mb_detect_encoding($rs[0]['market_cap_show'], array('UTF-8','GBK','LATIN1','BIG5')));
 		die;
 
