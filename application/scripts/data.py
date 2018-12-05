@@ -40,6 +40,8 @@ def get_data(i, headers, connect):
 		if len(number) == 0 or number[0] == "":
 			continue
 		number = number[0]
+
+		
 		#市值
 		market_cap_usd = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[3]/@data-usd')
 		market_cap_usd = market_cap_usd[0] if len(market_cap_usd)>=1 else ''
@@ -75,7 +77,7 @@ def get_data(i, headers, connect):
 		# print(char_polygon)
 		# print(char_polyline)
 
-		sql = "REPLACE INTO currency_data (num1,name,icon,market_cap_usd,market_cap_cny,market_cap_btc,price_usd,price_cny,num,volume_usd,volume_cny,volume_btc,text_red,char_line) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
+		sql = "REPLACE INTO currency_data (num1,name,icon,market_cap_usd,market_cap_cny,market_cap_btc,price_usd,price_cny,num,volume_usd,volume_cny,volume_btc,text_red,char_line) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
 		data = (int(number),str(name),str(icon),str(market_cap_usd),str(market_cap_cny),str(market_cap_btc),str(price_usd),str(price_cny),str(num),str(volume_usd),str(volume_cny),str(volume_btc),str(text_red),str(char_line))
 		connect['cur'].execute(sql % data)
 		connect['con'].commit()
