@@ -21,13 +21,22 @@ class IndexController extends Yaf_Controller_Abstract {
 			$pageSize = 100;
 		}
 		$start = ((int)$page - 1) * $pageSize;
+		$date = date("Y-m-d");
+		$date1 = date("Y-m-d", strtotime("-1 day"));
 		if($type == 1){
-			$order = $lang=='us' ? 'market_cap_usd' : 'market_cap_cny';
-			IvyDb::query("select * from `currency_data` order by `".$order."` desc limit $start,$pageSize ");
+			$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit $start,$pageSize ");
+			if(!$rs || !count($rs)){
+				$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date1' order by `number` asc limit $start,$pageSize ");
+			}
+		} else {}
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
-
-
+		exit(json_encode(['status'=>1, 'data'=>$rs]));
 	}
+
+
+
 
 
 }
