@@ -34,9 +34,28 @@ class IndexController extends Yaf_Controller_Abstract {
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
 
-		var_dump(json_encode(['status'=>1, 'data'=>utf8_encode($rs)], JSON_UNESCAPED_UNICODE));
+		var_dump($this->gbk_to_utf8($rs));die;
 
-		exit(json_encode(['status'=>1, 'data'=>utf8_encode($rs)], JSON_UNESCAPED_UNICODE));
+		var_dump(json_encode(['status'=>1, 'data'=>$rs], JSON_UNESCAPED_UNICODE));
+
+		//exit(json_encode(['status'=>1, 'data'=>$rs], JSON_UNESCAPED_UNICODE));
+	}
+
+
+	function gbk_to_utf8($data) {
+        if( is_array($data) ) {
+            foreach ($data as $k => $v) {
+                if ( is_array($v) ) {
+                    $data[$k] = gbk_to_utf8($v);
+                } else {
+                    $data[$k] = iconv('gbk', 'utf-8', $v);
+                }
+            }
+            return $data;
+        } else {
+            $data = iconv('gbk', 'utf-8', $data);
+            return $data;
+        }
 	}
 
 
