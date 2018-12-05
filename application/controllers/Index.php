@@ -19,7 +19,7 @@ class IndexController extends Yaf_Controller_Abstract {
 			$page = 1;
 		}
 	  	if(!isset($_REQUEST['pageSize']) || !$pageSize = $_REQUEST['pageSize']){
-			$pageSize = 100;
+			$pageSize = 1;
 		}
 		$start = ((int)$page - 1) * $pageSize;
 		$date = date("Y-m-d");
@@ -34,11 +34,11 @@ class IndexController extends Yaf_Controller_Abstract {
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
 
-		var_dump($this->gbk_to_utf8($rs));die;
+		//var_dump($this->gbk_to_utf8($rs));die;
 
-		var_dump(json_encode(['status'=>1, 'data'=>$rs], JSON_UNESCAPED_UNICODE));
+		//var_dump(json_encode(['status'=>1, 'data'=>$rs], JSON_UNESCAPED_UNICODE));
 
-		//exit(json_encode(['status'=>1, 'data'=>$rs], JSON_UNESCAPED_UNICODE));
+		exit(json_encode(['status'=>1, 'data'=>$rs], JSON_UNESCAPED_UNICODE));
 	}
 
 
