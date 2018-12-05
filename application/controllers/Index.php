@@ -33,6 +33,9 @@ class IndexController extends Yaf_Controller_Abstract {
 				$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date1' order by `number` asc limit $start,$pageSize ");
 			}
 		} else {}
+
+		var_dump($rs);
+		
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
