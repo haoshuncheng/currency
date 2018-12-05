@@ -34,6 +34,9 @@ class IndexController extends Yaf_Controller_Abstract {
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
 
+		echo "<pre>";
+		print_r($rs);die;
+
 		//var_dump($this->gbk_to_utf8($rs));die;
 
 		//var_dump(json_encode(['status'=>1, 'data'=>$rs], JSON_UNESCAPED_UNICODE));
