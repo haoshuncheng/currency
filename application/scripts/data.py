@@ -36,10 +36,10 @@ def get_data(i, headers, connect):
 		name = name[0]
 		print(name)
 
-		number = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[0]/text()')
+		number = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[1]/text()')
 		print(number)
 		sys.exit()
-		
+
 		if len(number) == 0 or number[0] == "":
 			continue
 		number = number[0]
