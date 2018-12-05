@@ -3,6 +3,7 @@ from lxml import etree
 import pymysql.cursors
 import sys
 import json
+import datetime
 
 def main():
 	headers = {'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
@@ -13,7 +14,13 @@ def main():
 	# f = open('./abc.html', 'w', encoding='utf-8')
 	# f.write(rs.text)
 	# f.close()
-
+def getTime(days = 1,DateSplit=None):
+    if not DateSplit:
+        Datetype = "%Y%m%d"
+    else:
+        Datetype = "%Y"+DateSplit+"%m"+DateSplit+"%d"
+    aimDate = (datetime.datetime.now() - datetime.timedelta(days = days)).strftime(Datetype)
+    return aimDate
 def get_data(i, headers, connect):
 	rs = requests.get('https://www.feixiaohao.com/exchange/list_'+str(i)+'.html?mineable=1', headers=headers)
 	#rs = requests.get('https://www.feixiaohao.com/list_1.html', headers=headers)
@@ -43,7 +50,7 @@ def get_data(i, headers, connect):
 		transaction_pair = transaction_pair[0] if len(transaction_pair) else 0
 
 		country = record.xpath("./td[5]/a/text()")
-		country = country[0] if len(transaction_pair) else ''
+		country = country[0] if len(country) else ''
 
 		transaction_types = record.xpath("./td[5]")
 
