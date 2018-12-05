@@ -5,6 +5,7 @@ import sys
 import json
 import datetime
 import time
+from common import *
 from lxml.html import fromstring, tostring
 def main():
 	headers = {'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
@@ -15,13 +16,7 @@ def main():
 	# f = open('./abc.html', 'w', encoding='utf-8')
 	# f.write(rs.text)
 	# f.close()
-def getTime(days = 1,DateSplit=None):
-    if not DateSplit:
-        Datetype = "%Y%m%d"
-    else:
-        Datetype = "%Y"+DateSplit+"%m"+DateSplit+"%d"
-    aimDate = (datetime.datetime.now() - datetime.timedelta(days = days)).strftime(Datetype)
-    return aimDate
+
 def get_data(i, headers, connect):
 	rs = requests.get('https://www.feixiaohao.com/exchange/list_'+str(i)+'.html?mineable=1', headers=headers)
 	#rs = requests.get('https://www.feixiaohao.com/list_1.html', headers=headers)
@@ -55,7 +50,7 @@ def get_data(i, headers, connect):
 			country = country[0] if len(country) else ''
 
 			transaction_types = record.xpath("./td[6]")[0]
-			transaction_types = tostring(transaction_types).decode('utf-8').replace("'","''")
+			transaction_types = tostring(transaction_types).decode('utf-8')
 			# transaction_types = etree.tostring(transaction_types,print_pretty=True, method='html')
 
 			# print(transaction_types)
@@ -71,7 +66,7 @@ def get_data(i, headers, connect):
 
 			sql = "REPLACE INTO exchange (rank,href,icon,name,turnover,transaction_pair,country,transaction_types,stars,follows,rp_date) VALUES (%s,'%s','%s','%s','%s',%s,'%s','%s','%s',%s,'%s')"
 			print(sql)
-			data = (rank,href,icon,name,turnover,transaction_pair,country,transaction_types,stars,follows,rp_date)
+			data = (rank,handlestr(href),handlestr(icon),handlestr(name),handlestr(turnover),transaction_pair,handlestr(country),handlestr(transaction_types),handlestr(stars),follows,rp_date)
 			print(data)
 			connect['cur'].execute(sql % data)
 			connect['con'].commit()
