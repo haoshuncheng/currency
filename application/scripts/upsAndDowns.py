@@ -30,7 +30,7 @@ def get_data(i, j, c_type, headers, connect):
 		href = href[0] if len(href) else ''
 		icon = record.xpath("./td[2]/a/img/@src")
 		icon = icon[0] if len(icon) else ''
-		name = record.xpath("./td[2]/a/string()")
+		name = record.xpath("./td[2]/a/text()")
 		name = name[0] if len(name) else ''
 		abbreviation = record.xpath("./td[3]/text()")
 		abbreviation = abbreviation[0] if len(abbreviation) else ''
