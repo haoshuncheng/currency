@@ -136,7 +136,7 @@
     </table>
     <div class="new-table-bar">
      <div class="new-page-list">
-      <a href="javascript:;" class="btn btn-white">&lt;</a> 
+      <!-- <a href="javascript:;" class="btn btn-white">&lt;</a> 
       <a href="javascript:;" class="btn btn-white active">1</a>
       <a class="btn btn-white" href="javascript:;">2</a>
       <a class="btn btn-white" href="javascript:;">3</a>
@@ -144,7 +144,7 @@
       <a class="btn btn-white" href="javascript:;">5</a>
       <a href="javascript:;" class="btn btn-white">...</a>
       <a class="btn btn-white" href="javascript:;">25</a>
-      <a class="btn btn-white" href="javascript:;">&gt;</a>
+      <a class="btn btn-white" href="javascript:;">&gt;</a> -->
      </div>
      <span></span>
     </div>
@@ -377,9 +377,9 @@
     </div>
    </div>
   </div>
-  <div class="totop">
+  <!-- <div class="totop"> 返回顶页
    <div class="top"></div>
-  </div>
+  </div> -->
   <script src="./js/layer.js"></script>
   <script src="./js/jquery.peity.min.js"></script>
   <script>
@@ -399,14 +399,15 @@
      * page为页码
      * lang: cn中文 us英文
      */
-    function get_main_data(type, page, lang){
+    function get_main_data(type, page, lang, pageSize=100){
       $.ajax({
         url:"/Index/index",
         type:"POST",
         data:{
           'type':type,
           'page':page,
-          'lang':lang
+          'lang':lang,
+          'pageSize':pageSize
         },
         beforeSend:function(){
           layer.load();
@@ -420,11 +421,12 @@
           }
           var str = "";
           $.each(rs.data, function(k,v){
-            var num = parseInt(k) + 1;
+            var num = (parseInt(page)-1)*parseInt(pageSize) + parseInt(k) + 1;
             str += '<tr><td>'+num+'</td><td><a href="javascript:;" target="_blank"> <img src="'+v.icon+'" tppabs="" />'+v.name+' </a></td><td class="market-cap" data-usd="" data-cny="" data-btc="">'+v.market_cap_show+'</td><td><a href="javascript:;" target="_blank" class="price" data-usd="" data-cny="" data-btc="">'+v.price_show+'</a></td><td>'+v.num+'</td><td><a href="javascript:;" target="_blank" class="volume" data-usd="" data-cny="" data-btc="">'+v.volume_show+'</a></td><td class="change"><span class="new-text-red">'+v.text_red+'</span></td><td class="char"><span class="line2">'+v.char_line+'</span></td></tr>';
           });
           $("#table tbody").empty().append(str);
           show_line();
+          set_page(rs.total, page, pageSize)
 
         /*  <tr id="bitcoin">
         <td>1</td>
@@ -439,6 +441,28 @@
         }
       });
     }
+
+    function set_page(number, page=1, pageSize=100){
+      var page = parseInt(page);
+      var pageSize = parseInt(pageSize);
+      var str = '<a href="javascript:;" class="btn btn-white" data-dt-idx="1">首页</a>';
+      for(var i = page-2;i<=page-1;i++){
+        if(i <= 0){
+          continue;
+        }
+        str += '<a class="btn btn-white" href="javascript:;" data-dt-idx='+i+'>'+i+'</a>';
+      }
+      str += '<a href="javascript:;" class="btn btn-white active" data-dt-idx='+page+'>'+page+'</a>';
+      for(var i = page+1;i<=page+2;i++){
+        if(i > Math.ceil(parseInt(number)/pageSize)){
+          continue;
+        }
+        str += '<a class="btn btn-white" href="javascript:;" data-dt-idx='+i+'>'+i+'</a>';
+      }
+      str += '<a class="btn btn-white" href="javascript:;" data-dt-idx='+Math.ceil(parseInt(number)/pageSize)+'>末页</a>';
+      $(".new-table-bar .new-page-list").empty().append(str);
+    }
+
 
     function show_line(){
       new Tablesort(document.getElementById('table'));

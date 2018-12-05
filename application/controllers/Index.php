@@ -25,15 +25,18 @@ class IndexController extends Yaf_Controller_Abstract {
 		$date = date("Y-m-d");
 		$date1 = date("Y-m-d", strtotime("-1 day"));
 		if($type == 1){
-			$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit $start,$pageSize ");
-			if(!$rs || !count($rs)){
+			$total = IvyDb::query("select count(*) as num from `currency_data` where `number`>0 and rp_date='$date' ");
+			if(!$total || !count($total) || $total[0]['num'] <= 0){
+				$total = IvyDb::query("select count(*) as num from `currency_data` where `number`>0 and rp_date='$date1' ");
 				$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date1' order by `number` asc limit $start,$pageSize ");
+			} else {
+				$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit $start,$pageSize ");
 			}
 		} else {}
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
-		exit(json_encode(['status'=>1, 'data'=>$rs]));
+		exit(json_encode(['status'=>1, 'data'=>$rs, 'total'=>$total[0]['num']]));
 	}
 
 
