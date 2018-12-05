@@ -32,7 +32,15 @@ class IndexController extends Yaf_Controller_Abstract {
 			} else {
 				$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit $start,$pageSize ");
 			}
-		} else {}
+		} else {
+			$total = IvyDb::query("select count(*) as num from `exchange` where `rank`>0 and rp_date='$date' ");
+			if(!$total || !count($total) || $total[0]['num'] <= 0){
+				$total = IvyDb::query("select count(*) as num from `exchange` where `rank`>0 and rp_date='$date1' ");
+				$rs = IvyDb::query("select * from `exchange` where `rank`>0 and rp_date='$date1' order by `rank` asc limit $start,$pageSize ");
+			} else {
+				$rs = IvyDb::query("select * from `exchange` where `rank`>0 and rp_date='$date' order by `rank` asc limit $start,$pageSize ");
+			}
+		}
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}

@@ -13,8 +13,14 @@
   <link href="./css/stylesheet_nav.css-v=2.351.css" rel="stylesheet" />
   <link href="./css/style-2.0.css-v=2.351.css" rel="stylesheet" />
   <link href="./css/tablesort.css" rel="stylesheet" />
+  <link href="./js/skin/default/layer.css" rel="stylesheet" />
   <script src="./js/jquery-2.1.1.js"></script>
   <!-- <link rel="shortcut icon" href="//static.feixiaohao.com/themes/default/images/fav.ico" /> -->
+  <style>
+    .big_title_color{
+      color:#0291d6;
+    }
+  </style>
  </head>
  <body style="background:#fff">
   <div class="new-nav">
@@ -24,8 +30,8 @@
     <div class="new-row">
      <div class="new-left-side" style="width:50%;">
       <a href="javascript:;" class="new-logo"><img src="https://static.feixiaohao.com/themes/default/images/logo.png" /></a>
-      <p style="float:left;font-size:16px;color:#0291d6;line-height:58px;margin-right:9%;cursor:pointer;">行情</p>
-      <p style="float:left;font-size:16px;line-height:58px;cursor:pointer;">交易所</p>
+      <p class="big_title big_title_color" type="1" style="float:left;font-size:16px;line-height:58px;margin-right:9%;cursor:pointer;">行情</p>
+      <p class="big_title" type="2" style="float:left;font-size:16px;line-height:58px;cursor:pointer;">交易所</p>
      </div>
      <div class="new-right-size">
       <div class="searchForm">
@@ -82,6 +88,7 @@
      </div>
 
     </div>
+
     <table class="new-table new-coin-list" id="table">
      <thead>
       <tr>
@@ -100,6 +107,27 @@
 
      </tbody>
     </table>
+
+    <table class="table exchange-table" style="display:none;" id="table2">
+     <thead>
+      <tr>
+       <th>#</th>
+       <th>名称</th>
+       <th>成交额（24h）</th>
+       <th>交易对</th>
+       <th>国家</th>
+       <th>交易类型</th>
+       <th>星级</th>
+       <th>关注数</th>
+      </tr>
+     </thead>
+     <tbody>
+
+      
+     </tbody>
+    </table>
+
+
     <div class="new-table-bar">
      <div class="new-page-list">
       <!-- <a href="javascript:;" class="btn btn-white">&lt;</a> 
@@ -379,19 +407,48 @@
           layer.closeAll('loading');
           if(!rs.status){
             $("#table tbody").empty();
+            $("#table2 tbody").empty();
             return;
           }
           var str = "";
           $.each(rs.data, function(k,v){
             var num = (parseInt(page)-1)*parseInt(pageSize) + parseInt(k) + 1;
-            str += '<tr><td>'+num+'</td><td><a href="javascript:;" target="_blank"> <img src="'+v.icon+'" tppabs="" />'+v.name+' </a></td><td class="market-cap" data-usd="" data-cny="" data-btc="">'+v.market_cap_show+'</td><td><a href="javascript:;" target="_blank" class="price" data-usd="" data-cny="" data-btc="">'+v.price_show+'</a></td><td>'+v.num+'</td><td><a href="javascript:;" target="_blank" class="volume" data-usd="" data-cny="" data-btc="">'+v.volume_show+'</a></td><td class="change"><span class="new-text-red">'+v.text_red+'</span></td><td class="char"><span class="line2">'+v.char_line+'</span></td></tr>';
+            if(MAIN_TYPE == 1){
+              str += '<tr><td>'+num+'</td><td><a href="javascript:;" target="_blank"> <img src="'+v.icon+'" tppabs="" />'+v.name+' </a></td><td class="market-cap" data-usd="" data-cny="" data-btc="">'+v.market_cap_show+'</td><td><a href="javascript:;" target="_blank" class="price" data-usd="" data-cny="" data-btc="">'+v.price_show+'</a></td><td>'+v.num+'</td><td><a href="javascript:;" target="_blank" class="volume" data-usd="" data-cny="" data-btc="">'+v.volume_show+'</a></td><td class="change"><span class="new-text-red">'+v.text_red+'</span></td><td class="char"><span class="line2">'+v.char_line+'</span></td></tr>';
+            } else {
+              str += '<tr><td>'+num+'</td><td><a href="javascript:;"> <img src="'+v.icon+'" /> '+v.name+' </a></td><td><a href="javascript:;">'+v.turnover+'</a></td><td><a target="_blank" href="javascript:;">'+v.transaction_pair+'</a></td><td><a href="javascript:;">'+v.country+'</a></td>'+v.transaction_types+'<td><div class="'+v.stars+'"></div></td><td><div>'+v.follows+'</div></td></tr>';
+            }
           });
-          $("#table tbody").empty().append(str);
-          show_line();
+          if(MAIN_TYPE == 1){
+            $("#table").css("display", "block");
+            $("#table2").css("display", "none");
+            $("#table tbody").empty().append(str);
+            show_line();
+          } else {
+            $("#table2").css("display", "block");
+            $("#table").css("display", "none");
+            $("#table2 tbody").empty().append(str);
+          }
           set_page(rs.total, page, pageSize);  //显示页码
         }
       });
     }
+
+    <tr>
+       <td>1</td>
+       <td><a href="/exchange/bitmex/"> <img src="//static.feixiaohao.com/platimages/20170805/9d0e9d158baa4efc8f40935c49e584bb_2_100_100.png" alt="BitMEX的logo" /> BitMEX </a></td>
+       <td><a href="/exchange/bitmex/">&yen;1,115,860万</a></td>
+       <td><a target="_blank" href="/exchange/bitmex/">8</a></td>
+       <td><a href="/exchange/?code=sser">塞舌尔</a></td>
+       <td><a href="/exchange/?type=2"><i class="fxh-login fxh-qihuo"></i></a></td>
+       <td>
+        <div class="star star9"></div></td>
+       <td>
+        <div>
+         2695
+        </div>
+        </td>
+      </tr>
 
     /**
      * 展示图标数据
@@ -442,6 +499,21 @@
     $("body").off("click", ".new-box-tools a").on("click", ".new-box-tools a", function(){
       get_main_data(MAIN_TYPE, 1, 'cn', 10000);
     });
+
+    /**
+     * 行情与交易所相互切换
+     */
+    $("body").off("click", ".big_title").on("click", ".big_title", function(){
+      if($(this).hasClass("big_title_color")){
+        return;
+      }
+      $(".big_title").removeClass("big_title_color");
+      $(this).addClass("big_title_color");
+      get_main_data($(this).attr("type"), 1, 'cn');
+    });
+
+
+    
 
     
 
