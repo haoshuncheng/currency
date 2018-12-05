@@ -41,7 +41,9 @@ def get_data(i, headers, connect):
 			continue
 		number = number[0]
 
-		
+		print(number)
+		sys.exit()
+
 		#市值
 		market_cap_usd = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[3]/@data-usd')
 		market_cap_usd = market_cap_usd[0] if len(market_cap_usd)>=1 else ''
