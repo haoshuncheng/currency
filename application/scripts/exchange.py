@@ -50,7 +50,7 @@ def get_data(i, headers, connect):
 		transaction_pair = transaction_pair[0] if len(transaction_pair) else 0
 
 		country = record.xpath("./td[5]/a/text()")
-		country = country[0] if len(transaction_pair) else ''
+		country = country[0] if len(country) else ''
 
 		transaction_types = record.xpath("./td[5]")
 
