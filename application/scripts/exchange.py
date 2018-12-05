@@ -45,11 +45,8 @@ def get_data(i, headers, connect):
 		country = record.xpath("./td[5]/a/text()")
 		country = country[0] if len(transaction_pair) else ''
 
-		transaction_types = record.xpath("./td[5]/a")
-		transaction_typeses = []
-		for transaction_type in transaction_types:
-			transaction_typeses.append([transaction_type.xpath("@href")[0],transaction_type.xpath("./i/@class")[0]])
-		transaction_typeses = json.dumps(transaction_typeses)
+		transaction_types = record.xpath("./td[5]/")
+		
 
 		stars = record.xpath("./td[6]/div/@class")
 		stars = stars[0] if len(stars) else ''
