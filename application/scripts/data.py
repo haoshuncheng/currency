@@ -2,18 +2,20 @@ import requests
 from lxml import etree
 import pymysql.cursors
 import sys
+import time
 
 def main():
 	headers = {'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
 	connect = connect1()
+	date = time.strftime("%Y-%m-%d", time.localtime())
 	for i in range(1, 26):
 		print("获取："+str(i)+"页数据")
-		get_data(i, headers, connect)
+		get_data(i, headers, connect, date)
 	# f = open('./abc.html', 'w', encoding='utf-8')
 	# f.write(rs.text)
 	# f.close()
 
-def get_data(i, headers, connect):
+def get_data(i, headers, connect, date):
 	rs = requests.get('https://www.feixiaohao.com/list_'+str(i)+'.html', headers=headers)
 	#rs = requests.get('https://www.feixiaohao.com/list_1.html', headers=headers)
 	print(rs.status_code)
@@ -75,8 +77,8 @@ def get_data(i, headers, connect):
 		# print(char_polygon)
 		# print(char_polyline)
 
-		sql = "REPLACE INTO currency_data (number,name,icon,market_cap_usd,market_cap_cny,market_cap_btc,price_usd,price_cny,num,volume_usd,volume_cny,volume_btc,text_red,char_line) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
-		data = (int(number),str(name),str(icon),str(market_cap_usd),str(market_cap_cny),str(market_cap_btc),str(price_usd),str(price_cny),str(num),str(volume_usd),str(volume_cny),str(volume_btc),str(text_red),str(char_line))
+		sql = "REPLACE INTO currency_data (rp_date,number,name,icon,market_cap_usd,market_cap_cny,market_cap_btc,price_usd,price_cny,num,volume_usd,volume_cny,volume_btc,text_red,char_line) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
+		data = (str(date),int(number),str(name),str(icon),str(market_cap_usd),str(market_cap_cny),str(market_cap_btc),str(price_usd),str(price_cny),str(num),str(volume_usd),str(volume_cny),str(volume_btc),str(text_red),str(char_line))
 		connect['cur'].execute(sql % data)
 		connect['con'].commit()
 		print('成功插入', connect['cur'].rowcount, '条数据')
