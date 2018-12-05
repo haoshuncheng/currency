@@ -17,6 +17,9 @@ def getTime(days = 1,DateSplit=None):
         Datetype = "%Y"+DateSplit+"%m"+DateSplit+"%d"
     aimDate = (datetime.datetime.now() - datetime.timedelta(days = days)).strftime(Datetype)
     return aimDate
+
+def handlestr(str):
+	return str.replace("'","''");
 def get_data(i, j, c_type, headers, connect):
 	url = 'https://api.feixiaohao.com/vol/maxchange/?datatype='+c_type+'&timetype='+str(j)+'&searchtype='+str(i)
 	rs = requests.get(url, headers=headers)
@@ -50,7 +53,7 @@ def get_data(i, j, c_type, headers, connect):
 		time_type = j
 		rp_date = getTime(0,'-')
 		sql = "REPLACE INTO upanddowns (rank,href,icon,name,abbreviation,turnover,price,percentage,data_type,search_type,time_type,rp_date) VALUES (%s,'%s','%s','%s','%s','%s','%s','%s','%s',%s,%s,'%s')"
-		data = (rank,href,icon,name,abbreviation,turnover,price,percentage,data_type,search_type,time_type,rp_date)
+		data = (rank,handlestr(href),handlestr(icon),handlestr(name),handlestr(abbreviation),handlestr(turnover),handlestr(price),handlestr(percentage),data_type,search_type,time_type,rp_date)
 		connect['cur'].execute(sql % data)
 		connect['con'].commit()
 		print('成功插入', connect['cur'].rowcount, '条数据')
