@@ -8,7 +8,7 @@ class IndexController extends Yaf_Controller_Abstract {
      * lang: cn中文 us英文
      */
 	public function indexAction() {
-		header("Content-type:text/html;charset=utf8");
+		//header("Content-type:text/html;charset=utf8");
 		if(!isset($_REQUEST['type']) || !$type = $_REQUEST['type']){
 			exit(json_encode(['status'=>0, 'msg'=>'not find type']));
 		}
@@ -25,17 +25,11 @@ class IndexController extends Yaf_Controller_Abstract {
 		$date = date("Y-m-d");
 		$date1 = date("Y-m-d", strtotime("-1 day"));
 		if($type == 1){
-
-			echo "select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit $start,$pageSize ";
-
 			$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit $start,$pageSize ");
 			if(!$rs || !count($rs)){
 				$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date1' order by `number` asc limit $start,$pageSize ");
 			}
 		} else {}
-
-		var_dump($rs);
-		
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
