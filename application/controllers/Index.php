@@ -19,7 +19,7 @@ class IndexController extends Yaf_Controller_Abstract {
 			$page = 1;
 		}
 	  	if(!isset($_REQUEST['pageSize']) || !$pageSize = $_REQUEST['pageSize']){
-			$pageSize = 1;
+			$pageSize = 100;
 		}
 		$start = ((int)$page - 1) * $pageSize;
 		$date = date("Y-m-d");
