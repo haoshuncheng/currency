@@ -3,6 +3,7 @@ from lxml import etree
 import pymysql.cursors
 import sys
 import json
+import datetime
 
 def main():
 	headers = {'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
