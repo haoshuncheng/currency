@@ -13,7 +13,13 @@ def main():
 	# f = open('./abc.html', 'w', encoding='utf-8')
 	# f.write(rs.text)
 	# f.close()
-
+def getTime(days = 1,DateSplit=None):
+    if not DateSplit:
+        Datetype = "%Y%m%d"
+    else:
+        Datetype = "%Y"+DateSplit+"%m"+DateSplit+"%d"
+    aimDate = (datetime.datetime.now() - datetime.timedelta(days = days)).strftime(Datetype)
+    return aimDate
 def get_data(i, headers, connect):
 	rs = requests.get('https://www.feixiaohao.com/exchange/list_'+str(i)+'.html?mineable=1', headers=headers)
 	#rs = requests.get('https://www.feixiaohao.com/list_1.html', headers=headers)
