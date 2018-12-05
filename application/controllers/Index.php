@@ -69,9 +69,7 @@ class IndexController extends Yaf_Controller_Abstract {
 	}
 
 	function gbk_to_utf8($data) {
-		if(!$data || empty($data)){
-			return false;
-		}if( is_array($data) ) {
+		if( is_array($data) ) {
             foreach ($data as $k => $v) {
                 if ( is_array($v) ) {
                     $data[$k] = $this->gbk_to_utf8($v);
