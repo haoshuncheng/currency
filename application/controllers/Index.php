@@ -21,11 +21,13 @@ class IndexController extends Yaf_Controller_Abstract {
 	  	if(!isset($_REQUEST['pageSize']) || !$pageSize = $_REQUEST['pageSize']){
 			$pageSize = 100;
 		}
-		echo "aaaaaaaa\n";
 		$start = ((int)$page - 1) * $pageSize;
 		$date = date("Y-m-d");
 		$date1 = date("Y-m-d", strtotime("-1 day"));
 		if($type == 1){
+
+			echo "select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit $start,$pageSize ";
+
 			$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit $start,$pageSize ");
 			if(!$rs || !count($rs)){
 				$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date1' order by `number` asc limit $start,$pageSize ");
