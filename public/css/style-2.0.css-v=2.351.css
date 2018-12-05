@@ -1,13 +1,11 @@
 ﻿@font-face {
     font-family: fxh;
-    /* src: url("../../../../www.feixiaohao.com/coin/20181123/66458f0c98694a688ffe490757885958_2_32_32.png"tpa=https://www.feixiaohao.com/themes/default/css/font/icomoon.eot), url("../../../../www.feixiaohao.com/coin/20181123/0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27"tpa=https://www.feixiaohao.com/themes/default/css/font/icomoon.ttf), url("../../../../www.feixiaohao.com/coin/20181123/4f46f907ad80463e8630bf8fdff33c45_16_16.png"tpa=https://www.feixiaohao.com/themes/default/css/font/icomoon.woff); */
     src: url("../images/icomoon.eot"), url("../images/icomoon.ttf"), url("../images/icomoon.woff");;
 }
 
 @font-face {
     font-family: fxh_login;
     src: url("../images/fxh_login.eot"), url("../images/fxh_login.ttf"), url("../images/fxh_login.woff"); 
-    /* url("../../../../www.feixiaohao.com/coin/20181123/3c6b5333977dbee9d77691da6818ece7_mid.png"tpa=https://www.feixiaohao.com/themes/default/css/font/fxh_login.eot?v=1), url("../../../../www.feixiaohao.com/coin/20181123/æternity-blockchain-whitepaper.pdf"tpa=https://www.feixiaohao.com/themes/default/css/font/fxh_login.ttf?v=1), url("../../../../www.feixiaohao.com/coin/20181123/0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d"tpa=https://www.feixiaohao.com/themes/default/css/font/fxh_login.woff?v=1); */
 }
 
 @keyframes spin {
