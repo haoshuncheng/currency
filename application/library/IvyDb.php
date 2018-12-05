@@ -6,7 +6,7 @@ class IvyDb {
 		$opt = array (PDO::ATTR_PERSISTENT => true);
 		$config = new Yaf_Config_Ini(CONFIG_INI, 'product');
 		self::$conn = new PDO ($config->database->uri, 
-			$config->database->username, $config->database->password, $opt);
+			$config->database->username, $config->database->password, $opt, array(PDO::MYSQL_ATTR_INIT_COMMAND => "set names utf8"));
     }
 
 	/**
