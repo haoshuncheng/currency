@@ -2,7 +2,7 @@ import requests
 from lxml import etree
 import pymysql.cursors
 import sys
-import datetime
+from common import *
 def main():
 	headers = {'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
 	connect = connect1()
@@ -10,13 +10,8 @@ def main():
 		for j in range(1,4):
 			for c_type in ['up','down']:
 				get_data(i, j, c_type, headers, connect)
-def getTime(days = 1,DateSplit=None):
-    if not DateSplit:
-        Datetype = "%Y%m%d"
-    else:
-        Datetype = "%Y"+DateSplit+"%m"+DateSplit+"%d"
-    aimDate = (datetime.datetime.now() - datetime.timedelta(days = days)).strftime(Datetype)
-    return aimDate
+
+
 def get_data(i, j, c_type, headers, connect):
 	url = 'https://api.feixiaohao.com/vol/maxchange/?datatype='+c_type+'&timetype='+str(j)+'&searchtype='+str(i)
 	rs = requests.get(url, headers=headers)
@@ -35,7 +30,7 @@ def get_data(i, j, c_type, headers, connect):
 		href = href[0] if len(href) else ''
 		icon = record.xpath("./td[2]/a/img/@src")
 		icon = icon[0] if len(icon) else ''
-		name = record.xpath("./td[2]/a/text()")
+		name = record.xpath("./td[2]/a/string()")
 		name = name[0] if len(name) else ''
 		abbreviation = record.xpath("./td[3]/text()")
 		abbreviation = abbreviation[0] if len(abbreviation) else ''
@@ -50,7 +45,7 @@ def get_data(i, j, c_type, headers, connect):
 		time_type = j
 		rp_date = getTime(0,'-')
 		sql = "REPLACE INTO upanddowns (rank,href,icon,name,abbreviation,turnover,price,percentage,data_type,search_type,time_type,rp_date) VALUES (%s,'%s','%s','%s','%s','%s','%s','%s','%s',%s,%s,'%s')"
-		data = (rank,href,icon,name,abbreviation,turnover,price,percentage,data_type,search_type,time_type,rp_date)
+		data = (rank,handlestr(href),handlestr(icon),handlestr(name),handlestr(abbreviation),handlestr(turnover),handlestr(price),handlestr(percentage),data_type,search_type,time_type,rp_date)
 		connect['cur'].execute(sql % data)
 		connect['con'].commit()
 		print('成功插入', connect['cur'].rowcount, '条数据')
