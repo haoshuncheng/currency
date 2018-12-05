@@ -392,6 +392,7 @@
   </script>
   <script type="text/javascript">
     //获取行情数据
+    var MAIN_TYPE = 1;
     get_main_data(1, 1, 'cn');
     /**
      * 获取主数据 
@@ -400,6 +401,7 @@
      * lang: cn中文 us英文
      */
     function get_main_data(type, page, lang, pageSize=100){
+      MAIN_TYPE = type;
       $.ajax({
         url:"/Index/index",
         type:"POST",
@@ -426,7 +428,7 @@
           });
           $("#table tbody").empty().append(str);
           show_line();
-          set_page(rs.total, page, pageSize)
+          set_page(rs.total, page, pageSize);  //显示页码
 
         /*  <tr id="bitcoin">
         <td>1</td>
@@ -442,6 +444,17 @@
       });
     }
 
+    /**
+     * 分页
+     */
+    $("body").off("click", ".new-table-bar .new-page-list a").on("click", ".new-table-bar .new-page-list a", function(){
+      var page = $(this).attr("data-dt-idx");
+      get_main_data(MAIN_TYPE, page, 'cn');
+    });
+
+    /**
+     * 显示页码
+     */
     function set_page(number, page=1, pageSize=100){
       var page = parseInt(page);
       var pageSize = parseInt(pageSize);
