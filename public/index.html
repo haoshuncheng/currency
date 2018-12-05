@@ -416,9 +416,9 @@
           var str1 = "";
           $.each(rs.data, function(k,v){
             if(k == 4){
-              str1 += '<a class="new-cell" id="hotPait-bitcoin" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;"><div class="tit"><img src="'+v.icon+'">'+v.name+'</div><div class="val"><span class="value">'+v.price_show+'</span><span class="line" style="display: none;">'+v.char_line+'</span></div></a>';
+              str1 += '<a class="new-cell" id="hotPait-bitcoin" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;"><div class="tit"><img src="'+v.icon+'">'+v.name+'</div><div class="val"><span class="value">￥'+v.volume_cny+'</span><span class="line" style="display: none;">'+v.char_line+'</span></div></a>';
             } else {
-              str += '<a class="new-cell" id="hotPait-bitcoin" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;"><div class="tit"><img src="'+v.icon+'">'+v.name+'</div><div class="val"><span class="value">'+v.price_show+'</span><span class="line" style="display: none;">'+v.char_line+'</span></div></a>';
+              str += '<a class="new-cell" id="hotPait-bitcoin" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;"><div class="tit"><img src="'+v.icon+'">'+v.name+'</div><div class="val"><span class="value">￥'+v.volume_cny+'</span><span class="line" style="display: none;">'+v.char_line+'</span></div></a>';
             }
           });
           $(".new-hot-pair1").empty().append(str);
