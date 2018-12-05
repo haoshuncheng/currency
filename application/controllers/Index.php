@@ -35,7 +35,9 @@ class IndexController extends Yaf_Controller_Abstract {
 		}
 
 		echo "<pre>";
-		print_r($rs);die;
+		print_r($rs);
+		var_dump(mb_detect_encoding($rs[0]['market_cap_show'], array("ASCII",'UTF-8′,"GB2312′,"GBK",'BIG5′)));
+		die;
 
 		//var_dump($this->gbk_to_utf8($rs));die;
 
@@ -60,6 +62,17 @@ class IndexController extends Yaf_Controller_Abstract {
             return $data;
         }
 	}
+
+	function characet($data){
+        if(!$data || empty($data)){    
+            return false;
+        }  
+        $fileType = mb_detect_encoding($data , array('UTF-8','GBK','LATIN1','BIG5')) ;   
+        if( $fileType != 'UTF-8'){   
+            $data = iconv($fileType, "UTF-8//ignore", $data);  
+        } 
+        return $data;    
+    }
 
 
 
