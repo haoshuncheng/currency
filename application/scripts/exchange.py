@@ -5,7 +5,7 @@ import sys
 import json
 import datetime
 import time
-
+from lxml.html import fromstring, tostring
 def main():
 	headers = {'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
 	connect = connect1()
@@ -54,7 +54,8 @@ def get_data(i, headers, connect):
 		country = country[0] if len(country) else ''
 
 		transaction_types = record.xpath("./td[6]")[0]
-		transaction_types = etree.tostring(transaction_types,print_pretty=True, method='html')
+		transaction_types = tostring(transaction_types)
+		# transaction_types = etree.tostring(transaction_types,print_pretty=True, method='html')
 
 		print(transaction_types)
 		
