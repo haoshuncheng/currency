@@ -57,9 +57,9 @@ def get_data(i, headers, connect):
 		transaction_types = tostring(transaction_types).decode('utf-8').replace("'","''")
 		# transaction_types = etree.tostring(transaction_types,print_pretty=True, method='html')
 
-		print(transaction_types)
+		# print(transaction_types)
 		
-		time.sleep(5)
+		# time.sleep(5)
 		stars = record.xpath("./td[7]/div/@class")
 		stars = stars[0] if len(stars) else ''
 
