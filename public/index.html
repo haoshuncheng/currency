@@ -22,7 +22,7 @@
     }
   </style>
  </head>
- <body style="background:#fff">
+ <body>
   <div class="new-nav">
    <div class="new-main-nav">
     <!-- <div class="new-row" id="globalinfo"></div> -->
@@ -46,8 +46,8 @@
 
    <div class="" style="width:100%;background:#F6F6F6;height:15px;"></div> <!-- 间隔 -->
 
-   <div class="new-main-nav" style="height:100px;">
-    <div class="new-row" style="height:100%;">
+   <div class="new-main-nav" style="height:100px;background:#F4F4F4;">
+    <div class="new-row" style="height:100%;background:#fff;">
      <div class="new-left-side" style="height:100%;">
       <div class="new-hot-pair new-hot-pair1" style="height:100%;">
 
@@ -81,9 +81,9 @@
   <div class="new-wrapper">
    <div class="new-main-box">
     <div class="new-box-tit new-tab-tit">
-     <h1 class="new-cell-tit active">币值榜</h1>
+     <h1 class="new-cell-tit active" style="margin:5px auto auto 10px;">币值榜</h1>
 
-     <div class="new-box-tools" style="float:right;margin-right:2%;">
+     <div class="new-box-tools" style="float:right;margin:12px 2% auto auto;">
       <a class="" href="javascript:;" target="_blank">查看全部</a>
      </div>
 
@@ -144,7 +144,7 @@
     </div>
    </div>
 
-  <div class="new-side-box">
+  <div class="new-side-box" style="background:#fff">
 
     <div class="new-hot-pair new-hot-pair2" style="height:100%;margin-left:20%;">
       <!-- <a class="new-cell" id="hotPait-ethereum" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;">
@@ -160,20 +160,20 @@
     </div>
   </div>
 
-   <div class="new-side-box" id="new-side-box-updownlist">
+   <div class="new-side-box" id="new-side-box-updownlist" style="background:#fff">
     <div class="new-box-tit new-tab-tit">
-     <div class="new-cell-tit active" data-datatype="up">
+     <div class="new-cell-tit active" data-datatype="up" style="margin:5px auto auto 10px;">
       涨幅榜
      </div>
-     <div class="new-cell-tit" data-datatype="down">
+     <div class="new-cell-tit" data-datatype="down" style="margin:7px auto auto 10px;">
       跌幅榜
      </div>
      
       <a href="javascript:;" class="" title="更多" style="">
-        <img title="更多" style="float:right;cursor:pointer;margin-top:12px;" src="./images/more.jpg"/>
+        <img title="更多" style="float:right;cursor:pointer;margin:15px 10px auto auto;" src="./images/more.jpg"/>
       </a>
     </div>
-    <div class="new-slide-btn" id="listType">
+    <div class="new-slide-btn" id="listType" style="margin-left:10px;">
      <button>全部
       <img title="更多" style="" src="./images/jiantou.jpg"/>
      </button>
@@ -260,15 +260,15 @@
     </div>
    </div>
    
-   <div class="new-side-box">
-    <div class="new-box-tit">
+   <div class="new-side-box" style="background:#fff">
+    <div class="new-box-tit" style="margin:5px auto 10px 10px;">
      <h2>成交额排行榜</h2>
       <a href="javascript:;" class="" title="更多" style="">
-        <img title="更多" style="float:right;cursor:pointer;margin-top:12px;" src="./images/more.jpg"/>
+        <img title="更多" style="float:right;cursor:pointer;margin:5px 10px auto auto;" src="./images/more.jpg"/>
       </a>
     </div>
     <div class="new-tab-cell new-tab-box">
-     <div class="new-tab-tit">
+     <div class="new-tab-tit" style="margin-left:10px;">
       <div class="new-tab-subtit active">
        交易所
       </div>
@@ -482,7 +482,7 @@
      * 查看全部
      */
     $("body").off("click", ".new-box-tools a").on("click", ".new-box-tools a", function(){
-      get_main_data(MAIN_TYPE, 1, 'cn', 10000);
+      get_main_data(MAIN_TYPE, 1, 'cn', 3000);
     });
 
     /**
