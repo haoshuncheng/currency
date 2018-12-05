@@ -49,11 +49,15 @@ def get_data(i, headers, connect, date):
 		market_cap_cny = market_cap_cny[0] if len(market_cap_cny)>=1 else ''
 		market_cap_btc = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[3]/@data-btc')
 		market_cap_btc = market_cap_btc[0] if len(market_cap_btc)>=1 else ''
+		market_cap_show = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[3]/text()')
+		market_cap_show = market_cap_show[0] if len(market_cap_show)>=1 else ''
 		#价格
 		price_usd = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[4]/a/@data-usd')
 		price_usd = price_usd[0] if len(price_usd)>=1 else ''
 		price_cny = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[4]/a/@data-cny')
 		price_cny = price_cny[0] if len(price_cny)>=1 else ''
+		price_show = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[4]/a/text()')
+		price_show = price_show[0] if len(price_show)>=1 else ''
 		#流通数量
 		num = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[5]/text()')
 		if len(num) <= 0:
@@ -66,6 +70,8 @@ def get_data(i, headers, connect, date):
 		volume_cny = volume_cny[0] if len(volume_cny)>=1 else ''
 		volume_btc = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[6]/a/@data-btc')
 		volume_btc = volume_btc[0] if len(volume_btc)>=1 else ''
+		volume_show = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[6]/a/text()')
+		volume_show = volume_show[0] if len(volume_show)>=1 else ''
 		#涨幅
 		text_red = tree.xpath('//table[@id="table"]//tr['+str(k)+']/td[7]/span/text()')
 		text_red = text_red[0] if len(text_red)>=1 else ''
@@ -77,8 +83,8 @@ def get_data(i, headers, connect, date):
 		# print(char_polygon)
 		# print(char_polyline)
 
-		sql = "REPLACE INTO currency_data (rp_date,number,name,icon,market_cap_usd,market_cap_cny,market_cap_btc,price_usd,price_cny,num,volume_usd,volume_cny,volume_btc,text_red,char_line) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
-		data = (str(date),int(number),str(name),str(icon),str(market_cap_usd),str(market_cap_cny),str(market_cap_btc),str(price_usd),str(price_cny),str(num),str(volume_usd),str(volume_cny),str(volume_btc),str(text_red),str(char_line))
+		sql = "REPLACE INTO currency_data (volume_show,price_show,market_cap_show,rp_date,number,name,icon,market_cap_usd,market_cap_cny,market_cap_btc,price_usd,price_cny,num,volume_usd,volume_cny,volume_btc,text_red,char_line) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
+		data = (str(volume_show),str(price_show),str(market_cap_show),str(date),int(number),str(name),str(icon),str(market_cap_usd),str(market_cap_cny),str(market_cap_btc),str(price_usd),str(price_cny),str(num),str(volume_usd),str(volume_cny),str(volume_btc),str(text_red),str(char_line))
 		connect['cur'].execute(sql % data)
 		connect['con'].commit()
 		print('成功插入', connect['cur'].rowcount, '条数据')
