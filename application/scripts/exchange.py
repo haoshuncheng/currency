@@ -32,49 +32,53 @@ def get_data(i, headers, connect):
 	tree = etree.HTML(rs.text)
 	r = tree.xpath('//tbody/tr')
 	for record in r:
-		rank = record.xpath("./td[1]/text()")
-		rank = rank[0] if len(rank) else 0
+		try:
+			rank = record.xpath("./td[1]/text()")
+			rank = rank[0] if len(rank) else 0
 
-		href = record.xpath("./td[2]/a/@href")
-		href = href[0] if len(href) else ''
+			href = record.xpath("./td[2]/a/@href")
+			href = href[0] if len(href) else ''
 
-		icon = record.xpath("./td[2]/a/img/@src")
-		icon = icon[0] if len(icon) else ''
+			icon = record.xpath("./td[2]/a/img/@src")
+			icon = icon[0] if len(icon) else ''
 
-		name = record.xpath("./td[2]/a/text()")
-		name = name[0] if len(name) else ''
+			name = record.xpath("./td[2]/a/text()")
+			name = name[0] if len(name) else ''
 
-		turnover = record.xpath("./td[3]/a/text()")
-		turnover = turnover[0] if len(turnover) else ''
+			turnover = record.xpath("./td[3]/a/text()")
+			turnover = turnover[0] if len(turnover) else ''
 
-		transaction_pair = record.xpath("./td[4]/a/text()")
-		transaction_pair = transaction_pair[0] if len(transaction_pair) else 0
+			transaction_pair = record.xpath("./td[4]/a/text()")
+			transaction_pair = transaction_pair[0] if len(transaction_pair) else 0
 
-		country = record.xpath("./td[5]/a/text()")
-		country = country[0] if len(country) else ''
+			country = record.xpath("./td[5]/a/text()")
+			country = country[0] if len(country) else ''
 
-		transaction_types = record.xpath("./td[6]")[0]
-		transaction_types = tostring(transaction_types).decode('utf-8').replace("'","''")
-		# transaction_types = etree.tostring(transaction_types,print_pretty=True, method='html')
+			transaction_types = record.xpath("./td[6]")[0]
+			transaction_types = tostring(transaction_types).decode('utf-8').replace("'","''")
+			# transaction_types = etree.tostring(transaction_types,print_pretty=True, method='html')
 
-		# print(transaction_types)
-		
-		# time.sleep(5)
-		stars = record.xpath("./td[7]/div/@class")
-		stars = stars[0] if len(stars) else ''
+			# print(transaction_types)
+			
+			# time.sleep(5)
+			stars = record.xpath("./td[7]/div/@class")
+			stars = stars[0] if len(stars) else ''
 
-		follows = record.xpath("./td[8]/div/text()")
-		follows = follows[0] if len(follows) else 0 
+			follows = record.xpath("./td[8]/div/text()")
+			follows = follows[0] if len(follows) else 0 
 
-		rp_date = getTime(0,'-')
+			rp_date = getTime(0,'-')
 
-		sql = "REPLACE INTO exchange (rank,href,icon,name,turnover,transaction_pair,country,transaction_types,stars,follows,rp_date) VALUES (%s,'%s','%s','%s','%s',%s,'%s','%s','%s',%s,'%s')"
-		print(sql)
-		data = (rank,href,icon,name,turnover,transaction_pair,country,transaction_types,stars,follows,rp_date)
-		print(data)
-		connect['cur'].execute(sql % data)
-		connect['con'].commit()
-		print('成功插入', connect['cur'].rowcount, '条数据')
+			sql = "REPLACE INTO exchange (rank,href,icon,name,turnover,transaction_pair,country,transaction_types,stars,follows,rp_date) VALUES (%s,'%s','%s','%s','%s',%s,'%s','%s','%s',%s,'%s')"
+			print(sql)
+			data = (rank,href,icon,name,turnover,transaction_pair,country,transaction_types,stars,follows,rp_date)
+			print(data)
+			connect['cur'].execute(sql % data)
+			connect['con'].commit()
+			print('成功插入', connect['cur'].rowcount, '条数据')
+		except:
+			print(sys.exc_info())
+			continue
 		#print(alt)
 	#print(len(r))
 
