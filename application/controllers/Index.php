@@ -39,6 +39,22 @@ class IndexController extends Yaf_Controller_Abstract {
 		exit(json_encode(['status'=>1, 'data'=>$rs, 'total'=>$total[0]['num']]));
 	}
 
+	/**
+     * 展示图标数据
+     */
+	public function linedataAction() {
+		$date = date("Y-m-d");
+		$date1 = date("Y-m-d", strtotime("-1 day"));
+		$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit 5");
+		if(!$rs || !count($rs)){
+			$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date1' order by `number` asc limit 5");
+		}
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=>$rs]));
+	}
+
 
 
 
