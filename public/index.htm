@@ -10,10 +10,10 @@
   <meta http-equiv="mobile-agent" content="format=html5; url=https://m.feixiaohao.com/" /> 
   <link rel="alternate" media="only screen and(max-width: 640px)" href="//m.feixiaohao.com/" />
   <link rel="canonical" href="//www.feixiaohao.com/" />-->
-  <link href="http://static.feixiaohao.com/themes/default/css/stylesheet_nav.css?v=2.351" rel="stylesheet" />
-  <link href="http://static.feixiaohao.com/themes/default/css/style-2.0.css?v=2.351" rel="stylesheet" />
-  <link href="http://static.feixiaohao.com/themes/default/css/tablesort.css" rel="stylesheet" />
-  <script src="http://static.feixiaohao.com/Scripts/jquery-2.1.1.js"></script>
+  <link href="./css/stylesheet_nav.css-v=2.351.css" rel="stylesheet" />
+  <link href="./css/style-2.0.css-v=2.351.css" rel="stylesheet" />
+  <link href="./css/tablesort.css" rel="stylesheet" />
+  <script src="./js/jquery-2.1.1.js"></script>
   <!-- <link rel="shortcut icon" href="//static.feixiaohao.com/themes/default/images/fav.ico" /> -->
  </head>
  <body style="background:#fff">
@@ -24,8 +24,8 @@
     <div class="new-row">
      <div class="new-left-side" style="width:50%;">
       <a href="javascript:;" class="new-logo"><img src="https://static.feixiaohao.com/themes/default/images/logo.png" /></a>
-      <p style="float:left;font-size:16px;color:#0291d6;line-height:58px;margin-right:9%;">行情</p>
-      <p style="float:left;font-size:16px;line-height:58px;">交易所</p>
+      <p style="float:left;font-size:16px;color:#0291d6;line-height:58px;margin-right:9%;cursor:pointer;">行情</p>
+      <p style="float:left;font-size:16px;line-height:58px;cursor:pointer;">交易所</p>
      </div>
      <div class="new-right-size">
       <div class="searchForm">
@@ -54,11 +54,33 @@
             <span class="line" style="display: none;">3745,3787,3767,3777,3879,4112,4071,4173,4237,4177,4333,4345,4271,4305,4058,4070,4019,4005,4158,4272,4216,4145,4119,4182,4030,4033,3886,3905
             </span>
           </div>
+          <!-- <div class="tit">-3.84%</div> -->
         </a>
 
-        <a style="border-bottom: 1px solid #e5e5e5;"></a>
 
         <a class="new-cell" id="hotPait-ethereum" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;">
+          <div class="tit">
+            <img src="https://static.feixiaohao.com/coin/8cc736e4abd44c3d689eb1599a27edb_small.png">ETH
+          </div>
+          <div class="val">
+            <span class="value">￥756</span>
+            <span class="line" style="display: none;">107,108,106,108,113,117,116,118,122,118,121,121,118,119,114,116,113,113,118,119,119,117,117,117,114,114,109,109
+            </span>
+          </div>
+        </a>
+
+        <a class="new-cell" id="hotPait-ethereum" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;">
+          <div class="tit">
+            <img src="https://static.feixiaohao.com/coin/8cc736e4abd44c3d689eb1599a27edb_small.png">ETH
+          </div>
+          <div class="val">
+            <span class="value">￥756</span>
+            <span class="line" style="display: none;">107,108,106,108,113,117,116,118,122,118,121,121,118,119,114,116,113,113,118,119,119,117,117,117,114,114,109,109
+            </span>
+          </div>
+        </a>
+
+        <a class="new-cell" id="hotPait-ethereum" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;">
           <div class="tit">
             <img src="https://static.feixiaohao.com/coin/8cc736e4abd44c3d689eb1599a27edb_small.png">ETH
           </div>
@@ -138,6 +160,22 @@
     </div>
    </div>
 
+  <div class="new-side-box">
+
+    <div class="new-hot-pair" style="height:100%;margin-left:20%;">
+      <a class="new-cell" id="hotPait-ethereum" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;">
+        <div class="tit">
+          <img src="https://static.feixiaohao.com/coin/8cc736e4abd44c3d689eb1599a27edb_small.png">ETH
+        </div>
+        <div class="val">
+          <span class="value">￥756</span>
+          <span class="line" style="display: none;">107,108,106,108,113,117,116,118,122,118,121,121,118,119,114,116,113,113,118,119,119,117,117,117,114,114,109,109
+          </span>
+        </div>
+      </a>
+    </div>
+  </div>
+
    <div class="new-side-box" id="new-side-box-updownlist">
     <div class="new-box-tit new-tab-tit">
      <div class="new-cell-tit active" data-datatype="up">
@@ -146,17 +184,24 @@
      <div class="new-cell-tit" data-datatype="down">
       跌幅榜
      </div>
-     <a href="javascript:;" class="new-more" title="更多"></a>
+     
+      <a href="javascript:;" class="" title="更多" style="">
+        <img title="更多" style="float:right;cursor:pointer;margin-top:12px;" src="./images/more.jpg"/>
+      </a>
     </div>
     <div class="new-slide-btn" id="listType">
-     <button>全部</button>
+     <button>全部
+      <img title="更多" style="" src="./images/jiantou.jpg"/>
+     </button>
      <ul class="new-slide-sub" style="display:none">
       <li data-type="1" class="active"><a>全部</a></li>
       <li data-type="2"><a>前10交易所</a></li>
      </ul>
     </div>
     <div class="new-slide-btn" id="time">
-     <button>24小时</button>
+     <button>24小时
+      <img title="更多" style="" src="./images/jiantou.jpg"/>
+     </button>
      <ul class="new-slide-sub" style="display:none">
       <li data-type="1"><a>1小时</a></li>
       <li data-type="2" class="active"><a>24小时</a></li>
@@ -234,7 +279,9 @@
    <div class="new-side-box">
     <div class="new-box-tit">
      <h2>成交额排行榜</h2>
-     <a href="javascript:;" target="_blank" class="new-more" title="更多"></a>
+      <a href="javascript:;" class="" title="更多" style="">
+        <img title="更多" style="float:right;cursor:pointer;margin-top:12px;" src="./images/more.jpg"/>
+      </a>
     </div>
     <div class="new-tab-cell new-tab-box">
      <div class="new-tab-tit">
@@ -343,18 +390,18 @@
   <div class="totop">
    <div class="top"></div>
   </div>
-  <script src="http://static.feixiaohao.com/Scripts/layer/layer.js"></script>
+  <script src="./js/layer.js"></script>
   <!-- <script src="../static.feixiaohao.com/Scripts/jquery.signalR-2.2.1.min.js" tppabs="https://static.feixiaohao.com/Scripts/jquery.signalR-2.2.1.min.js"></script> -->
-  <script src="http://static.feixiaohao.com/Scripts/jquery.peity.min.js"></script>
+  <script src="./js/jquery.peity.min.js"></script>
   <!-- <script src="../static.feixiaohao.com/Scripts/autocomplete.js" tppabs="https://static.feixiaohao.com/Scripts/autocomplete.js"></script>
   <script src="../static.feixiaohao.com/Scripts/common-1.1.js-v=1.691" tppabs="https://static.feixiaohao.com/Scripts/common-1.1.js?v=1.691"></script>
   <script src="lcc/js" tppabs="https://www.feixiaohao.com/lcc/js"></script> -->
   <script>
   $('.line').peity("line",{width:60,height:25,fill:'#EFF6FF',min:99999,strokeWidth:1});
-    loadglobalinfo_new();
-    startSocketHub(true);
+    /*loadglobalinfo_new();*/
+    /*startSocketHub(true);*/
   </script>
-  <script src="http://static.feixiaohao.com/Scripts/tablesort.js"></script>
+  <script src="./js/tablesort.js"></script>
   <!-- <script src="../static.feixiaohao.com/Scripts/fxh3.js-v=1.992" tppabs="https://static.feixiaohao.com/Scripts/fxh3.js?v=1.992"></script> -->
   <script>
     new Tablesort(document.getElementById('table'));
