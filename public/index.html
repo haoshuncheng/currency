@@ -35,7 +35,7 @@
      </div>
      <div class="new-right-size">
       <div class="searchForm">
-       <input id="input-sm" placeholder="输入关键词..." autocomplete="off" /> 
+       <input id="input-sm" placeholder="搜币或者关键字..." autocomplete="off" /> 
        <i class="icon-search" onclick="search(document.getElementById('input-sm').value)"><i class="fxh fxh-search"></i></i>
       </div>
      </div>
@@ -496,6 +496,31 @@
       $(this).addClass("big_title_color");
       get_main_data($(this).attr("type"), 1, 'cn');
     });
+
+
+
+    /**
+     * 涨跌幅切换事件
+     */
+    $("body").off("click", "#new-side-box-updownlist .new-cell-tit").on("click", "#new-side-box-updownlist .new-cell-tit", function(){
+      if($(this).hasClass("active")){
+        return;
+      }
+      var data_type = $(this).attr("data-datatype");
+      /*$(".big_title").removeClass("big_title_color");
+      $(this).addClass("big_title_color");
+      get_main_data($(this).attr("type"), 1, 'cn');*/
+    });
+
+
+    /**
+     * 下拉框交替
+     */
+    $("body").off("click", ".new-slide-sub").on("click", ".new-slide-sub", function(){
+      $(this).find("ul").fadeToggle("slow");
+    });
+
+    
 
 
     
