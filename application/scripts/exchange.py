@@ -45,7 +45,9 @@ def get_data(i, headers, connect):
 		country = record.xpath("./td[5]/a/text()")
 		country = country[0] if len(transaction_pair) else ''
 
-		transaction_types = record.xpath("./td[5]/")
+		transaction_types = record.xpath("./td[5]")
+
+		print(transaction_types)
 		
 
 		stars = record.xpath("./td[6]/div/@class")
