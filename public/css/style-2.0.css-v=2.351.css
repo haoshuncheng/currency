@@ -1288,27 +1288,27 @@ a {
 .star10 {
     width: 70px;
     height: 14px;
-    background: url("../images/ICON-Whitepaper-EN-Draft.pdf"/*tpa=https://static.feixiaohao.com/themes/default/images/star.png*/);
+    background: url("../images/star10.png"/*tpa=https://static.feixiaohao.com/themes/default/images/star.png*/);
     background-size: 140px 14px;
 }
 
 .star2 {
-    background: url("../images/ICON-Whitepaper-EN-Draft.pdf"/*tpa=https://static.feixiaohao.com/themes/default/images/star.png*/) -56px top;
+    background: url("../images/star10.png"/*tpa=https://static.feixiaohao.com/themes/default/images/star.png*/) -56px top;
     background-size: 140px 14px;
 }
 
 .star4 {
-    background: url("../images/ICON-Whitepaper-EN-Draft.pdf"/*tpa=https://static.feixiaohao.com/themes/default/images/star.png*/) -42px top;
+    background: url("../images/star10.png"/*tpa=https://static.feixiaohao.com/themes/default/images/star.png*/) -42px top;
     background-size: 140px 14px;
 }
 
 .star6 {
-    background: url("../images/ICON-Whitepaper-EN-Draft.pdf"/*tpa=https://static.feixiaohao.com/themes/default/images/star.png*/) -28px top;
+    background: url("../images/star10.png"/*tpa=https://static.feixiaohao.com/themes/default/images/star.png*/) -28px top;
     background-size: 140px 14px;
 }
 
 .star8 {
-    background: url("../images/ICON-Whitepaper-EN-Draft.pdf"/*tpa=https://static.feixiaohao.com/themes/default/images/star.png*/) -14px top;
+    background: url("../images/star10.png"/*tpa=https://static.feixiaohao.com/themes/default/images/star.png*/) -14px top;
     background-size: 140px 14px;
 }
 
