@@ -43,9 +43,9 @@
    <div class="new-main-nav" style="height:100px;">
     <div class="new-row" style="height:100%;">
      <div class="new-left-side" style="height:100%;">
-      <div class="new-hot-pair" style="height:100%;">
+      <div class="new-hot-pair new-hot-pair1" style="height:100%;">
 
-        <a class="new-cell" id="hotPait-bitcoin" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;">
+        <!-- <a class="new-cell" id="hotPait-bitcoin" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;">
           <div class="tit">
             <img src="https://static.feixiaohao.com/coin/7033f2f2c2a16094bbb3bafc47205ba8_small.png">BTC
           </div>
@@ -54,42 +54,8 @@
             <span class="line" style="display: none;">3745,3787,3767,3777,3879,4112,4071,4173,4237,4177,4333,4345,4271,4305,4058,4070,4019,4005,4158,4272,4216,4145,4119,4182,4030,4033,3886,3905
             </span>
           </div>
-          <!-- <div class="tit">-3.84%</div> -->
-        </a>
+        </a> -->
 
-
-        <a class="new-cell" id="hotPait-ethereum" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;">
-          <div class="tit">
-            <img src="https://static.feixiaohao.com/coin/8cc736e4abd44c3d689eb1599a27edb_small.png">ETH
-          </div>
-          <div class="val">
-            <span class="value">￥756</span>
-            <span class="line" style="display: none;">107,108,106,108,113,117,116,118,122,118,121,121,118,119,114,116,113,113,118,119,119,117,117,117,114,114,109,109
-            </span>
-          </div>
-        </a>
-
-        <a class="new-cell" id="hotPait-ethereum" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;">
-          <div class="tit">
-            <img src="https://static.feixiaohao.com/coin/8cc736e4abd44c3d689eb1599a27edb_small.png">ETH
-          </div>
-          <div class="val">
-            <span class="value">￥756</span>
-            <span class="line" style="display: none;">107,108,106,108,113,117,116,118,122,118,121,121,118,119,114,116,113,113,118,119,119,117,117,117,114,114,109,109
-            </span>
-          </div>
-        </a>
-
-        <a class="new-cell" id="hotPait-ethereum" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;">
-          <div class="tit">
-            <img src="https://static.feixiaohao.com/coin/8cc736e4abd44c3d689eb1599a27edb_small.png">ETH
-          </div>
-          <div class="val">
-            <span class="value">￥756</span>
-            <span class="line" style="display: none;">107,108,106,108,113,117,116,118,122,118,121,121,118,119,114,116,113,113,118,119,119,117,117,117,114,114,109,109
-            </span>
-          </div>
-        </a>
 
       </div>
      </div>
@@ -152,8 +118,8 @@
 
   <div class="new-side-box">
 
-    <div class="new-hot-pair" style="height:100%;margin-left:20%;">
-      <a class="new-cell" id="hotPait-ethereum" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;">
+    <div class="new-hot-pair new-hot-pair2" style="height:100%;margin-left:20%;">
+      <!-- <a class="new-cell" id="hotPait-ethereum" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;">
         <div class="tit">
           <img src="https://static.feixiaohao.com/coin/8cc736e4abd44c3d689eb1599a27edb_small.png">ETH
         </div>
@@ -162,7 +128,7 @@
           <span class="line" style="display: none;">107,108,106,108,113,117,116,118,122,118,121,121,118,119,114,116,113,113,118,119,119,117,117,117,114,114,109,109
           </span>
         </div>
-      </a>
+      </a> -->
     </div>
   </div>
 
@@ -382,18 +348,12 @@
   </div> -->
   <script src="./js/layer.js"></script>
   <script src="./js/jquery.peity.min.js"></script>
-  <script>
-    $('.line').peity("line",{width:60,height:25,fill:'#EFF6FF',min:99999,strokeWidth:1});
-  </script>
   <script src="./js/tablesort.js"></script>
-  <script>
-    new Tablesort(document.getElementById('table'));
-    $('.line2').peity('line',{width:80,height:20,fill:'none',strokeWidth:1,min:10000,stroke:'#3499da'});
-  </script>
   <script type="text/javascript">
     //获取行情数据
     var MAIN_TYPE = 1;
-    get_main_data(1, 1, 'cn');
+    get_main_data(1, 1, 'cn'); //展示主数据
+    get_line_data();           //展示图标数据
     /**
      * 获取主数据 
      * type：1为行情数据 2为交易所数据 
@@ -429,17 +389,41 @@
           $("#table tbody").empty().append(str);
           show_line();
           set_page(rs.total, page, pageSize);  //显示页码
+        }
+      });
+    }
 
-        /*  <tr id="bitcoin">
-        <td>1</td>
-        <td><a href="javascript:;" target="_blank"> <img src="https://static.feixiaohao.com/coin/7033f2f2c2a16094bbb3bafc47205ba8_small.png" tppabs="" alt="BTC-比特币" />BTC-比特币 </a></td>
-        <td class="market-cap" data-usd="69692940908" data-cny="480751270890" data-btc="17404475">&yen;4,808亿</td>
-        <td><a href="javascript:;" target="_blank" class="price" data-usd="4004" data-cny="27622" data-btc="1">&yen;27,622</a></td>
-        <td>1,740万</td>
-        <td><a href="javascript:;" target="_blank" class="volume" data-usd="3511029480.21298" data-cny="24218769024.56" data-btc="874245.224215844">&yen;2,421,877万</a></td>
-        <td class="change"><span class="new-text-red">-3.84%</span></td>
-        <td class="char"><span class="line2">4021,4011,3890,3745,3787,3767,3777,3879,4112,4071,4173,4237,4177,4333,4345,4271,4305,4058,4070,4019,4005,4158,4272,4216,4145,4119,4182,4030</span></td>
-        </tr>*/
+    /**
+     * 展示图标数据
+     */
+    function get_line_data(){
+      $.ajax({
+        url:"/Index/linedata",
+        type:"POST",
+        data:{},
+        beforeSend:function(){
+          layer.load();
+        },
+        success:function(e){
+          var rs = $.parseJSON(e);
+          layer.closeAll('loading');
+          if(!rs.status){
+            $(".new-hot-pair1").empty();
+            $(".new-hot-pair2").empty();
+            return;
+          }
+          var str = "";
+          var str1 = "";
+          $.each(rs.data, function(k,v){
+            if(k == 4){
+              str1 += '<a class="new-cell" id="hotPait-bitcoin" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;"><div class="tit"><img src="'+v.icon+'">'+v.name+'</div><div class="val"><span class="value">'+v.price_show+'</span><span class="line" style="display: none;">'+v.char_line+'</span></div></a>';
+            } else {
+              str += '<a class="new-cell" id="hotPait-bitcoin" target="_blank" href="javascript:;" style="height:54px;margin: 23px 0 0 0;padding:0 15px 0 15px;border-right: 1px solid #e5e5e5;"><div class="tit"><img src="'+v.icon+'">'+v.name+'</div><div class="val"><span class="value">'+v.price_show+'</span><span class="line" style="display: none;">'+v.char_line+'</span></div></a>';
+            }
+          });
+          $(".new-hot-pair1").empty().append(str);
+          $(".new-hot-pair2").empty().append(str1);
+          show_line1();
         }
       });
     }
@@ -451,6 +435,15 @@
       var page = $(this).attr("data-dt-idx");
       get_main_data(MAIN_TYPE, page, 'cn');
     });
+
+    /**
+     * 查看全部
+     */
+    $("body").off("click", ".new-box-tools a").on("click", ".new-box-tools a", function(){
+      get_main_data(MAIN_TYPE, 1, 'cn', 10000);
+    });
+
+    
 
     /**
      * 显示页码
@@ -480,6 +473,10 @@
     function show_line(){
       new Tablesort(document.getElementById('table'));
       $('.line2').peity('line',{width:80,height:20,fill:'none',strokeWidth:1,min:10000,stroke:'#3499da'});
+    }
+
+    function show_line1(){
+      $('.line').peity("line",{width:60,height:25,fill:'#EFF6FF',min:99999,strokeWidth:1});
     }
   </script>
  </body>
