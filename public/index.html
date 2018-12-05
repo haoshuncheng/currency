@@ -131,16 +131,6 @@
      </thead>
      <tbody>
         
-        <tr id="bitcoin">
-        <td>1</td>
-        <td><a href="javascript:;" target="_blank"> <img src="https://static.feixiaohao.com/coin/7033f2f2c2a16094bbb3bafc47205ba8_small.png" tppabs="" alt="BTC-比特币" />BTC-比特币 </a></td>
-        <td class="market-cap" data-usd="69692940908" data-cny="480751270890" data-btc="17404475">&yen;4,808亿</td>
-        <td><a href="javascript:;" target="_blank" class="price" data-usd="4004" data-cny="27622" data-btc="1">&yen;27,622</a></td>
-        <td>1,740万</td>
-        <td><a href="javascript:;" target="_blank" class="volume" data-usd="3511029480.21298" data-cny="24218769024.56" data-btc="874245.224215844">&yen;2,421,877万</a></td>
-        <td class="change"><span class="new-text-red">-3.84%</span></td>
-        <td class="char"><span class="line2">4021,4011,3890,3745,3787,3767,3777,3879,4112,4071,4173,4237,4177,4333,4345,4271,4305,4058,4070,4019,4005,4158,4272,4216,4145,4119,4182,4030</span></td>
-        </tr>
 
      </tbody>
     </table>
@@ -419,14 +409,39 @@
         },
         beforeSend:function(){
           layer.load();
-          //$("#song_tables").append('<div class="loading js_loading"><em></em></div>');
         },
         success:function(e){
           var rs = $.parseJSON(e);
-          //layer.closeAll('loading');
-          console.log(rs);
+          layer.closeAll('loading');
+          if(!rs.status){
+            $("#table tbody").empty();
+            return;
+          }
+          var str = "";
+          $.each(rs.data, function(k,v){
+            var num = parseInt(k) + 1;
+            str += '<tr><td>'+num+'</td><td><a href="javascript:;" target="_blank"> <img src="'+v.icon+'" tppabs="" />'+v.name+' </a></td><td class="market-cap" data-usd="" data-cny="" data-btc="">'+v.market_cap_cny+'</td><td><a href="javascript:;" target="_blank" class="price" data-usd="" data-cny="" data-btc="">'+v.price_cny+'</a></td><td>'+v.num+'</td><td><a href="javascript:;" target="_blank" class="volume" data-usd="" data-cny="" data-btc="">'+v.volume_cny+'</a></td><td class="change"><span class="new-text-red">'+v.text_red+'</span></td><td class="char"><span class="line2">'+v.char_line+'</span></td></tr>';
+          });
+          $("#table tbody").empty().append(str);
+          show_line();
+
+        /*  <tr id="bitcoin">
+        <td>1</td>
+        <td><a href="javascript:;" target="_blank"> <img src="https://static.feixiaohao.com/coin/7033f2f2c2a16094bbb3bafc47205ba8_small.png" tppabs="" alt="BTC-比特币" />BTC-比特币 </a></td>
+        <td class="market-cap" data-usd="69692940908" data-cny="480751270890" data-btc="17404475">&yen;4,808亿</td>
+        <td><a href="javascript:;" target="_blank" class="price" data-usd="4004" data-cny="27622" data-btc="1">&yen;27,622</a></td>
+        <td>1,740万</td>
+        <td><a href="javascript:;" target="_blank" class="volume" data-usd="3511029480.21298" data-cny="24218769024.56" data-btc="874245.224215844">&yen;2,421,877万</a></td>
+        <td class="change"><span class="new-text-red">-3.84%</span></td>
+        <td class="char"><span class="line2">4021,4011,3890,3745,3787,3767,3777,3879,4112,4071,4173,4237,4177,4333,4345,4271,4305,4058,4070,4019,4005,4158,4272,4216,4145,4119,4182,4030</span></td>
+        </tr>*/
         }
       });
+    }
+
+    function show_line(){
+      new Tablesort(document.getElementById('table'));
+      $('.line2').peity('line',{width:80,height:20,fill:'none',strokeWidth:1,min:10000,stroke:'#3499da'});
     }
   </script>
  </body>
