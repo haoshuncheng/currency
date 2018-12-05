@@ -407,7 +407,7 @@
           layer.closeAll('loading');
           if(!rs.status){
             $("#table tbody").empty();
-            $("#table2 tbody").empty();
+            //$("#table2 tbody").empty();
             return;
           }
           var str = "";
@@ -421,7 +421,7 @@
           });
           if(MAIN_TYPE == 1){
             $("#table").css("display", "block");
-            $("#table2").css("display", "none");
+            //$("#table2").css("display", "none");
             $("#table tbody").empty().append(str);
             show_line();
           } else {
