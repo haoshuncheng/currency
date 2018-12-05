@@ -37,7 +37,7 @@ def get_data(i, headers, connect):
 			icon = record.xpath("./td[2]/a/img/@src")
 			icon = icon[0] if len(icon) else ''
 
-			name = record.xpath("./td[2]/a/text()")
+			name = record.xpath("./td[2]/a/string(.)")
 			name = name[0] if len(name) else ''
 
 			turnover = record.xpath("./td[3]/a/text()")
