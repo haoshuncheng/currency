@@ -89,6 +89,29 @@ class IndexController extends Yaf_Controller_Abstract {
 		exit(json_encode(['status'=>1, 'data'=>$rs]));
 	}
 
+	/**
+     * 搜索
+     */
+	public function searchAction() {
+		if(!isset($_REQUEST['search']) || !$search = $_REQUEST['search']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find search']));
+		}
+		$date = date("Y-m-d");
+		$date1 = date("Y-m-d", strtotime("-1 day"));
+		$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' and name like '%".$search."%' order by `number` asc");
+		if(!$rs || !count($rs)){
+			$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date1' and name like '%".$search."%' order by `number` asc");
+		}
+		$res = IvyDb::query("select * from `exchange` where `rank`>0 and rp_date='$date' and name like '%".$search."%' order by `rank` asc");
+		if(!$res || !count($res)){
+			$res = IvyDb::query("select * from `exchange` where `rank`>0 and rp_date='$date1' and name like '%".$search."%' order by `rank` asc");
+		}
+		if((!$rs || !count($rs)) && (!$res || !count($res))){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=>$rs, 'data1'=>$res]));
+	}
+
 
 
 

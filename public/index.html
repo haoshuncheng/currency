@@ -35,7 +35,7 @@
      </div>
      <div class="new-right-size">
       <div class="searchForm">
-       <input id="input-sm" placeholder="搜币或者关键字..." autocomplete="off" /> 
+       <input id="input-sm" placeholder="搜币或者交易所..." autocomplete="off" /> 
        <i class="icon-search" onclick="search(document.getElementById('input-sm').value)"><i class="fxh fxh-search"></i></i>
       </div>
      </div>
@@ -65,12 +65,7 @@
 
       </div>
      </div>
-     <!-- <div class="new-right-size">
-      <div class="searchForm">
-       <input id="input-sm" placeholder="输入关键词..." autocomplete="off" /> 
-       <i class="icon-search" onclick="search(document.getElementById('input-sm').value)"><i class="fxh fxh-search"></i></i>
-      </div>
-     </div> -->
+
     </div>
    </div>
 
@@ -79,7 +74,61 @@
   </div>
   <div class="m120"></div>
   <div class="new-wrapper">
-   <div class="new-main-box">
+  
+  <!-- 搜索结果 -->
+  <div class="box2 box815" style="display:none;">
+     <div class="slide">
+      <div class="active">
+       币种
+      </div>
+      <div>
+       交易平台
+      </div>
+     </div>
+     <div class="slidebody" style="min-height:830px">
+      <table class="new-table new-coin-list" id="table3">
+       <thead>
+        <tr>
+         <th class="th-num">#</th>
+         <th class="th-coin-name" data-sort-method="none">名称</th>
+         <th class="th-marketcap">流通市值</th>
+         <th class="th-price">价格</th>
+         <th class="th-turnover">流通数量</th>
+         <th class="th-vol">成交额(24h)</th>
+         <th class="th-rank">涨幅(24h)</th>
+         <th class="th-coin-char" data-sort-method="none">价格趋势(7d)</th>
+        </tr>
+       </thead>
+       <tbody>
+        
+       </tbody>
+      </table>
+      <div class="m15"></div>
+     </div>
+     <div class="slidebody" style="min-height:830px;display:none">
+      <table class="new-table new-coin-list" id="table4">
+       <thead>
+        <tr>
+         <th>#</th>
+         <th>名称</th>
+         <th>成交额（24h）</th>
+         <th>交易对</th>
+         <th>国家</th>
+         <th>交易类型</th>
+         <th>星级</th>
+         <th>关注数</th>
+        </tr>
+       </thead>
+       <tbody>
+        
+       </tbody>
+      </table>
+      <!-- <div class="m15"></div> -->
+     </div>
+  </div>
+
+  <!-- 默认显示内容页 -->
+  <div class="new-main-box">
     <div class="new-box-tit new-tab-tit">
      <h1 class="new-cell-tit active" style="margin:5px auto auto 10px;">币值榜</h1>
 
@@ -142,7 +191,7 @@
      </div>
      <span></span>
     </div>
-   </div>
+  </div>
 
   <div class="new-side-box" style="background:#fff">
 
@@ -406,6 +455,8 @@
         success:function(e){
           var rs = $.parseJSON(e);
           layer.closeAll('loading');
+          $(".new-main-box").css("display", "block");
+          $(".box815").css("display", "none");
           if(!rs.status){
             $("#table tbody").empty();
             //$("#table2 tbody").empty();
@@ -596,7 +647,64 @@
       get_up_down_data(data_type, searchtype, timetype);  //获取涨跌榜数据
     });
 
-    
+    //搜索 回车
+    $('body').off('keypress','#input-sm').on('keypress','#input-sm',function(e){
+      if(e.which != 13){
+        return false;   
+      }
+      if(!$(this).val()){
+        return false;
+      }
+      search($.trim($(this).val()));
+    });
+
+    //搜索 点击
+    $('body').off('click','.icon-search').on('click','.icon-search',function(e){
+      if(!$("#input-sm").val()){
+        return false;
+      }
+      search($.trim($(this).val()));
+    });
+
+    /**
+     * 搜索
+     */
+    function search(search){
+      $.ajax({
+        url:"/Index/search",
+        type:"POST",
+        data:{
+          'search':search,
+        },
+        beforeSend:function(){
+          layer.load();
+        },
+        success:function(e){
+          var rs = $.parseJSON(e);
+          layer.closeAll('loading');
+          $(".box815").css("display", "block");
+          $(".new-main-box").css("display", "none");
+          if(!rs.status){
+            $("#table3 tbody").empty();  
+            $("#table4 tbody").empty();  
+            return;
+          }
+          var str = "";
+          var str1 = "";
+          $.each(rs.data, function(k,v){
+            var num = parseInt(k) + 1;
+            str += '<tr><td>'+num+'</td><td><a href="javascript:;" target="_blank"> <img src="'+v.icon+'" tppabs="" />'+v.name+' </a></td><td class="market-cap" data-usd="" data-cny="" data-btc="">'+v.market_cap_show+'</td><td><a href="javascript:;" target="_blank" class="price" data-usd="" data-cny="" data-btc="">'+v.price_show+'</a></td><td>'+v.num+'</td><td><a href="javascript:;" target="_blank" class="volume" data-usd="" data-cny="" data-btc="">'+v.volume_show+'</a></td><td class="change"><span class="new-text-red">'+v.text_red+'</span></td><td class="char"><span class="line2">'+v.char_line+'</span></td></tr>';
+          });
+          $.each(rs.data1, function(k,v){
+            var num = parseInt(k) + 1;
+            str1 += '<tr><td>'+num+'</td><td><a href="javascript:;"> <img src="'+v.icon+'" /> '+v.name+' </a></td><td><a href="javascript:;">'+v.turnover+'</a></td><td><a target="_blank" href="javascript:;">'+v.transaction_pair+'</a></td><td><a href="javascript:;">'+v.country+'</a></td>'+v.transaction_types+'<td><div class="'+v.stars+'"></div></td><td><div>'+v.follows+'</div></td></tr>';
+          });
+          $("#table3 tbody").empty().append(str);
+          $("#table4 tbody").empty().append(str1);
+          show_line();
+        }
+      });
+    }
 
 
     
