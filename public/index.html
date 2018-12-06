@@ -543,7 +543,8 @@
           var str = "";
           $.each(rs.data, function(k,v){
             var num = parseInt(k) + 1;
-            str += '<tr><td><span>'+num+'</span></td><td><a href="javascript:;" target="_blank"><img src="'+v.icon+'" />'+v.abbreviation+'</a></td><td>'+v.price+'</td><td><span class="rang-tag-green">'+v.percentage+'</span></td></tr>';
+            var cla = v.percentage.indexOf("-") === 0 ? "rang-tag-red" : "rang-tag-green";
+            str += '<tr><td><span>'+num+'</span></td><td><a href="javascript:;" target="_blank"><img src="'+v.icon+'" />'+v.abbreviation+'</a></td><td>'+v.price+'</td><td><span class="'+cla+'">'+v.percentage+'</span></td></tr>';
           });
           $("#up_down_tb tbody").empty().append(str);
         }
