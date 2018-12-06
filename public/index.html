@@ -552,7 +552,7 @@
       }
       $(this).siblings("li").removeClass("active");
       $(this).addClass("active");
-      $(this).parent("ul").prev("button").children("img").before($(this).children("a").text());
+      $(this).parent("ul").prev("button").html($(this).children("a").text()+'<img title="更多" style="" src="./images/jiantou.jpg">');
     });
 
     
