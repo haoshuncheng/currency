@@ -78,14 +78,14 @@
   <!-- 搜索结果 -->
   <div class="box2 box815" style="display:none;background:#fff;">
      <div class="slide">
-      <div class="active">
+      <div class="active" type=3>
        币种
       </div>
-      <div>
+      <div type=4>
        交易平台
       </div>
      </div>
-     <div class="slidebody" style="min-height:830px">
+     <div class="slidebody slidebody3" style="min-height:830px">
       <table class="new-table new-coin-list" id="table3">
        <thead>
         <tr>
@@ -105,7 +105,7 @@
       </table>
       <div class="m15"></div>
      </div>
-     <div class="slidebody" style="min-height:830px;display:none">
+     <div class="slidebody slidebody4" style="min-height:830px;display:none">
       <table class="new-table new-coin-list" id="table4">
        <thead>
         <tr>
@@ -707,6 +707,18 @@
         }
       });
     }
+
+    //切换搜索结果
+    $('body').off('click','.box815 .slide div').on('click','.box815 .slide div',function(e){
+      if($(this).hasClass("active")){
+        return;
+      }
+      $(this).siblings("div").removeClass("active");
+      $(this).addClass("active");
+      var type = $(this).attr("type");
+      $(".slidebody").css("display", "none");
+      $(".slidebody"+type).css("display", "block");
+    });
 
 
     
