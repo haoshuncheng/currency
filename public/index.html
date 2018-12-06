@@ -571,16 +571,6 @@
         $("#listType").find("ul").css("display","none");
       }
       $(this).find("ul").fadeToggle("fast");
-
-      var data_type = "up";
-      for(var i=0;i<$("#up_down_data_type .new-cell-tit").length;i++){
-        if($("#up_down_data_type .new-cell-tit").eq(i).hasClass("active")){
-          data_type = $("#up_down_data_type .new-cell-tit").eq(i).attr("data-datatype");
-        }
-      }
-      var searchtype = get_type($("#listType ul li"));
-      var timetype = get_type($("#time ul li"));
-      get_up_down_data(data_type, searchtype, timetype);  //获取涨跌榜数据
     });
 
 
@@ -594,6 +584,15 @@
       $(this).siblings("li").removeClass("active");
       $(this).addClass("active");
       $(this).parent("ul").prev("button").html($(this).children("a").text()+'<img title="更多" style="" src="./images/jiantou.jpg">');
+      var data_type = "up";
+      for(var i=0;i<$("#up_down_data_type .new-cell-tit").length;i++){
+        if($("#up_down_data_type .new-cell-tit").eq(i).hasClass("active")){
+          data_type = $("#up_down_data_type .new-cell-tit").eq(i).attr("data-datatype");
+        }
+      }
+      var searchtype = get_type($("#listType ul li"));
+      var timetype = get_type($("#time ul li"));
+      get_up_down_data(data_type, searchtype, timetype);  //获取涨跌榜数据
     });
 
     
