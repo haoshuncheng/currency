@@ -38,9 +38,12 @@ def get_data(headers, connect, d_type):
 		rp_date = getTime(0,'-')
 		print([rank,href,icon,name,price])		
 
-		sql = "REPLACE INTO volume (rp_date,name,icon,rank,data_type,href,price) VALUES ('%s','%s',%s,'%s','%s','%s','%s')"
-		data = (rp_date,name,icon,rank,data_type,href,price)
-		connect['cur'].execute(sql % data)
+		sql = "REPLACE INTO volume (rp_date,name,icon,rank,data_type,href,price) VALUES ('"+rp_date+"','"+name+"','"+icon+"',"+rank+",'"+data_type+"','"+href+"','"+price+"')"
+
+		# sql = "REPLACE INTO volume (rp_date,name,icon,rank,data_type,href,price) VALUES ('%s','%s',%s,'%s','%s','%s','%s')"
+		# data = (rp_date,name,icon,rank,data_type,href,price)
+		#connect['cur'].execute(sql % data)
+		connect['cur'].execute(sql)
 		connect['con'].commit()
 		print('成功插入', connect['cur'].rowcount, '条数据')
 		#print(alt)
