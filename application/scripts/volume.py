@@ -15,14 +15,14 @@ def main():
 	# f.close()
 
 def get_data(headers, connect, date):
-	rs = requests.get('https://www.feixiaohao.com.html', headers=headers)
+	rs = requests.get('https://www.feixiaohao.com', headers=headers)
 	#rs = requests.get('https://www.feixiaohao.com/list_1.html', headers=headers)
 	print(rs.status_code)
 	if rs.status_code != 200:
 		print("数据请求失败\n")
 		return
 	tree = etree.HTML(rs.text)
-	r = tree.xpath('//table[@id="vol_exchange"]/tbody/tr')
+	r = tree.xpath('//table[@id="vol_coin"]/tbody/tr')
 	#r = tree.xpath('//table[@id="table"]//tr/td[2]/a/img/@alt')
 	#print(r)
 	for record in r:
@@ -34,7 +34,7 @@ def get_data(headers, connect, date):
 		icon = record.xpath("./td[2]/a/img/@src")
 		icon = icon[0] if len(icon) else ''
 		name = record.xpath("./td[2]/a/text()")
-		name = name[0] if len(name) else ''
+		name = name[1] if len(name) else ''
 		print([rank,href,icon,name])		
 
 		# sql = "REPLACE INTO currency_data (rp_date,number,name,icon,market_cap_usd,market_cap_cny,market_cap_btc,price_usd,price_cny,num,volume_usd,volume_cny,volume_btc,text_red,char_line) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
