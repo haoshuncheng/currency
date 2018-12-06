@@ -33,7 +33,7 @@ def get_data(headers, connect, d_type):
 		name = record.xpath("./td[2]/a/text()")
 		name = name[1] if len(name) else ''
 		price = record.xpath("./td[3]/a/text()")
-		price = price[1] if len(price) else ''
+		price = price[0] if len(price) else ''
 		data_type = d_type
 		rp_date = getTime(0,'-')
 		# print([rank,href,icon,name])		
