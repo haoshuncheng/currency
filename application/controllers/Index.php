@@ -64,6 +64,32 @@ class IndexController extends Yaf_Controller_Abstract {
 	}
 
 
+	/**
+     * 获取涨跌榜数据
+     */
+	public function get_up_down_dataAction() {
+		if(!isset($_REQUEST['data_type']) || !$data_type = $_REQUEST['data_type']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find data_type']));
+		}
+		if(!isset($_REQUEST['searchtype']) || !$searchtype = $_REQUEST['searchtype']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find searchtype']));
+		}
+		if(!isset($_REQUEST['timetype']) || !$timetype = $_REQUEST['timetype']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find timetype']));
+		}
+		$date = date("Y-m-d");
+		$date1 = date("Y-m-d", strtotime("-1 day"));
+		$rs = IvyDb::query("select * from `upanddowns` where `rank`>0 and rp_date='$date' and data_type='$data_type' and searchtype=$searchtype and timetype=$timetype order by `rank` asc limit 8");
+		if(!$rs || !count($rs)){
+			$rs = IvyDb::query("select * from `upanddowns` where `rank`>0 and rp_date='$date1' and data_type='$data_type' and searchtype=$searchtype and timetype=$timetype order by `rank` asc limit 8");
+		}
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=>$rs]));
+	}
+
+
 
 
 
