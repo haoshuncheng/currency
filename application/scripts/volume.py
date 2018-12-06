@@ -37,7 +37,7 @@ def get_data(headers, connect, d_type):
 		# print([rank,href,icon,name])		
 
 		sql = "REPLACE INTO volume (rp_date,name,icon,rank,data_type,href) VALUES ('%s','%s','%s',%s,'%s','%s')"
-		data = (rp_date,name,icon,rank,data_type,html)
+		data = (rp_date,name,icon,rank,data_type,href)
 		connect['cur'].execute(sql % data)
 		connect['con'].commit()
 		print('成功插入', connect['cur'].rowcount, '条数据')
