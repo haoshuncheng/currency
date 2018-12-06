@@ -547,15 +547,12 @@
      * 下拉框选择
      */
     $("body").off("click", ".new-slide-btn ul li").on("click", ".new-slide-btn ul li", function(){
-      console.log($(this).siblings().length);
-      /*for(var i=0;i<$(this).siblings().length;)
-      var id = $(this).attr("id");
-      if(id == "listType"){
-        $("#time").find("ul").css("display","none");
-      } else {
-        $("#listType").find("ul").css("display","none");
+      if($(this).hasClass("active")){
+        return;
       }
-      $(this).find("ul").fadeToggle("fast");*/
+      $(this).siblings("li").removeClass("active");
+      $(this).addClass("active");
+      $(this).parent("ul").prev("button").children("img").before($(this).children("a").text());
     });
 
     
