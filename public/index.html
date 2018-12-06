@@ -675,7 +675,7 @@
           var str = "";
           $.each(rs.data, function(k,v){
             var num = parseInt(k) + 1;
-            str += '<tr><td><span>'+num+'</span></td><td><a href="javascript:;"> <img src="'+v.icon+'" /> '+v.name+' </a></td><td>￥983,838万</td></tr>';
+            str += '<tr><td><span>'+num+'</span></td><td><a href="javascript:;"> <img src="'+v.icon+'" /> '+v.name+' </a></td><td>'+v.price+'</td></tr>';
           });
           $("#"+type+" tbody").empty().append(str);
         }

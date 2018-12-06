@@ -36,10 +36,9 @@ def get_data(headers, connect, d_type):
 		price = price[0] if len(price) else ''
 		data_type = d_type
 		rp_date = getTime(0,'-')
-		print([rank,href,icon,name,price])		
+		#print([rank,href,icon,name,price])		
 
 		sql = "REPLACE INTO volume (rp_date,name,icon,rank,data_type,href,price) VALUES ('"+rp_date+"','"+name+"','"+icon+"',"+rank+",'"+data_type+"','"+href+"','"+price+"')"
-
 		# sql = "REPLACE INTO volume (rp_date,name,icon,rank,data_type,href,price) VALUES ('%s','%s',%s,'%s','%s','%s','%s')"
 		# data = (rp_date,name,icon,rank,data_type,href,price)
 		#connect['cur'].execute(sql % data)
