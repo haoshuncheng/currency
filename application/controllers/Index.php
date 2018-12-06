@@ -113,6 +113,26 @@ class IndexController extends Yaf_Controller_Abstract {
 	}
 
 
+	/**
+     * 获取成交额排行榜数据
+     */
+	public function get_volume_dataAction() {
+		if(!isset($_REQUEST['type']) || !$type = $_REQUEST['type']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find type']));
+		}
+		$date = date("Y-m-d");
+		$date1 = date("Y-m-d", strtotime("-1 day"));
+		$rs = IvyDb::query("select * from `volume` where `rank`>0 and rp_date='$date' and data_type='$type' order by `rank` asc limit 8");
+		if(!$rs || !count($rs)){
+			$rs = IvyDb::query("select * from `volume` where `rank`>0 and rp_date='$date1' and data_type='$type' order by `rank` asc limit 8");
+		}
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=>$rs]));
+	}
+
+
 
 
 
