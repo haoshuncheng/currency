@@ -652,31 +652,31 @@
       if(e.which != 13){
         return false;   
       }
-      var search = $.trim($(this).val());
-      if(!search){
+      var text = $.trim($(this).val());
+      if(!text){
         return false;
       }
-      search(search);
+      search(text);
     });
 
     //搜索 点击
     $('body').off('click','.icon-search').on('click','.icon-search',function(e){
-      var search = $.trim($("#input-sm").val());
-      if(!search){
+      var text = $.trim($("#input-sm").val());
+      if(!text){
         return false;
       }
-      search(search);
+      search(text);
     });
 
     /**
      * 搜索
      */
-    function search(search){
+    function search(text){
       $.ajax({
         url:"/Index/search",
         type:"POST",
         data:{
-          'search':search,
+          'search':text,
         },
         beforeSend:function(){
           layer.load();
