@@ -15,7 +15,7 @@ def main():
 	# f.close()
 
 def get_data(headers, connect, date):
-	rs = requests.get('https://www.feixiaohao.com.html', headers=headers)
+	rs = requests.get('https://www.feixiaohao.com', headers=headers)
 	#rs = requests.get('https://www.feixiaohao.com/list_1.html', headers=headers)
 	print(rs.status_code)
 	if rs.status_code != 200:
