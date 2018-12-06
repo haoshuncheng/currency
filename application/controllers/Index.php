@@ -79,9 +79,9 @@ class IndexController extends Yaf_Controller_Abstract {
 		}
 		$date = date("Y-m-d");
 		$date1 = date("Y-m-d", strtotime("-1 day"));
-		$rs = IvyDb::query("select * from `upanddowns` where `rank`>0 and rp_date='$date' and data_type='$data_type' and searchtype=$searchtype and timetype=$timetype order by `rank` asc limit 8");
+		$rs = IvyDb::query("select * from `upanddowns` where `rank`>0 and rp_date='$date' and data_type='$data_type' and search_type=$searchtype and time_type=$timetype order by `rank` asc limit 8");
 		if(!$rs || !count($rs)){
-			$rs = IvyDb::query("select * from `upanddowns` where `rank`>0 and rp_date='$date1' and data_type='$data_type' and searchtype=$searchtype and timetype=$timetype order by `rank` asc limit 8");
+			$rs = IvyDb::query("select * from `upanddowns` where `rank`>0 and rp_date='$date1' and data_type='$data_type' and search_type=$searchtype and time_type=$timetype order by `rank` asc limit 8");
 		}
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
