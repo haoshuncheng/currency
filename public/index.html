@@ -161,7 +161,7 @@
   </div>
 
    <div class="new-side-box" id="new-side-box-updownlist" style="background:#fff">
-    <div class="new-box-tit new-tab-tit">
+    <div class="new-box-tit new-tab-tit" id="up_down_data_type">
      <div class="new-cell-tit active" data-datatype="up" style="margin:5px auto auto 10px;">
       涨幅榜
      </div>
@@ -195,7 +195,7 @@
     <div class="new-tab-cell">
      <div id="table-info2" style="min-height:345px;margin-top:10px">
       
-      <table class="new-side-table range-table">
+      <table class="new-side-table range-table" id="up_down_tb">
        <thead>
         <tr>
          <th>#</th>
@@ -205,7 +205,7 @@
         </tr>
        </thead>
        <tbody>
-        <tr>
+        <!-- <tr>
          <td><span>1</span></td>
          <td><a href="/currencies/wecc/" target="_blank"><img src="https://static.feixiaohao.com/coin/20181124/80441d7fe9cb43e9b5380decdb042329_16_16.png" alt="WECC-授权链" />WECC</a></td>
          <td>&yen;0.005888</td>
@@ -252,7 +252,7 @@
          <td><a href="/currencies/witchain/" target="_blank"><img src="https://static.feixiaohao.com/coin/20181112/898eddfa473b430c966c9a9ec510018a_16_16.png" alt="WITchain-智慧链" />WIT</a></td>
          <td>&yen;0.000408</td>
          <td><span class="rang-tag-green">45.38%</span></td>
-        </tr>
+        </tr> -->
        </tbody>
       </table>
 
@@ -382,6 +382,7 @@
     var MAIN_TYPE = 1;
     get_main_data(1, 1, 'cn'); //展示主数据
     get_line_data();           //展示图标数据
+    get_up_down_data("up", 1, 2);  //获取涨跌榜数据
     /**
      * 获取主数据 
      * type：1为行情数据 2为交易所数据 
@@ -513,11 +514,41 @@
       var data_type = $(this).attr("data-datatype");
       var searchtype = get_type($("#listType ul li"));
       var timetype = get_type($("#time ul li"));
-      console.log(data_type, searchtype, timetype);
-      /*$(".big_title").removeClass("big_title_color");
-      $(this).addClass("big_title_color");
-      get_main_data($(this).attr("type"), 1, 'cn');*/
+      get_up_down_data(data_type, searchtype, timetype);  //获取涨跌榜数据
     });
+
+    
+    /**
+     * 获取涨跌榜数据
+     */
+    function get_up_down_data(data_type, searchtype, timetype) {
+      $.ajax({
+        url:"/Index/get_up_down_data",
+        type:"POST",
+        data:{
+          'data_type':data_type,
+          'searchtype':searchtype,
+          'timetype':timetype
+        },
+        beforeSend:function(){
+          layer.load();
+        },
+        success:function(e){
+          var rs = $.parseJSON(e);
+          layer.closeAll('loading');
+          if(!rs.status){
+            $("#up_down_tb tbody").empty();
+            return;
+          }
+          var str = "";
+          $.each(rs.data, function(k,v){
+            var num = parseInt(k) + 1;
+            str += '<tr><td><span>'+num+'</span></td><td><a href="javascript:;" target="_blank"><img src="'+v.icon+'" />'+v.abbreviation+'</a></td><td>'+v.price+'</td><td><span class="rang-tag-green">'+v.percentage+'</span></td></tr>';
+          });
+          $("#up_down_tb tbody").empty().append(str);
+        }
+      });
+    }
 
     function get_type(obj){
       for(var i=0;i<obj.length;i++){
@@ -540,6 +571,17 @@
         $("#listType").find("ul").css("display","none");
       }
       $(this).find("ul").fadeToggle("fast");
+
+      var data_type = "up";
+      for(var i=0;i<$("#up_down_data_type .new-cell-tit").length;i++){
+        if($("#up_down_data_type .new-cell-tit").eq(i).hasClass("active")){
+          data_type = $("#up_down_data_type .new-cell-tit").eq(i).attr("data-datatype");
+        }
+      }
+      var searchtype = get_type($("#listType ul li"));
+      var timetype = get_type($("#time ul li"));
+      console.log(data_type, searchtype, timetype);
+      //get_up_down_data(data_type, searchtype, timetype);  //获取涨跌榜数据
     });
 
 
