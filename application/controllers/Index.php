@@ -25,16 +25,96 @@ class IndexController extends Yaf_Controller_Abstract {
 		$date = date("Y-m-d");
 		$date1 = date("Y-m-d", strtotime("-1 day"));
 		if($type == 1){
-			$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit $start,$pageSize ");
-			if(!$rs || !count($rs)){
+			$total = IvyDb::query("select count(*) as num from `currency_data` where `number`>0 and rp_date='$date' ");
+			if(!$total || !count($total) || $total[0]['num'] <= 0){
+				$total = IvyDb::query("select count(*) as num from `currency_data` where `number`>0 and rp_date='$date1' ");
 				$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date1' order by `number` asc limit $start,$pageSize ");
+			} else {
+				$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit $start,$pageSize ");
 			}
-		} else {}
+		} else {
+			$total = IvyDb::query("select count(*) as num from `exchange` where `rank`>0 and rp_date='$date' ");
+			if(!$total || !count($total) || $total[0]['num'] <= 0){
+				$total = IvyDb::query("select count(*) as num from `exchange` where `rank`>0 and rp_date='$date1' ");
+				$rs = IvyDb::query("select * from `exchange` where `rank`>0 and rp_date='$date1' order by `rank` asc limit $start,$pageSize ");
+			} else {
+				$rs = IvyDb::query("select * from `exchange` where `rank`>0 and rp_date='$date' order by `rank` asc limit $start,$pageSize ");
+			}
+		}
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=>$rs, 'total'=>$total[0]['num']]));
+	}
+
+	/**
+     * 展示图标数据
+     */
+	public function linedataAction() {
+		$date = date("Y-m-d");
+		$date1 = date("Y-m-d", strtotime("-1 day"));
+		$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit 5");
+		if(!$rs || !count($rs)){
+			$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date1' order by `number` asc limit 5");
+		}
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
 		exit(json_encode(['status'=>1, 'data'=>$rs]));
 	}
+
+
+	/**
+     * 获取涨跌榜数据
+     */
+	public function get_up_down_dataAction() {
+		if(!isset($_REQUEST['data_type']) || !$data_type = $_REQUEST['data_type']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find data_type']));
+		}
+		if(!isset($_REQUEST['searchtype']) || !$searchtype = $_REQUEST['searchtype']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find searchtype']));
+		}
+		if(!isset($_REQUEST['timetype']) || !$timetype = $_REQUEST['timetype']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find timetype']));
+		}
+		$date = date("Y-m-d");
+		$date1 = date("Y-m-d", strtotime("-1 day"));
+		$rs = IvyDb::query("select * from `upanddowns` where `rank`>0 and rp_date='$date' and data_type='$data_type' and search_type=$searchtype and time_type=$timetype order by `rank` asc limit 8");
+		if(!$rs || !count($rs)){
+			$rs = IvyDb::query("select * from `upanddowns` where `rank`>0 and rp_date='$date1' and data_type='$data_type' and search_type=$searchtype and time_type=$timetype order by `rank` asc limit 8");
+		}
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=>$rs]));
+	}
+
+	/**
+     * 搜索
+     */
+	public function searchAction() {
+		if(!isset($_REQUEST['search']) || !$search = $_REQUEST['search']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find search']));
+		}
+		$date = date("Y-m-d");
+		$date1 = date("Y-m-d", strtotime("-1 day"));
+		$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' and name like '%".$search."%' order by `number` asc");
+		if(!$rs || !count($rs)){
+			$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date1' and name like '%".$search."%' order by `number` asc");
+		}
+		$res = IvyDb::query("select * from `exchange` where `rank`>0 and rp_date='$date' and name like '%".$search."%' order by `rank` asc");
+		if(!$res || !count($res)){
+			$res = IvyDb::query("select * from `exchange` where `rank`>0 and rp_date='$date1' and name like '%".$search."%' order by `rank` asc");
+		}
+		if((!$rs || !count($rs)) && (!$res || !count($res))){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=>$rs, 'data1'=>$res]));
+	}
+
+
+
+
 
 
 
