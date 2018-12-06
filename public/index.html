@@ -29,7 +29,7 @@
 
     <div class="new-row">
      <div class="new-left-side" style="width:50%;">
-      <a href="javascript:;" class="new-logo"><img src="https://static.feixiaohao.com/themes/default/images/logo.png" /></a>
+      <a href="javascript:;" class="new-logo"><img src="./images/logo.png" /></a><!-- src="https://static.feixiaohao.com/themes/default/images/logo.png" -->
       <p class="big_title big_title_color" type="1" style="float:left;font-size:16px;line-height:58px;margin-right:9%;cursor:pointer;">行情</p>
       <p class="big_title" type="2" style="float:left;font-size:16px;line-height:58px;cursor:pointer;">交易所</p>
      </div>
@@ -507,17 +507,35 @@
         return;
       }
       var data_type = $(this).attr("data-datatype");
+      var searchtype = get_type($("#listType ul li"));
+      var timetype = get_type($("#time ul li"));
+      console.log(data_type, searchtype, timetype);
       /*$(".big_title").removeClass("big_title_color");
       $(this).addClass("big_title_color");
       get_main_data($(this).attr("type"), 1, 'cn');*/
     });
+
+    function get_type(obj){
+      for(var i=0;i<obj.length;i++){
+        if(!obj.eq(i).hasClass("active")){
+          continue;
+        }
+        return obj.eq(i).attr("data-type");
+      }
+    }
 
 
     /**
      * 下拉框交替
      */
     $("body").off("click", ".new-slide-btn").on("click", ".new-slide-btn", function(){
-      $(this).find("ul").fadeToggle("slow");
+      var id = $(this).attr("id");
+      if(id == "listType"){
+        $("#time").find("ul").css("display","none");
+      } else {
+        $("#listType").find("ul").css("display","none");
+      }
+      $(this).find("ul").fadeToggle("fast");
     });
 
     
