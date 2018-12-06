@@ -34,7 +34,7 @@ def get_data(headers, connect, date):
 		icon = record.xpath("./td[2]/a/img/@src")
 		icon = icon[0] if len(icon) else ''
 		name = record.xpath("./td[2]/a/text()")
-		name = name[0] if len(name) else ''
+		name = name[1] if len(name) else ''
 		print([rank,href,icon,name])		
 
 		# sql = "REPLACE INTO currency_data (rp_date,number,name,icon,market_cap_usd,market_cap_cny,market_cap_btc,price_usd,price_cny,num,volume_usd,volume_cny,volume_btc,text_red,char_line) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
