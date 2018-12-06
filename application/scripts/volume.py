@@ -22,7 +22,7 @@ def get_data(headers, connect, date):
 		print("数据请求失败\n")
 		return
 	tree = etree.HTML(rs.text)
-	r = tree.xpath('//table[@id="vol_exchange"]/tbody/tr')
+	r = tree.xpath('//table[@id="vol_coin"]/tbody/tr')
 	#r = tree.xpath('//table[@id="table"]//tr/td[2]/a/img/@alt')
 	#print(r)
 	for record in r:
