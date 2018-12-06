@@ -32,12 +32,14 @@ def get_data(headers, connect, d_type):
 		icon = icon[0] if len(icon) else ''
 		name = record.xpath("./td[2]/a/text()")
 		name = name[1] if len(name) else ''
+		price = record.xpath("./td[3]/a/text()")
+		price = price[1] if len(price) else ''
 		data_type = d_type
 		rp_date = getTime(0,'-')
 		# print([rank,href,icon,name])		
 
-		sql = "REPLACE INTO volume (rp_date,name,icon,rank,data_type,href) VALUES ('%s','%s','%s',%s,'%s','%s')"
-		data = (rp_date,name,icon,rank,data_type,href)
+		sql = "REPLACE INTO volume (price,rp_date,name,icon,rank,data_type,href) VALUES ('%s','%s','%s',%s,'%s','%s','%s')"
+		data = (price,rp_date,name,icon,rank,data_type,href)
 		connect['cur'].execute(sql % data)
 		connect['con'].commit()
 		print('成功插入', connect['cur'].rowcount, '条数据')
