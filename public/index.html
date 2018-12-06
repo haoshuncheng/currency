@@ -506,6 +506,10 @@
       if($(this).hasClass("active")){
         return;
       }
+      $("#new-side-box-updownlist .new-cell-tit").removeClass("active");
+      $(this).addClass("active");
+      $("#time").find("ul").css("display","none");
+      $(".new-slide-btn ul").css("display","none");  //隐藏下拉选项
       var data_type = $(this).attr("data-datatype");
       var searchtype = get_type($("#listType ul li"));
       var timetype = get_type($("#time ul li"));
@@ -536,6 +540,22 @@
         $("#listType").find("ul").css("display","none");
       }
       $(this).find("ul").fadeToggle("fast");
+    });
+
+
+    /**
+     * 下拉框选择
+     */
+    $("body").off("click", ".new-slide-btn ul li").on("click", ".new-slide-btn ul li", function(){
+      console.log($(this).siblings().length);
+      /*for(var i=0;i<$(this).siblings().length;)
+      var id = $(this).attr("id");
+      if(id == "listType"){
+        $("#time").find("ul").css("display","none");
+      } else {
+        $("#listType").find("ul").css("display","none");
+      }
+      $(this).find("ul").fadeToggle("fast");*/
     });
 
     
