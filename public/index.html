@@ -76,7 +76,7 @@
   <div class="new-wrapper">
   
   <!-- 搜索结果 -->
-  <div class="box2 box815" style="display:none;">
+  <div class="box2 box815" style="display:none;background:#fff;">
      <div class="slide">
       <div class="active">
        币种
@@ -652,18 +652,23 @@
       if(e.which != 13){
         return false;   
       }
-      if(!$(this).val()){
+      var search = $.trim($(this).val());
+      if(!search){
         return false;
       }
-      search($.trim($(this).val()));
+      console.log(search);
+      console.log(typeof(search));
+      //search(search);
     });
 
     //搜索 点击
     $('body').off('click','.icon-search').on('click','.icon-search',function(e){
-      if(!$("#input-sm").val()){
+      var search = $.trim($("#input-sm").val());
+      if(!search){
         return false;
       }
-      search($.trim($(this).val()));
+
+      //search(search);
     });
 
     /**
