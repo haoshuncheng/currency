@@ -9,12 +9,12 @@ def main():
 	connect = connect1()
 	date = time.strftime("%Y-%m-%d", time.localtime())
 
-	get_data(i, headers, connect, date)
+	get_data(headers, connect, date)
 	# f = open('./abc.html', 'w', encoding='utf-8')
 	# f.write(rs.text)
 	# f.close()
 
-def get_data(i, headers, connect, date):
+def get_data(headers, connect, date):
 	rs = requests.get('https://www.feixiaohao.com.html', headers=headers)
 	#rs = requests.get('https://www.feixiaohao.com/list_1.html', headers=headers)
 	print(rs.status_code)
