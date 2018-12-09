@@ -24,13 +24,12 @@ def handurl(url,curPage,coin_type):
 			clumns.append(k)
 			vs.append(v)
 			vs_f.append("%s")
-			time.sleep(5)
 		clumns = ",".join(clumns)
 		vs_f = ",".join(vs_f)
-		print(clumns)
-		print(vs_f)
-		# sql = "replace into coin_rank("+clumns+") values("+vs_f+")"
-		# print(sql)
+		# print(clumns)
+		# print(vs_f)
+		sql = "replace into coin_rank("+clumns+") values("+vs_f+")"
+		print(sql)
 		# connect['cur'].execute(sql,vs)
 		time.sleep(4)
 
