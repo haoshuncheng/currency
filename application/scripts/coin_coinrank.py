@@ -21,13 +21,13 @@ def handurl(url,curPage,coin_type):
 		vs_f = []
 		vs = []
 		for k,v in record.items():
+			if k == 'rank':
+				continue
 			clumns.append(k)
 			vs.append(v)
 			vs_f.append("%s")
 		clumns = ",".join(clumns)
 		vs_f = ",".join(vs_f)
-		# print(clumns)
-		# print(vs_f)
 		sql = "replace into coin_rank("+clumns+") values("+vs_f+")"
 		print(sql)
 		connect['cur'].execute(sql,vs)
