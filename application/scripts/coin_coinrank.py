@@ -31,6 +31,7 @@ def handurl(url,curPage,coin_type):
 		sql = "replace into coin_rank("+clumns+") values("+vs_f+")"
 		print(sql)
 		connect['cur'].execute(sql,vs)
+		connect['con'].commit()
 		time.sleep(4)
 
 
