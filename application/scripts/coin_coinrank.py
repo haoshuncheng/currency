@@ -17,20 +17,11 @@ def handurl(url,curPage,coin_type):
 
 	
 	for record in records:
-		clumns = []
-		vs_f = []
-		vs = []
-		for k,v in record.items():
-			if k == 'rank':
-				continue
-			clumns.append(k)
-			vs.append(v)
-			vs_f.append("%s")
-		clumns = ",".join(clumns)
-		vs_f = ",".join(vs_f)
-		sql = "replace into coin_rank("+clumns+") values("+vs_f+")"
-		print(sql)
-		connect['cur'].execute(sql,vs)
+		
+		sql = "replace into coin_rank(current_price,current_price_usd,update_time,code,name,fullname,logo,market,platform,platform_name,change_percent,market_value,vol,supply,star_level,kline_data,market_value_usd,vol_usd,marketcap,high_price,drop_ath,low_price,high_time,low_time,isifo,ismineable,logo_small,coin_type) values(%s,%s,'%s','%s','%s','%s','%s','%s','%s','%s',%s,%s,%s,%s,%s,'%s',%s,%s,%s,%s,%s,%s,'%s','%s',%s,%s,'%s',%s)"
+
+		vs = (record['current_price'],record['current_price_usd'],record['update_time'],record['code'],record['name'],record['fullname'],record['logo'],record['market'],record['platform'],record['platform_name'],record['change_percent'],record['market_value'],record['vol'],record['supply'],record['star_level'],record['kline_data'],record['market_value_usd'],record['vol_usd'],record['marketcap'],record['high_price'],record['drop_ath'],record['low_price'],record['high_time'],record['low_time'],record['isifo'],record['ismineable'],record['logo_small'],coin_type)
+		connect['cur'].execute(sql % vs)
 		connect['con'].commit()
 		time.sleep(4)
 
