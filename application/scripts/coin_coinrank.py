@@ -23,7 +23,7 @@ def handurl(url,curPage,coin_type):
 		connect['cur'].execute(sql % vs)
 		connect['con'].commit()
 	maxPageSize = data['maxpage']
-	curPage = data['currpage']
+	curPage = data['currpage']+1
 	if int(curPage) <= int(maxPageSize):
 		handurl(url,curPage,coin_type)
 
