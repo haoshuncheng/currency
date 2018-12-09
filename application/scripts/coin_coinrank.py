@@ -14,11 +14,23 @@ def handurl(url,curPage,coin_type):
 		return
 	data = rs.json()
 	records = data['data']
-	for record in records:
-		for k,v in record.items():
-			print([k,v])
-			time.sleep(4)
 
+	
+	for record in records:
+		ks = []
+		vs = []
+		for k,v in record.items():
+			if k == 'rank':
+				continue
+			ks.append(k)
+			vs.append(v)
+		ks = ",".join(ks)
+		vs = ",".join(vs)
+		sql = "replace into coin_rank ("+ks+") values("+vs+")"
+		print(sql)
+		time.sleep(5)
+
+			
 	maxPageSize = data['maxpage']
 	curPage = data['currpage']
 	if int(curPage) <= int(maxPageSize):
