@@ -1,3 +1,4 @@
+#弃用
 import requests
 from lxml import etree
 import pymysql.cursors
