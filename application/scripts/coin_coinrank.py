@@ -17,18 +17,19 @@ def handurl(url,curPage,coin_type):
 
 	
 	for record in records:
-		ks = []
+		clumns = []
+		vs_f = []
 		vs = []
 		for k,v in record.items():
-			if k == 'rank':
-				continue
-			ks.append(k)
-			vs.append(v)
-		ks = ",".join(ks)
-		vs = ",".join(vs)
-		sql = "replace into coin_rank ("+ks+") values("+vs+")"
-		print(sql)
-		time.sleep(5)
+			clumns.append(k)
+			vs.append(vs)
+			vs_f.append("%s")
+		clumns = ",".join(clumns)
+		vs_f = ",".join(vs_f)
+		sql = "replace into coin_rank("+clumns+") values("+vs_f+")"
+		connect['cur'].execute(sql,vs)
+		time.sleep(4)
+
 
 			
 	maxPageSize = data['maxpage']
