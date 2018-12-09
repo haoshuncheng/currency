@@ -11,7 +11,7 @@ def handurl(curPage):
 	global base_url
 	global headers
 	global connect
-	url = base_url+"&page="+curPage
+	url = base_url+"&page="+str(curPage)
 	rs = requests.get(url, headers=headers)
 	if rs.status_code != 200:
 		print(url+" 数据请求失败\n")
@@ -20,6 +20,7 @@ def handurl(curPage):
 	records = data['data']
 	for record in records:
 		print(record)
+		time.sleep(5)
 	maxPageSize = data['maxpage']
 	curPage = data['currpage']
 	if int(curPage) <= int(maxPageSize):
