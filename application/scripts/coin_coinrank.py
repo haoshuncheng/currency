@@ -4,17 +4,16 @@ import sys
 import time
 import json
 
-def run():
-	handurl("1")
 
-def handurl(curPage):
-	global base_url
+	
+
+def handurl(url,curPage):
 	global headers
 	global connect
-	url = base_url+"&page="+str(curPage)
-	rs = requests.get(url, headers=headers)
+	full_url = url+"&page="+str(curPage)
+	rs = requests.get(full_url, headers=headers)
 	if rs.status_code != 200:
-		print(url+" 数据请求失败\n")
+		print(full_url+" 数据请求失败\n")
 		return
 	data = rs.json()
 	records = data['data']
@@ -24,7 +23,7 @@ def handurl(curPage):
 	maxPageSize = data['maxpage']
 	curPage = data['currpage']
 	if int(curPage) <= int(maxPageSize):
-		handurl(curPage)
+		handurl(url,curPage)
 
 
 def connect1():
@@ -46,7 +45,9 @@ def connect1():
 
 
 if __name__ == '__main__':
-	headers = {'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
-	base_url = "https://dncapi.feixiaohao.com/api/coin/coinrank?type=0&pagesize=100&webp=1"
 	connect = connect1()
-	run()
+	headers = {'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
+	base_url = "https://dncapi.feixiaohao.com/api/coin/coinrank?pagesize=100&webp=1"
+	for coin_type in [0,1]:
+		url = base_url+"&type="+str(coin_type)
+		handurl(url,1)
