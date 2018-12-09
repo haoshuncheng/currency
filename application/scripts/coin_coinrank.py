@@ -9,11 +9,12 @@ def handurl(url,curPage,coin_type):
 	global headers
 	global connect
 	full_url = url+str(coin_type)+"&page="+str(curPage)
-	print(full_url)
 	rs = requests.get(full_url, headers=headers)
 	if rs.status_code != 200:
 		print(full_url+" 数据请求失败\n")
 		return
+	else:
+		print(full_url+" 数据请求成功\n")
 	data = rs.json()
 	records = data['data']
 	for record in records:
