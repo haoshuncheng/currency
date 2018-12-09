@@ -5,22 +5,25 @@ import time
 import json
 
 def run():
-	
-	base_url = "https://dncapi.feixiaohao.com/api/coin/coinrank?page=1&type=0&pagesize=100&webp=1"
-	handurl(base_url)
+	handurl("1")
 
-def handurl(url):
+def handurl(curPage):
+	global base_url
 	global headers
 	global connect
-
+	url = base_url+"&page="+curPage
 	rs = requests.get(url, headers=headers)
 	if rs.status_code != 200:
 		print(url+" 数据请求失败\n")
 		return
-	records = rs.json()
+	data = rs.json()
+	records = data['data']
 	for record in records:
 		print(record)
-		time.sleep(3)
+	maxPageSize = data['maxpage']
+	curPage = data['currpage']
+	if int(curPage) <= int(maxPageSize):
+		handurl(curPage)
 
 
 def connect1():
@@ -43,5 +46,6 @@ def connect1():
 
 if __name__ == '__main__':
 	headers = {'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
+	base_url = "https://dncapi.feixiaohao.com/api/coin/coinrank?type=0&pagesize=100&webp=1"
 	connect = connect1()
 	run()
