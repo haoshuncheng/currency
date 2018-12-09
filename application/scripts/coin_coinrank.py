@@ -4,13 +4,10 @@ import sys
 import time
 import json
 
-
-	
-
-def handurl(url,curPage):
+def handurl(url,curPage,coin_type):
 	global headers
 	global connect
-	full_url = url+"&page="+str(curPage)
+	full_url = url+str(coin_type)+"&page="+str(curPage)
 	rs = requests.get(full_url, headers=headers)
 	if rs.status_code != 200:
 		print(full_url+" 数据请求失败\n")
@@ -18,13 +15,14 @@ def handurl(url,curPage):
 	data = rs.json()
 	records = data['data']
 	for record in records:
-		print(record)
-		time.sleep(5)
+		for k,v in record.items():
+			print([k,v])
+			time.sleep(4)
+
 	maxPageSize = data['maxpage']
 	curPage = data['currpage']
 	if int(curPage) <= int(maxPageSize):
-		handurl(url,curPage)
-
+		handurl(url,curPage,coin_type)
 
 def connect1():
 	connect = pymysql.Connect(
@@ -42,12 +40,10 @@ def connect1():
 	return {'con':connect, 'cur':cursor}
 
 
-
-
 if __name__ == '__main__':
 	connect = connect1()
 	headers = {'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
 	base_url = "https://dncapi.feixiaohao.com/api/coin/coinrank?pagesize=100&webp=1"
 	for coin_type in [0,1]:
-		url = base_url+"&type="+str(coin_type)
-		handurl(url,1)
+		url = base_url+"&type="
+		handurl(url,1,coin_type)
