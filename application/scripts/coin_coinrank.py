@@ -24,7 +24,7 @@ def handurl(url,curPage,coin_type):
 			# print(k,v)
 			# time.sleep(4)
 			clumns.append(k)
-			vs.append(vs)
+			vs.append(v)
 			vs_f.append("%s")
 			print(clumns)
 			print(vs)
