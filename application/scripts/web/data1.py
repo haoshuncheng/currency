@@ -66,7 +66,7 @@ def get_data(response, rs, rec):
 
 def save(rec):
 	print(rec)
-	csvfile = codecs.open(os.path.dirname(os.path.abspath(__file__))+'/data/data.csv', 'w', 'utf_8_sig')  #w a r 与文件类似
+	csvfile = codecs.open(os.path.dirname(os.path.abspath(__file__))+'/data/data.csv', 'a', 'utf_8_sig')  #w a r 与文件类似
 	writer = csv.writer(csvfile) #文件对象
 	writer.writerow(rec) #核心方法
 	csvfile.close() #关闭
