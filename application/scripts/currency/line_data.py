@@ -18,14 +18,15 @@ def main(script_type):
 		print("获取的货币列表为空\n")
 		return
 	time = get_range_time(script_type)  #获取时间范围
-	for name in currency_name:
-		url = "https://www.binance.com/info-api/v1/public/agg_kline?base="+name+"&quote=USD&type="+script_type+"&limit=2000&startEpochSecond="+str(time[0])+"&endEpochSecond="+str(time[1])
-		print(url)
-		line_data = get_requests(url, 'json')
-		if line_data == False:
-			print("无法获取数据，执行下一货币\n")
-			continue
-		insert(line_data) #储存数据
+	print(time)
+	# for name in currency_name:
+	# 	url = "https://www.binance.com/info-api/v1/public/agg_kline?base="+name+"&quote=USD&type="+script_type+"&limit=2000&startEpochSecond="+str(time[0])+"&endEpochSecond="+str(time[1])
+	# 	print(url)
+	# 	line_data = get_requests(url, 'json')
+	# 	if line_data == False:
+	# 		print("无法获取数据，执行下一货币\n")
+	# 		continue
+	# 	insert(line_data) #储存数据
 
 
 
@@ -54,8 +55,13 @@ def insert(rs):
 
 #获取时间范围
 def get_range_time(script_type):
-	time2 = int(time.time())
-	if script_type in ['M15','M5','MIN']:
+	if end != 0:
+		time2 = end
+	else:
+		time2 = int(time.time())
+	if start != 0:
+		time1 = start
+	elif script_type in ['M15','M5','MIN']:
 		time1 = time2 - 3600*24
 	else:
 		time1 = time2 - 3600*24*5
@@ -90,8 +96,14 @@ def connect1():
 	return {'con':connect, 'cur':cursor}
 
 if __name__ == "__main__":
+	start = 0
+	end = 0
 	if len(sys.argv) <= 1 or sys.argv[1] == '':
 		print("脚本类型不可以为空\n")
 	else:
+		if len(sys.argv) == 3:
+			start = sys.argv[2]
+		if len(sys.argv) == 4:
+			end = sys.argv[3]	
 		connect = connect1()
 		main(sys.argv[1])
