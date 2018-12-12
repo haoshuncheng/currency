@@ -65,10 +65,12 @@ def get_range_time(script_type):
 		time2 = int(time.time())
 	if start != 0:
 		time1 = start
-	elif script_type in ['M15','M5','MIN']:
-		time1 = time2 - 3600*24
+	elif script_type = 'MIN':
+		time1 = time2 - 3600
+	elif script_type in ['M15','M5']:
+		time1 = time2 - 3600*6
 	else:
-		time1 = time2 - 3600*24*5
+		time1 = time2 - 3600*24*3
 	return [time1, time2]
 
 
