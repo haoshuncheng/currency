@@ -1,4 +1,4 @@
-#折线图数据脚本
+#首页数据
 import requests
 from lxml import etree
 import pymysql.cursors
