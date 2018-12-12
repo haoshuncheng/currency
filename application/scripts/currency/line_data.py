@@ -67,7 +67,7 @@ def get_range_time(script_type):
 	if start != 0:
 		time1 = start
 	elif script_type == 'MIN':
-		time1 = time2 - 600
+		time1 = time2 - 1200
 	elif script_type in ['M15','M5']:
 		time1 = time2 - 3600
 	elif script_type in ['HOUR','M30']:
