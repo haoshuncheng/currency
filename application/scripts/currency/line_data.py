@@ -76,7 +76,7 @@ def get_requests(url, dattype=''):
 
 def connect1():
 	connect = pymysql.Connect(
-		host='localhost',
+		host='116.62.118.136',
 	    port=3306,
 	    user='dev',
 	    passwd='1fi923^a3bui*9',
