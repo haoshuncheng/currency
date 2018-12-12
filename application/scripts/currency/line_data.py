@@ -93,4 +93,5 @@ if __name__ == "__main__":
 	if len(sys.argv) <= 1 or sys.argv[1] == '':
 		print("脚本类型不可以为空\n")
 	else:
+		connect = connect1()
 		main(sys.argv[1])
