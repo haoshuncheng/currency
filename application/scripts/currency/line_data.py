@@ -40,10 +40,18 @@ def insert(rs):
 	data = ""
 	print(len(rs['result']['data']))
 	for v in rs['result']['data']:
-		res = "('"+str(v['epochSecond'])+"','"+str(v['type'])+"','"+str(v['from'])+"','"+str(v['to'])+"',"+str(v['high'])+","+str(v['low'])+","+str(v['open'])+","+str(v['close'])+","+str(v['volumeFrom'])+","+str(v['volumeTo'])+")"
+		epochSecond = v['epochSecond'] if 'epochSecond' in v else ''
+		type1 = v['type'] if 'type' in v else ''
+		from1 = v['from'] if 'from' in v else ''
+		to = v['to'] if 'to' in v else ''
+		high = v['high'] if 'high' in v else ''
+		low = v['low'] if 'low' in v else ''
+		open1 = v['open'] if 'open' in v else ''
+		close = v['close'] if 'close' in v else ''
+		volumeFrom = v['volumeFrom'] if 'volumeFrom' in v else ''
+		volumeTo = v['volumeTo'] if 'volumeTo' in v else ''
+		res = "('"+str(epochSecond)+"','"+str(type1)+"','"+str(from1)+"','"+str(to)+"',"+str(high)+","+str(low)+","+str(open1)+","+str(close)+","+str(volumeFrom)+","+str(volumeTo)+")"
 		data = res if data=="" else data+","+res
-
-
 	sql = "REPLACE INTO `line_data` (`epochSecond`,`type`,`from`,`to`,`high`,`low`,`open`,`close`,`volumeFrom`,`volumeTo`) VALUES "+data
 	connect['cur'].execute(sql)
 	connect['con'].commit()
