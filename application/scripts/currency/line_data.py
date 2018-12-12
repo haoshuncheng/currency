@@ -18,18 +18,14 @@ def main(script_type):
 		print("获取的货币列表为空\n")
 		return
 	time = get_range_time(script_type)  #获取时间范围
-	print(time)
-	# for name in currency_name:
-	# 	url = "https://www.binance.com/info-api/v1/public/agg_kline?base="+name+"&quote=USD&type="+script_type+"&limit=2000&startEpochSecond="+str(time[0])+"&endEpochSecond="+str(time[1])
-	# 	print(url)
-	# 	line_data = get_requests(url, 'json')
-	# 	if line_data == False:
-	# 		print("无法获取数据，执行下一货币\n")
-	# 		continue
-	# 	insert(line_data) #储存数据
-
-
-
+	for name in currency_name:
+		url = "https://www.binance.com/info-api/v1/public/agg_kline?base="+name+"&quote=USD&type="+script_type+"&limit=2000&startEpochSecond="+str(time[0])+"&endEpochSecond="+str(time[1])
+		print(url)
+		line_data = get_requests(url, 'json')
+		if line_data == False:
+			print("无法获取数据，执行下一货币\n")
+			continue
+		insert(line_data) #储存数据
 
 	# f = open('./abc.html', 'w', encoding='utf-8')
 	# f.write(rs.text)
@@ -56,7 +52,7 @@ def insert(rs):
 #获取时间范围
 def get_range_time(script_type):
 	if end != 0:
-		time2 = end
+		time2 = int(end)
 	else:
 		time2 = int(time.time())
 	if start != 0:
@@ -101,9 +97,9 @@ if __name__ == "__main__":
 	if len(sys.argv) <= 1 or sys.argv[1] == '':
 		print("脚本类型不可以为空\n")
 	else:
-		if len(sys.argv) == 3:
+		if len(sys.argv) >= 3:
 			start = sys.argv[2]
-		if len(sys.argv) == 4:
+		if len(sys.argv) >= 4:
 			end = sys.argv[3]	
 		connect = connect1()
 		main(sys.argv[1])
