@@ -2,7 +2,7 @@
 class IndexController extends Yaf_Controller_Abstract {
 
 	/**
-     * 获取主数据 
+     * 获取首页数据(货币列表数据)
      * type：1为行情数据 2为交易所数据 
      * page为页码
      * lang: cn中文 us英文
@@ -36,15 +36,13 @@ class IndexController extends Yaf_Controller_Abstract {
 	}
 
 	/**
-     * 展示图标数据
+     * 获取货币详细信息
      */
-	public function linedataAction() {
-		$date = date("Y-m-d");
-		$date1 = date("Y-m-d", strtotime("-1 day"));
-		$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit 5");
-		if(!$rs || !count($rs)){
-			$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date1' order by `number` asc limit 5");
+	public function currencyInfAction() {
+		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find code']));
 		}
+		$rs = IvyDb::query("select * from `rank` where `code`='$code'");
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
@@ -53,24 +51,13 @@ class IndexController extends Yaf_Controller_Abstract {
 
 
 	/**
-     * 获取涨跌榜数据
+     * 获取饼状图数据
      */
-	public function get_up_down_dataAction() {
-		if(!isset($_REQUEST['data_type']) || !$data_type = $_REQUEST['data_type']){
-			exit(json_encode(['status'=>0, 'msg'=>'not find data_type']));
+	public function get_pie_chart_dataAction() {
+		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find code']));
 		}
-		if(!isset($_REQUEST['searchtype']) || !$searchtype = $_REQUEST['searchtype']){
-			exit(json_encode(['status'=>0, 'msg'=>'not find searchtype']));
-		}
-		if(!isset($_REQUEST['timetype']) || !$timetype = $_REQUEST['timetype']){
-			exit(json_encode(['status'=>0, 'msg'=>'not find timetype']));
-		}
-		$date = date("Y-m-d");
-		$date1 = date("Y-m-d", strtotime("-1 day"));
-		$rs = IvyDb::query("select * from `upanddowns` where `rank`>0 and rp_date='$date' and data_type='$data_type' and search_type=$searchtype and time_type=$timetype order by `rank` asc limit 8");
-		if(!$rs || !count($rs)){
-			$rs = IvyDb::query("select * from `upanddowns` where `rank`>0 and rp_date='$date1' and data_type='$data_type' and search_type=$searchtype and time_type=$timetype order by `rank` asc limit 8");
-		}
+		$rs = IvyDb::query("select * from `pie_chart` where `code`='$code'");
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
@@ -78,27 +65,35 @@ class IndexController extends Yaf_Controller_Abstract {
 	}
 
 	/**
-     * 搜索
+     * 获取折线图数据
      */
-	public function searchAction() {
-		if(!isset($_REQUEST['search']) || !$search = $_REQUEST['search']){
-			exit(json_encode(['status'=>0, 'msg'=>'not find search']));
+	public function get_line_dataAction() {
+		if(!isset($_REQUEST['name']) || !$name = $_REQUEST['name']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find name']));
 		}
-		$date = date("Y-m-d");
-		$date1 = date("Y-m-d", strtotime("-1 day"));
-		$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' and name like '%".$search."%' order by `number` asc");
+		if(!isset($_REQUEST['type']) || !$type = $_REQUEST['type']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find type']));
+		}
+		if(!isset($_REQUEST['start']) || !$start = $_REQUEST['start']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find start']));
+		}
+		if(!isset($_REQUEST['end']) || !$end = $_REQUEST['end']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find end']));
+		}
+		$rs = IvyDb::query("select * from `line_data` where `type`='$type' and `from`='$name' and `epochSecond`>='$start' and `epochSecond`<='$end' order by epochSecond asc");
 		if(!$rs || !count($rs)){
-			$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date1' and name like '%".$search."%' order by `number` asc");
-		}
-		$res = IvyDb::query("select * from `exchange` where `rank`>0 and rp_date='$date' and name like '%".$search."%' order by `rank` asc");
-		if(!$res || !count($res)){
-			$res = IvyDb::query("select * from `exchange` where `rank`>0 and rp_date='$date1' and name like '%".$search."%' order by `rank` asc");
-		}
-		if((!$rs || !count($rs)) && (!$res || !count($res))){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
-		exit(json_encode(['status'=>1, 'data'=>$rs, 'data1'=>$res]));
+		exit(json_encode(['status'=>1, 'data'=>$rs]));
 	}
+
+
+
+
+
+
+
+
 
 
 	/**
