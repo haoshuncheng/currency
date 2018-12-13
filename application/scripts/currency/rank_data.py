@@ -22,7 +22,12 @@ def main():
 		print("数据中不含coinList\n")
 		sys.exit()
 	for res in m_tr['coinList']:
-		pic = host_url+res['thumbUrl'] if 'thumbUrl' in res else ''
+		if 'thumbUrl' in res and res['thumbUrl'] != '':
+			pic = host_url+res['thumbUrl']
+		elif 'imageUrl' in res and res['imageUrl'] != '':
+			pic = host_url+res['imageUrl']
+		else:
+			pic = ''
 		name = res['name'] if 'name' in res else ''
 		code = res['url'] if 'url' in res else ''
 		price = res['price'] if 'price' in res else 0 													#价格

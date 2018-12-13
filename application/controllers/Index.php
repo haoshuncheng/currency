@@ -66,7 +66,7 @@ class IndexController extends Yaf_Controller_Abstract {
 
 
 	/**
-     * 获取折线图数据
+     * 获取折线图数据 http://116.62.118.136/Index/get_line_data?name=BTC&type=DAY&start=1515737886&end=1518416286
      */
 	public function get_line_dataAction() {
 		if(!isset($_REQUEST['name']) || !$name = $_REQUEST['name']){
