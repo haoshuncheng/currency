@@ -8,7 +8,7 @@ import json
 
 def main():
 	kline_data = get_kline_data()  #获取图形数据
-	rs = get_requests("https://info.binance.com/cn/all")
+	rs = get_requests("https://info.binance.com/cn/all", 'text')
 	if rs == False:
 		print("list列表失败\n")
 		return
@@ -124,6 +124,8 @@ def get_requests(url, dattype=''):
 		return False
 	if dattype=='json':
 		return rs.json()
+	elif dattype=='text'::
+		return rs.text
 	return etree.HTML(rs.text)
 
 def connect1():
