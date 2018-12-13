@@ -27,7 +27,7 @@ def main():
 		code = res['url'] if 'url' in res else ''
 		price = res['price'] if 'price' in res else 0 													#价格
 		dayChange = res['dayChange'] if 'dayChange' in res else 0 										#24h涨跌
-		marketCap = res['marketCap'] if 'marketCap' in res else 0   									#市值
+		marketCap = round(res['marketCap'], 2) if 'marketCap' in res else 0   									#市值
 		volumeGlobal = res['volumeGlobal'] if 'volumeGlobal' in res else 0  							#24h成交量 全球
 		circulatingSupply = res['circulatingSupply'] if 'circulatingSupply' in res else 0  				#流通数量
 		kline = '' if kline_data==False or code not in kline_data else kline_data[code] 				#折线图
@@ -55,7 +55,7 @@ def main():
 		off_web = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]//table[2]//tr[2]/td[5]/a/@href')  		#官网
 		currency_type = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]//table[2]//tr[2]/td[6]/text()')  #类型
 		inf = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]/div[@class="s1qusdff-3 eCKrJW"]/p/text()') #简介
-		res = "('"+pic+"','"+name+"','"+code+"','"+str(price)+"',"+str(dayChange)+",'"+str(marketCap)+"','"+str(volumeGlobal)+"','"+str(circulatingSupply)+"','"+kline+"','"+volume_value+"','"+web+"','"+web_url+"','"+browser+"','"+browser_url+"','"+white_paper+"','"+white_paper_url+"','"+sourceCode+"','"+sourceCodeUrl+"','"+community_url+"','"+str(maxSupply)+"','"+issue_date+"','"+issue_price+"','"+consensus+"','"+encryption+"','"+off_web+"','"+currency_type+"','"+inf+"')"
+		res = "('"+pic+"','"+name+"','"+code+"','"+str(price)+"','"+str(dayChange)+"',"+str(marketCap)+",'"+str(volumeGlobal)+"','"+str(circulatingSupply)+"','"+kline+"','"+volume_value+"','"+web+"','"+web_url+"','"+browser+"','"+browser_url+"','"+white_paper+"','"+white_paper_url+"','"+sourceCode+"','"+sourceCodeUrl+"','"+community_url+"','"+str(maxSupply)+"','"+issue_date+"','"+issue_price+"','"+consensus+"','"+encryption+"','"+off_web+"','"+currency_type+"','"+inf+"')"
 	
 		get_pie_chart(code) #获取饼状图
 		sql = "REPLACE INTO `rank` (`pic`,`name`,`code`,`price`,`dayChange`,`marketCap`,`volumeGlobal`,`circulatingSupply`,`kline`,`volume_value`,`web`,`web_url`,`browser`,`browser_url`,`white_paper`,`white_paper_url`,`sourceCode`,`sourceCodeUrl`,`community_url`,`maxSupply`,`issue_date`,`issue_price`,`consensus`,`encryption`,`off_web`,`currency_type`,`inf`) VALUES "+res
