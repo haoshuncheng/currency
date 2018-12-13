@@ -76,10 +76,10 @@ class IndexController extends Yaf_Controller_Abstract {
 			exit(json_encode(['status'=>0, 'msg'=>'not find type']));
 		}
 		if(!isset($_REQUEST['start']) || !$start = $_REQUEST['start']){
-			exit(json_encode(['status'=>0, 'msg'=>'not find start']));
+			$start = time() - 3600*12;
 		}
 		if(!isset($_REQUEST['end']) || !$end = $_REQUEST['end']){
-			exit(json_encode(['status'=>0, 'msg'=>'not find end']));
+			$end = time();
 		}
 		$rs = IvyDb::query("select * from `line_data` where `type`='$type' and `from`='$name' and `epochSecond`>='$start' and `epochSecond`<='$end' order by epochSecond asc");
 		if(!$rs || !count($rs)){
