@@ -10,10 +10,10 @@ class IndexController extends Yaf_Controller_Abstract {
 	public function indexAction() {
 		header("Content-type:text/html;charset=utf8");
 		if(!isset($_REQUEST['type']) || !$type = $_REQUEST['type']){
-			exit(json_encode(['status'=>0, 'msg'=>'not find type']));
+			$type = 1;
 		}
 		if(!isset($_REQUEST['lang']) || !$lang = $_REQUEST['lang']){
-			exit(json_encode(['status'=>0, 'msg'=>'not find lang']));
+			$lang = 'us';
 		}
 		if(!isset($_REQUEST['page']) || !$page = $_REQUEST['page']){
 			$page = 1;
@@ -23,23 +23,11 @@ class IndexController extends Yaf_Controller_Abstract {
 		}
 		$start = ((int)$page - 1) * $pageSize;
 		$date = date("Y-m-d");
-		$date1 = date("Y-m-d", strtotime("-1 day"));
 		if($type == 1){
-			$total = IvyDb::query("select count(*) as num from `currency_data` where `number`>0 and rp_date='$date' ");
-			if(!$total || !count($total) || $total[0]['num'] <= 0){
-				$total = IvyDb::query("select count(*) as num from `currency_data` where `number`>0 and rp_date='$date1' ");
-				$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date1' order by `number` asc limit $start,$pageSize ");
-			} else {
-				$rs = IvyDb::query("select * from `currency_data` where `number`>0 and rp_date='$date' order by `number` asc limit $start,$pageSize ");
-			}
+			$total = IvyDb::query("select count(*) as num from `rank` ");
+			$rs = IvyDb::query("select pic,name,code,marketCap,volumeGlobal,circulatingSupply,kline from `rank` order by `marketCap` desc limit $start,$pageSize ");
 		} else {
-			$total = IvyDb::query("select count(*) as num from `exchange` where `rank`>0 and rp_date='$date' ");
-			if(!$total || !count($total) || $total[0]['num'] <= 0){
-				$total = IvyDb::query("select count(*) as num from `exchange` where `rank`>0 and rp_date='$date1' ");
-				$rs = IvyDb::query("select * from `exchange` where `rank`>0 and rp_date='$date1' order by `rank` asc limit $start,$pageSize ");
-			} else {
-				$rs = IvyDb::query("select * from `exchange` where `rank`>0 and rp_date='$date' order by `rank` asc limit $start,$pageSize ");
-			}
+			$rs = [];
 		}
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
