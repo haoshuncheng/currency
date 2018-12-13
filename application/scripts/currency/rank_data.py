@@ -124,7 +124,7 @@ def get_requests(url, dattype=''):
 		return False
 	if dattype=='json':
 		return rs.json()
-	elif dattype=='text'::
+	elif dattype=='text':
 		return rs.text
 	return etree.HTML(rs.text)
 
