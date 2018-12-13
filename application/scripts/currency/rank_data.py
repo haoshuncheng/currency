@@ -4,6 +4,7 @@ from lxml import etree
 import pymysql.cursors
 import sys
 import time
+import json
 
 def main():
 	kline_data = get_kline_data()  #获取图形数据
@@ -11,11 +12,16 @@ def main():
 	if rs == False:
 		print("list列表失败\n")
 		return
+
+	abc = rs.xpath('//script[@nonce="3b1a756-24d45f8c-e046-4c99-ba71-74d0b5df61c5"]/text()')
+	print(abc)
+	sys.exit()
+
 	response = rs.xpath('//tbody[@class="s1apzr5v-2 ixZYaO"]/tr')
 	if len(response) == 0:
 		print("获取的货币列表为空\n")
 		return
-
+	data = ""
 	for resp in response:
 		order = get_data(resp, './td[1]/text()')
 		pic = get_data(resp, './td[2]//img[@class="avatar"]/@src')
@@ -34,17 +40,17 @@ def main():
 			print("无法获取详细数据\n")
 			continue
 		market_value = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[1]/div/text()')  				#市值 具体数值
-		volume_value = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[2]/div/text()')  				#24h成交量 全球 具体数值
+		volume_value = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[2]/div/text()')  				#24h成交量 全球 具体数值  /////
 		circulation_value = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[3]/div/text()')  		#流通数量 具体数值
-		web = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[4]/div/a/text()')  					#web
-		web_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[4]/div/a/@href')  					#web url
-		browser = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[5]/div/a/text()')  				#浏览器
-		browser_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[5]/div/a/@href')  				#浏览器 url
-		white_paper = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[6]/div/a/text()')  			#白皮书
-		white_paper_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[6]/div/a/@href')  			#白皮书 url
-		sourceCode = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[7]/div/a/text()')  				#源代码
-		sourceCode_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[7]/div/a/@href')  			#源代码 url
-		community_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[8]//a/@href')  				#社区 url
+		web = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[4]/div/a/text()')  					#web        /////
+		web_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[4]/div/a/@href')  					#web url    ////
+		browser = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[5]/div/a/text()')  				#浏览器     ////
+		browser_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[5]/div/a/@href')  				#浏览器 url ////
+		white_paper = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[6]/div/a/text()')  			#白皮书     ////
+		white_paper_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[6]/div/a/@href')  			#白皮书 url /////
+		sourceCode = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[7]/div/a/text()')  				#源代码     /////+++
+		sourceCode_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[7]/div/a/@href')  			#源代码 url /////++
+		community_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[8]//a/@href')  				#社区 url   /////
 		max_to = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]//tbody[1]/tr[2]/td[1]/text()')  		#最大供给量
 		issue_date = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]//tbody[1]/tr[2]/td[3]/text()')		#发行日期
 		issue_price = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]//tbody[1]/tr[2]/td[4]/text()')  	#发行价
@@ -53,12 +59,18 @@ def main():
 		off_web = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]//table[2]//tr[2]/td[5]/a/@href')  		#官网
 		currency_type = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]//table[2]//tr[2]/td[6]/text()')  #类型
 		inf = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]/div[@class="s1qusdff-3 eCKrJW"]/p/text()') #简介
-			
-
+		res = "("+str(order)+",'"+pic+"','"+name+"','"+code+"','"+price+"','"+updown+"','"+market+"','"+volume+"','"+circulation+"','"+kline+"','"+market_value+"','"+volume_value+"','"+circulation_value+"','"+web+"','"+web_url+"','"+browser+"','"+browser_url+"','"+white_paper+"','"+white_paper_url+"','"+sourceCode+"','"+sourceCode_url+"','"+community_url+"','"+max_to+"','"+issue_date+"','"+issue_price+"','"+consensus+"','"+encryption+"','"+off_web+"','"+currency_type+"','"+inf+"')"
+		data = res if data=="" else data+","+res
+		get_pie_chart(code.lower(), code) #获取饼状图
 		#insert(line_data) #储存数据
 
-		print([market_value,volume_value,circulation_value,web,web_url,browser,browser_url,white_paper,white_paper_url,sourceCode,sourceCode_url,community_url,max_to,issue_date,issue_price,consensus,encryption,off_web,currency_type,inf])
-		sys.exit()
+		# print([market_value,volume_value,circulation_value,web,web_url,browser,browser_url,white_paper,white_paper_url,sourceCode,sourceCode_url,community_url,max_to,issue_date,issue_price,consensus,encryption,off_web,currency_type,inf])
+		# sys.exit()
+
+	sql = "REPLACE INTO `rank` (`order`,`pic`,`name`,`code`,`price`,`updown`,`market`,`volume`,`circulation`,`kline`,`market_value`,`volume_value`,`circulation_value`,`web`,`web_url`,`browser`,`browser_url`,`white_paper`,`white_paper_url`,`sourceCode`,`sourceCode_url`,`community_url`,`max_to`,`issue_date`,`issue_price`,`consensus`,`encryption`,`off_web`,`currency_type`,`inf`) VALUES "+data
+	connect['cur'].execute(sql)
+	connect['con'].commit()
+	print('成功插入', connect['cur'].rowcount, '条数据')
 
 	# f = open('./abc.html', 'w', encoding='utf-8')
 	# f.write(rs.text)
@@ -75,28 +87,18 @@ def get_kline_data():
 		rs[row['code']] = row['kline_data']
 	return rs
 
-#储存数据
-def insert(rs):
+#获取饼状图
+def get_pie_chart(code, code1):
+	print("获取饼状图数据\n")
+	url = "https://dncapi.feixiaohao.com/api/coin/cointrades-web?code="+str(code)+"&webp=1"
+	print(url)
+	rs = get_requests(url, 'json')
 	#print(rs)
-	if 'code' not in rs or rs['code']!=0 or 'result' not in rs or 'total' not in rs['result'] or rs['result']['total']==0 or 'data' not in rs['result']:
-		print("接口返回数据异常或数据长度为0\n")
+	if 'code' not in rs or rs['code']!='200' or 'data' not in rs or len(rs['data']) <= 0:
+		print("饼状图接口返回数据异常或数据长度为0\n")
 		return
-	data = ""
-	print(len(rs['result']['data']))
-	for v in rs['result']['data']:
-		epochSecond = v['epochSecond'] if 'epochSecond' in v else ''
-		type1 = v['type'] if 'type' in v else ''
-		from1 = v['from'] if 'from' in v else ''
-		to = v['to'] if 'to' in v else ''
-		high = float(v['high']) if 'high' in v else ''
-		low = float(v['low']) if 'low' in v else ''
-		open1 = float(v['open']) if 'open' in v else ''
-		close = float(v['close']) if 'close' in v else ''
-		volumeFrom = float(v['volumeFrom']) if 'volumeFrom' in v else ''
-		volumeTo = float(v['volumeTo']) if 'volumeTo' in v else ''
-		res = "('"+str(epochSecond)+"','"+str(type1)+"','"+str(from1)+"','"+str(to)+"',"+str(high)+","+str(low)+","+str(open1)+","+str(close)+","+str(volumeFrom)+","+str(volumeTo)+")"
-		data = res if data=="" else data+","+res
-	sql = "REPLACE INTO `line_data` (`epochSecond`,`type`,`from`,`to`,`high`,`low`,`open`,`close`,`volumeFrom`,`volumeTo`) VALUES "+data
+
+	sql = "REPLACE INTO `pie_chart` (`code`,`data`) VALUES ('"+code1+"','"+json.dumps(rs['data'])+"')"
 	connect['cur'].execute(sql)
 	connect['con'].commit()
 	print('成功插入', connect['cur'].rowcount, '条数据')
