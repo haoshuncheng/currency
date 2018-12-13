@@ -117,6 +117,7 @@ def get_requests(url, dattype=''):
 		return etree.HTML(rs.text)
 	except:
 		return False
+		
 def connect1():
 	connect = pymysql.Connect(
 		host='116.62.118.136',
