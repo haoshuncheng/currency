@@ -13,8 +13,10 @@ def main():
 		print("list列表失败\n")
 		return
 
-	abc = rs.xpath('//script[@nonce="3b1a756-24d45f8c-e046-4c99-ba71-74d0b5df61c5"]/text()')
-	print(abc)
+	abc = rs.xpath('//script[@nonce="3b1a756-24d45f8c-e046-4c99-ba71-74d0b5df61c5"]')
+
+	div_str=etree.tostring(abc,encoding='utf-8')
+	print(div_str)
 	sys.exit()
 
 	response = rs.xpath('//tbody[@class="s1apzr5v-2 ixZYaO"]/tr')
