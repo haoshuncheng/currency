@@ -13,7 +13,9 @@ def main():
 		print("list列表失败\n")
 		return
 
-	print(rs)
+	f = open('./abce.html', 'w', encoding='utf-8')
+	f.write(rs)
+	f.close()
 	# abc = rs.xpath('//script[@nonce="3b1a756-24d45f8c-e046-4c99-ba71-74d0b5df61c5"]')
 	# print(abc)
 
