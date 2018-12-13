@@ -5,6 +5,7 @@ import pymysql.cursors
 import sys
 import time
 import json
+import re
 
 def main():
 	kline_data = get_kline_data()  #获取图形数据
@@ -13,9 +14,12 @@ def main():
 		print("list列表失败\n")
 		return
 
-	f = open('./abce.html', 'w', encoding='utf-8')
-	f.write(rs)
-	f.close()
+	rs = re.match(r'\"\"initialState\":\"(.*),\"initialProps\"',  rs)
+	print(len(rs.group))
+	if len(rs.group) > 1:
+		f = open('./abcef.html', 'w', encoding='utf-8')
+		f.write(rs.group[1])
+		f.close()
 	# abc = rs.xpath('//script[@nonce="3b1a756-24d45f8c-e046-4c99-ba71-74d0b5df61c5"]')
 	# print(abc)
 
