@@ -15,7 +15,7 @@ def main():
 
 	abc = rs.xpath('//script[@nonce="3b1a756-24d45f8c-e046-4c99-ba71-74d0b5df61c5"]')
 
-	div_str=etree.tostring(abc,encoding='utf-8')
+	div_str=etree.tostring(abc[0],encoding='utf-8')
 	print(div_str)
 	sys.exit()
 
