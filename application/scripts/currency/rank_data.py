@@ -13,19 +13,24 @@ def main():
 	if rs == False:
 		print("list列表失败\n")
 		return
+	m_tr =  re.findall(r'"initialState":(.*?),"initialProps"', rs, re.S|re.M)
+	if len(m_tr) == 0:
+		print("正则匹配数据失败\n")
+		sys.exit()
+	m_tr = json.loads(m_tr[0])
+	if 'coinList' not in m_tr:
+		print("数据中不含coinList\n")
+		sys.exit()
+	for res in m_tr['coinList']:
+		print(res['name'])
+		sys.exit()
 
-	rs = re.match(r'\"\"initialState\":\"(.*),\"initialProps\"',  rs)
-	print(len(rs.group))
-	if len(rs.group) > 1:
-		f = open('./abcef.html', 'w', encoding='utf-8')
-		f.write(rs.group[1])
-		f.close()
 	# abc = rs.xpath('//script[@nonce="3b1a756-24d45f8c-e046-4c99-ba71-74d0b5df61c5"]')
 	# print(abc)
 
 	# div_str=etree.tostring(abc[0],encoding='utf-8')
 	# print(div_str)
-	sys.exit()
+	
 
 	response = rs.xpath('//tbody[@class="s1apzr5v-2 ixZYaO"]/tr')
 	if len(response) == 0:
