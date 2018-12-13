@@ -105,16 +105,18 @@ def trim(str):
 #发送请求
 def get_requests(url, dattype=''):
 	headers = {'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
-	rs = requests.get(url, headers=headers)
-	if rs.status_code != 200:
-		print("数据请求失败\n")
+	try:
+		rs = requests.get(url, headers=headers)
+		if rs.status_code != 200:
+			print("数据请求失败\n")
+			return False
+		if dattype=='json':
+			return rs.json()
+		elif dattype=='text':
+			return rs.text
+		return etree.HTML(rs.text)
+	except:
 		return False
-	if dattype=='json':
-		return rs.json()
-	elif dattype=='text':
-		return rs.text
-	return etree.HTML(rs.text)
-
 def connect1():
 	connect = pymysql.Connect(
 		host='116.62.118.136',
