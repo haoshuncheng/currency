@@ -85,7 +85,7 @@ def get_pie_chart(code):
 	print(url)
 	rs = get_requests(url, 'json')
 	#print(rs)
-	if 'code' not in rs or rs['code']!='200' or 'data' not in rs or len(rs['data']) <= 0:
+	if rs == False or 'code' not in rs or rs['code']!='200' or 'data' not in rs or len(rs['data']) <= 0:
 		print("饼状图接口返回数据异常或数据长度为0\n")
 		return
 
@@ -117,7 +117,7 @@ def get_requests(url, dattype=''):
 		return etree.HTML(rs.text)
 	except:
 		return False
-		
+
 def connect1():
 	connect = pymysql.Connect(
 		host='116.62.118.136',
