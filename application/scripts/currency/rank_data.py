@@ -22,51 +22,32 @@ def main():
 		print("数据中不含coinList\n")
 		sys.exit()
 	for res in m_tr['coinList']:
-		print(res['name'])
-		sys.exit()
-
-	# abc = rs.xpath('//script[@nonce="3b1a756-24d45f8c-e046-4c99-ba71-74d0b5df61c5"]')
-	# print(abc)
-
-	# div_str=etree.tostring(abc[0],encoding='utf-8')
-	# print(div_str)
-	
-
-	response = rs.xpath('//tbody[@class="s1apzr5v-2 ixZYaO"]/tr')
-	if len(response) == 0:
-		print("获取的货币列表为空\n")
-		return
-	data = ""
-	for resp in response:
-		order = get_data(resp, './td[1]/text()')
-		pic = get_data(resp, './td[2]//img[@class="avatar"]/@src')
-		name = get_data(resp, './td[2]//span[@class="abbr"]/text()')
-		code = get_data(resp, './td[2]//span[@class="fullName"]/text()')
-		price = get_data(resp, './td[3]//div[@class="s1oak5r5-0 hPVmeY"]/text()')		#价格
-		updown = get_data(resp, './td[4]/div[@class="cw0nen-1 hUhTmi"]/text()')			#24h涨跌
-		market = get_data(resp, './td[5]/span[@class="cqbzzs-0 kGbRkh"]/text()')  		#市值
-		volume = get_data(resp, './td[7]/span[@class="cqbzzs-0 kGbRkh"]/text()')  		#24h成交量 全球
-		circulation = get_data(resp, './td[8]/span[@class="cqbzzs-0 kGbRkh"]/text()')  	#流通数量
-		kline = '' if kline_data==False or code.lower() not in kline_data else kline_data[code.lower()] #折线图
-		url = "https://info.binance.com/cn/currencies/"+code.lower()
+		pic = host_url+res['thumbUrl'] if 'thumbUrl' in res else ''
+		name = res['name'] if 'name' in res else ''
+		code = res['url'] if 'url' in res else ''
+		price = res['price'] if 'price' in res else 0 													#价格
+		dayChange = res['dayChange'] if 'dayChange' in res else 0 										#24h涨跌
+		marketCap = res['marketCap'] if 'marketCap' in res else 0   									#市值
+		volumeGlobal = res['volumeGlobal'] if 'volumeGlobal' in res else 0  							#24h成交量 全球
+		circulatingSupply = res['circulatingSupply'] if 'circulatingSupply' in res else 0  				#流通数量
+		kline = '' if kline_data==False or code not in kline_data else kline_data[code] 				#折线图
+		url = "https://info.binance.com/cn/currencies/"+code
 		print(url)
 		line_data = get_requests(url)
 		if line_data == False:
 			print("无法获取详细数据\n")
 			continue
-		market_value = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[1]/div/text()')  				#市值 具体数值
 		volume_value = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[2]/div/text()')  				#24h成交量 全球 具体数值  /////
-		circulation_value = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[3]/div/text()')  		#流通数量 具体数值
 		web = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[4]/div/a/text()')  					#web        /////
 		web_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[4]/div/a/@href')  					#web url    ////
 		browser = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[5]/div/a/text()')  				#浏览器     ////
 		browser_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[5]/div/a/@href')  				#浏览器 url ////
 		white_paper = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[6]/div/a/text()')  			#白皮书     ////
 		white_paper_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[6]/div/a/@href')  			#白皮书 url /////
-		sourceCode = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[7]/div/a/text()')  				#源代码     /////+++
-		sourceCode_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[7]/div/a/@href')  			#源代码 url /////++
+		sourceCode = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[7]/div/a/text()')  				#源代码     /////
+		sourceCodeUrl = res['sourceCodeUrl'] if 'sourceCodeUrl' in res else '' 									#源代码 url /////
 		community_url = get_data(line_data, '//div[@class="ix71fe-6 jgQppZ"]/ul/li[8]//a/@href')  				#社区 url   /////
-		max_to = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]//tbody[1]/tr[2]/td[1]/text()')  		#最大供给量
+		maxSupply = res['maxSupply'] if 'maxSupply' in res else 0  												#最大供给量
 		issue_date = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]//tbody[1]/tr[2]/td[3]/text()')		#发行日期
 		issue_price = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]//tbody[1]/tr[2]/td[4]/text()')  	#发行价
 		consensus = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]//tbody[1]/tr[2]/td[5]/text()')  		#共识机制
@@ -74,18 +55,13 @@ def main():
 		off_web = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]//table[2]//tr[2]/td[5]/a/@href')  		#官网
 		currency_type = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]//table[2]//tr[2]/td[6]/text()')  #类型
 		inf = get_data(line_data, '//div[@class="s1qusdff-0 fRRtWs"]/div[@class="s1qusdff-3 eCKrJW"]/p/text()') #简介
-		res = "("+str(order)+",'"+pic+"','"+name+"','"+code+"','"+price+"','"+updown+"','"+market+"','"+volume+"','"+circulation+"','"+kline+"','"+market_value+"','"+volume_value+"','"+circulation_value+"','"+web+"','"+web_url+"','"+browser+"','"+browser_url+"','"+white_paper+"','"+white_paper_url+"','"+sourceCode+"','"+sourceCode_url+"','"+community_url+"','"+max_to+"','"+issue_date+"','"+issue_price+"','"+consensus+"','"+encryption+"','"+off_web+"','"+currency_type+"','"+inf+"')"
-		data = res if data=="" else data+","+res
-		get_pie_chart(code.lower(), code) #获取饼状图
-		#insert(line_data) #储存数据
-
-		# print([market_value,volume_value,circulation_value,web,web_url,browser,browser_url,white_paper,white_paper_url,sourceCode,sourceCode_url,community_url,max_to,issue_date,issue_price,consensus,encryption,off_web,currency_type,inf])
-		# sys.exit()
-
-	sql = "REPLACE INTO `rank` (`order`,`pic`,`name`,`code`,`price`,`updown`,`market`,`volume`,`circulation`,`kline`,`market_value`,`volume_value`,`circulation_value`,`web`,`web_url`,`browser`,`browser_url`,`white_paper`,`white_paper_url`,`sourceCode`,`sourceCode_url`,`community_url`,`max_to`,`issue_date`,`issue_price`,`consensus`,`encryption`,`off_web`,`currency_type`,`inf`) VALUES "+data
-	connect['cur'].execute(sql)
-	connect['con'].commit()
-	print('成功插入', connect['cur'].rowcount, '条数据')
+		res = "('"+pic+"','"+name+"','"+code+"','"+price+"','"+dayChange+"','"+marketCap+"','"+volumeGlobal+"','"+circulatingSupply+"','"+kline+"','"+volume_value+"','"+web+"','"+web_url+"','"+browser+"','"+browser_url+"','"+white_paper+"','"+white_paper_url+"','"+sourceCode+"','"+sourceCodeUrl+"','"+community_url+"','"+maxSupply+"','"+issue_date+"','"+issue_price+"','"+consensus+"','"+encryption+"','"+off_web+"','"+currency_type+"','"+inf+"')"
+	
+		get_pie_chart(code) #获取饼状图
+		sql = "REPLACE INTO `rank` (`pic`,`name`,`code`,`price`,`dayChange`,`marketCap`,`volumeGlobal`,`circulatingSupply`,`kline`,`volume_value`,`web`,`web_url`,`browser`,`browser_url`,`white_paper`,`white_paper_url`,`sourceCode`,`sourceCodeUrl`,`community_url`,`maxSupply`,`issue_date`,`issue_price`,`consensus`,`encryption`,`off_web`,`currency_type`,`inf`) VALUES "+res
+		connect['cur'].execute(sql)
+		connect['con'].commit()
+		print('成功插入', connect['cur'].rowcount, '条数据')
 
 	# f = open('./abc.html', 'w', encoding='utf-8')
 	# f.write(rs.text)
@@ -103,7 +79,7 @@ def get_kline_data():
 	return rs
 
 #获取饼状图
-def get_pie_chart(code, code1):
+def get_pie_chart(code):
 	print("获取饼状图数据\n")
 	url = "https://dncapi.feixiaohao.com/api/coin/cointrades-web?code="+str(code)+"&webp=1"
 	print(url)
@@ -113,7 +89,7 @@ def get_pie_chart(code, code1):
 		print("饼状图接口返回数据异常或数据长度为0\n")
 		return
 
-	sql = "REPLACE INTO `pie_chart` (`code`,`data`) VALUES ('"+code1+"','"+json.dumps(rs['data'])+"')"
+	sql = "REPLACE INTO `pie_chart` (`code`,`data`) VALUES ('"+code+"','"+json.dumps(rs['data'])+"')"
 	connect['cur'].execute(sql)
 	connect['con'].commit()
 	print('成功插入', connect['cur'].rowcount, '条数据')
@@ -155,5 +131,6 @@ def connect1():
 	return {'con':connect, 'cur':cursor}
 
 if __name__ == "__main__":
+	host_url = 'https://resource.bnbstatic.com/'
 	connect = connect1()
 	main()
