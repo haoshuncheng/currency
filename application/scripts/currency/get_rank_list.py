@@ -18,4 +18,7 @@ def get_rank_list():
 		print("正则匹配数据失败\n")
 		return False
 	m_tr = json.loads(m_tr[0])
-	return m_tr
+	if 'coinList' not in m_tr:
+		print("数据中不含coinList\n")
+		return False
+	return m_tr['coinList']
