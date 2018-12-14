@@ -25,7 +25,11 @@ class IndexController extends Yaf_Controller_Abstract {
 		$date = date("Y-m-d");
 		if($type == 1){
 			$total = IvyDb::query("select count(*) as num from `rank` ");
+<<<<<<< HEAD
 			$rs = IvyDb::query("select pic,name,code,marketCap,volumeGlobal,circulatingSupply,kline,dayChange from `rank` order by `marketCap` desc limit $start,$pageSize ");
+=======
+			$rs = IvyDb::query("select pic,name,code,price,dayChange,marketCap,volumeGlobal,circulatingSupply,kline from `rank` order by `marketCap` desc limit $start,$pageSize ");
+>>>>>>> c46ccf809b1c21ee713fdeb79b6127ae8d2abfdb
 		} else {
 			$rs = [];
 		}
