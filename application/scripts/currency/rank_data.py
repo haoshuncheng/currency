@@ -25,7 +25,7 @@ def main():
 		code = res['url'] if 'url' in res else ''
 		price = res['price'] if 'price' in res else 0 													#价格
 		dayChange = res['dayChange'] if 'dayChange' in res else 0 										#24h涨跌
-		marketCap = round(res['marketCap'], 2) if 'marketCap' in res and res['marketCap']!='None' else 0#市值
+		marketCap = round(res['marketCap'], 2) if 'marketCap' in res and res['marketCap']!='' and res['marketCap']!='None' else 0#市值
 		volumeGlobal = res['volumeGlobal'] if 'volumeGlobal' in res else 0  							#24h成交量 全球
 		circulatingSupply = res['circulatingSupply'] if 'circulatingSupply' in res else 0  				#流通数量
 		kline = '' if kline_data==False or code not in kline_data else kline_data[code] 				#折线图
