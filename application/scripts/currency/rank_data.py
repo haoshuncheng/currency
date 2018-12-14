@@ -15,6 +15,8 @@ def main():
 		sys.exit()
 	data = ''
 	for res in m_tr:
+		print(res)
+
 		if 'thumbUrl' in res and res['thumbUrl'] != '':
 			pic = host_url+res['thumbUrl']
 		elif 'imageUrl' in res and res['imageUrl'] != '':
