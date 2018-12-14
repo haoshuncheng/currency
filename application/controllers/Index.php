@@ -25,7 +25,7 @@ class IndexController extends Yaf_Controller_Abstract {
 		$date = date("Y-m-d");
 		if($type == 1){
 			$total = IvyDb::query("select count(*) as num from `rank` ");
-			$rs = IvyDb::query("select pic,name,code,marketCap,volumeGlobal,circulatingSupply,kline,dayChange from `rank` order by `marketCap` desc limit $start,$pageSize ");
+			$rs = IvyDb::query("select pic,name,code,price,marketCap,volumeGlobal,circulatingSupply,kline,dayChange from `rank` order by `marketCap` desc limit $start,$pageSize ");
 		} else {
 			$rs = [];
 		}
@@ -42,11 +42,18 @@ class IndexController extends Yaf_Controller_Abstract {
 		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
 			exit(json_encode(['status'=>0, 'msg'=>'not find code']));
 		}
-		$rs = IvyDb::query("select * from `rank` where `code`='$code'");
+		$rs = IvyDb::query("select pic,name,code,price,marketCap,volumeGlobal,circulatingSupply,kline,dayChange from `rank` where `code`='$code'");
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
-		exit(json_encode(['status'=>1, 'data'=>$rs]));
+		$result = [];
+		$res = IvyDb::query("select * from `currency_inf` where `code`='$code'");
+		if(!$res || !count($res)){
+			$result = $rs[0];
+		} else {
+			$result = array_merge($rs[0], $res[0]);
+		}
+		exit(json_encode(['status'=>1, 'data'=>$result]));
 	}
 
 
