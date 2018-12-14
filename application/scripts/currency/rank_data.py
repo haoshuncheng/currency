@@ -13,7 +13,7 @@ def main():
 	m_tr = get_rank_list()         #获取货币列表
 	if m_tr == False:
 		sys.exit()
-	data = ''
+	#data = ''
 	for res in m_tr:
 		if 'thumbUrl' in res and res['thumbUrl'] != '':
 			pic = host_url+res['thumbUrl']
@@ -30,11 +30,11 @@ def main():
 		circulatingSupply = res['circulatingSupply'] if 'circulatingSupply' in res else 0  				#流通数量
 		kline = '' if kline_data==False or code not in kline_data else kline_data[code] 				#折线图
 		rec = "('"+pic+"','"+name+"','"+code+"','"+str(price)+"','"+str(dayChange)+"',"+str(marketCap)+",'"+str(volumeGlobal)+"','"+str(circulatingSupply)+"','"+kline+"')"
-		data = ","+rec if data!='' else rec
-	sql = "REPLACE INTO `rank` (`pic`,`name`,`code`,`price`,`dayChange`,`marketCap`,`volumeGlobal`,`circulatingSupply`,`kline`) VALUES "+data
-	connect['cur'].execute(sql)
-	connect['con'].commit()
-	print('成功插入', connect['cur'].rowcount, '条数据')
+		#data = ","+rec if data!='' else rec
+		sql = "REPLACE INTO `rank` (`pic`,`name`,`code`,`price`,`dayChange`,`marketCap`,`volumeGlobal`,`circulatingSupply`,`kline`) VALUES "+rec
+		connect['cur'].execute(sql)
+		connect['con'].commit()
+		print('成功插入', connect['cur'].rowcount, '条数据')
 
 	# f = open('./abc.html', 'w', encoding='utf-8')
 	# f.write(rs.text)
