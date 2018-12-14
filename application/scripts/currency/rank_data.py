@@ -15,6 +15,9 @@ def main():
 		sys.exit()
 	data = ''
 	for res in m_tr:
+		print(res['marketCap'])
+		print(type(res['marketCap']))
+
 		if 'thumbUrl' in res and res['thumbUrl'] != '':
 			pic = host_url+res['thumbUrl']
 		elif 'imageUrl' in res and res['imageUrl'] != '':
