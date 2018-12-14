@@ -6,18 +6,22 @@ import sys
 import time
 import json
 import re
+from get_rank_list import *
 
 def main():
 	kline_data = get_kline_data()  #获取图形数据
-	rs = get_requests("https://info.binance.com/cn/all", 'text')
-	if rs == False:
-		print("list列表失败\n")
-		return
-	m_tr =  re.findall(r'"initialState":(.*?),"initialProps"', rs, re.S|re.M)
-	if len(m_tr) == 0:
-		print("正则匹配数据失败\n")
-		sys.exit()
-	m_tr = json.loads(m_tr[0])
+	print(get_rank_list())
+	sys.exit()
+
+	# rs = get_requests("https://info.binance.com/cn/all", 'text')
+	# if rs == False:
+	# 	print("list列表失败\n")
+	# 	return
+	# m_tr =  re.findall(r'"initialState":(.*?),"initialProps"', rs, re.S|re.M)
+	# if len(m_tr) == 0:
+	# 	print("正则匹配数据失败\n")
+	# 	sys.exit()
+	# m_tr = json.loads(m_tr[0])
 	if 'coinList' not in m_tr:
 		print("数据中不含coinList\n")
 		sys.exit()
@@ -32,7 +36,7 @@ def main():
 		code = res['url'] if 'url' in res else ''
 		price = res['price'] if 'price' in res else 0 													#价格
 		dayChange = res['dayChange'] if 'dayChange' in res else 0 										#24h涨跌
-		marketCap = round(res['marketCap'], 2) if 'marketCap' in res else 0   									#市值
+		marketCap = round(res['marketCap'], 2) if 'marketCap' in res else 0   							#市值
 		volumeGlobal = res['volumeGlobal'] if 'volumeGlobal' in res else 0  							#24h成交量 全球
 		circulatingSupply = res['circulatingSupply'] if 'circulatingSupply' in res else 0  				#流通数量
 		kline = '' if kline_data==False or code not in kline_data else kline_data[code] 				#折线图
