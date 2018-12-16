@@ -29,7 +29,7 @@ def get_list(url,isinnovation):
 
 if __name__ == "__main__":
 	connect = connect1()
-	for isinnovation in [0,1]:
-		for page in [1,10]:
+	for isinnovation in range(0,1):
+		for page in range(1,11):
 			url = "https://dncapi.feixiaohao.com/api/exchange/web-exchange?pagesize=100&type=all&webp=1"+"&isinnovation="+str(isinnovation)+"&page="+str(page)
-	get_list(url,isinnovation)
+			get_list(url,isinnovation)
