@@ -22,6 +22,7 @@ def get_list(url,isinnovation):
 		record['labels_id'] = 0 if not record['labels_id'] else record['labels_id']
 		record['isfocus'] = 0 if not record['isfocus'] else record['isfocus']
 		record['isshare'] = 0 if not record['isshare'] else record['isshare']
+		
 		write(connect['con'],'exchange',record)
 
 

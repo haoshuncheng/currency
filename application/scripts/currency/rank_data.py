@@ -96,7 +96,7 @@ def write(conn, table_name, info_dict):
 	sql_key = ''  # 数据库行字段
 	sql_value = ''  # 数据库值
 	for key in info_dict.keys():  # 生成insert插入语句
-		sql_value = (sql_value + '"' + pymysql.escape_string(info_dict[key]) + '"' + ',')
+		sql_value = (sql_value + '"' + pymysql.escape_string(str(info_dict[key])) + '"' + ',')
 		sql_key = sql_key + ' ' + key + ','
 	try:
 		cursor.execute(
