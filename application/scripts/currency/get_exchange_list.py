@@ -18,10 +18,8 @@ def get_list(url,isinnovation):
 		print("json数据异常\n")
 		return False
 	for record in rs['data']:
-		print(record)
-		time.sleep(3)
-		# code = record['']
-		# sql = "replace into exchange values()"
+		record['isinnovation'] = isinnovation
+		write(connect['con'],'exchange',record)
 
 
 
