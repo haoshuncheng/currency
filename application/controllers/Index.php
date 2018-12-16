@@ -121,7 +121,7 @@ class IndexController extends Yaf_Controller_Abstract {
 		}
 		$start = ((int)$page - 1) * $pageSize;
 		$total = IvyDb::query("select count(*) as num from `exchange` ");
-		$rs = IvyDb::query("select * from exchange order by `volumn` desc limit $start,$pageSize ")
+		$rs = IvyDb::query("select * from exchange order by `volumn` desc limit $start,$pageSize ");
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
