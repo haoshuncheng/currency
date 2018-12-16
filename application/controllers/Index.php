@@ -109,7 +109,24 @@ class IndexController extends Yaf_Controller_Abstract {
 		exit(json_encode(['status'=>1, 'data'=>$rs]));
 	}
 
-
+	/**
+     * 交易所列表页
+     */
+	public function exchangeAction() {
+		if(!isset($_REQUEST['page']) || !$page = $_REQUEST['page']){
+			$page=1;
+		}
+		if(!isset($_REQUEST['pagesize']) || !$pagesize = $_REQUEST['pagesize']){
+			$pagesize=100;
+		}
+		$start = ((int)$page - 1) * $pageSize;
+		$total = IvyDb::query("select count(*) as num from `exchange` ");
+		$rs = IvyDb::query("select * from exchange order by `volumn` desc limit $start,$pageSize ")
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=>$rs],'total'=>$total[0]['num']]));
+	}
 
 
 
