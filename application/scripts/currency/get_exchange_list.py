@@ -8,6 +8,7 @@ import re
 from rank_data import *
 
 def get_list(url,isinnovation):
+	print(url)
 
 	rs = get_requests(url, 'json')
 	if rs == False:
