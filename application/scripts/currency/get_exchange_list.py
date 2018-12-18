@@ -27,7 +27,6 @@ def get_list(url,isinnovation):
 
 
 
-
 if __name__ == "__main__":
 	connect = connect1()
 	for isinnovation in [0,1]:

@@ -121,11 +121,12 @@ class IndexController extends Yaf_Controller_Abstract {
 		}
 		$start = ((int)$page - 1) * $pagesize;
 		$total = IvyDb::query("select count(*) as num from `exchange` ");
+		$sum = IvyDb::query("select sum(volumn) as sum_volumn from `exchange` ");
 		$rs = IvyDb::query("select * from exchange order by `volumn` desc limit $start,$pagesize ");
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
-		exit(json_encode(['status'=>1, 'data'=>$rs,'total'=>$total[0]['num']]));
+		exit(json_encode(['status'=>1, 'data'=>$rs,'total'=>$total[0]['num'], 'sum' => $sum[0]['sum_volumn']]));
 	}
 
 
