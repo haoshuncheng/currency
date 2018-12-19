@@ -40,7 +40,7 @@ def get_list(url,isinnovation):
 
 		coin_pairs_url = "https://dncapi.feixiaohao.com/api/exchange/coinpair_list"
 		data = {"code":record['id'],"page":1,"pagesize":1000,"webp":1}
-		coin_pairs_rs = post_requests(coin_pairs_url,data)
+		coin_pairs_rs = post_requests(coin_pairs_url,json.dumps(data))
 		if coin_pairs_rs == False:
 			print("list列表失败\n")
 			continue
