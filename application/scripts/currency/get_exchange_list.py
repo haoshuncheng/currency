@@ -33,7 +33,7 @@ def get_list(url,isinnovation):
 			continue
 		exchangetrades_data = json.dumps(exchange_rs['data'])
 		cursor = connect['cur']
-		cursor.execute("REPLACE INTO exchangetrades values('"+record['id']+"','"+exchangetrades_data+"')")
+		cursor.execute("REPLACE INTO exchangetrades(code,info) values('"+record['id']+"','"+exchangetrades_data+"')")
 		conn.commit()
 
 
