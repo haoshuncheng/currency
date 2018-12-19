@@ -130,6 +130,20 @@ class IndexController extends Yaf_Controller_Abstract {
 	}
 
 
+	/**
+     * 交易所列表页
+     */
+	public function exchangetradesAction() {
+		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
+			exit(json_encode(array('status' => 0, 'msg' => 'no code')));
+		}
+		$rs = IvyDb::query("select info from exchangetrades where code='$code'");
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=>$rs]);
+	}
+
 
 
 
