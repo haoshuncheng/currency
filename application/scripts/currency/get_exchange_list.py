@@ -38,6 +38,23 @@ def get_list(url,isinnovation):
 		cursor.execute("REPLACE INTO exchangetrades(code,info) values('"+record['id']+"','"+exchangetrades_data+"')")
 		connect['con'].commit()
 
+		coin_pairs_url = "https://dncapi.feixiaohao.com/api/exchange/coinpair_list"
+		data = {"code":record['id'],"page":1,"pagesize":1000,"webp":1}
+		coin_pairs_rs =  = post_requests(coin_pairs_url,data)
+		if coin_pairs_rs == False:
+			print("list列表失败\n")
+			continue
+		if 'code' not in coin_pairs_rs or coin_pairs_rs['code']!='200' or 'data' not in coin_pairs_rs or len(coin_pairs_rs['data'])==0:
+			print(data)
+			print("json数据异常\n")
+			continue
+		coin_pairs_data = coin_pairs_rs['data']
+		for coin_record in coin_pairs_data:
+			coin_record['code'] = record['id']
+			write(connect['con'],'coin_pairs',coin_record)
+
+
+
 
 if __name__ == "__main__":
 	connect = connect1()
