@@ -51,6 +51,7 @@ def get_list(url,isinnovation):
 		coin_pairs_data = coin_pairs_rs['data']
 		for coin_record in coin_pairs_data:
 			coin_record['code'] = record['id']
+			print(coin_record)
 			write(connect['con'],'coin_pairs',coin_record)
 
 
