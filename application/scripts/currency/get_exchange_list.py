@@ -15,7 +15,7 @@ def get_list(url,isinnovation):
 		print("list列表失败\n")
 		return False
 	if 'code' not in rs or rs['code']!='200' or 'data' not in rs or len(rs['data'])==0:
-		print(rs)
+		print(url)
 		print("json数据异常\n")
 		return False
 	for record in rs['data']:
@@ -30,7 +30,7 @@ def get_list(url,isinnovation):
 			print("list列表失败\n")
 			continue
 		if 'code' not in exchange_rs or exchange_rs['code']!='200' or 'data' not in exchange_rs or len(exchange_rs['data'])==0:
-			print(exchange_rs)
+			print(exchangeTrades_url)
 			print("json数据异常\n")
 			continue
 		exchangetrades_data = json.dumps(exchange_rs['data'])
