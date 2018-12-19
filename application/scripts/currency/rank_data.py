@@ -69,6 +69,14 @@ def get_requests(url, dattype=''):
 	except:
 		return False
 
+def post_requests(url,data):
+	headers = {'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
+	rs = requests.post(url, headers=headers,data=data)
+	if rs.status_code != 200:
+		print("数据请求失败\n")
+		return False
+	return rs.json()
+		
 def connect1():
 	connect = pymysql.Connect(
 		host='116.62.118.136',

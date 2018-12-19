@@ -131,7 +131,7 @@ class IndexController extends Yaf_Controller_Abstract {
 
 
 	/**
-     * 交易所列表页
+     * 交易所成交额
      */
 	public function exchangetradesAction() {
 		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
