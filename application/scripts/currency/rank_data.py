@@ -36,6 +36,19 @@ def main():
 		connect['con'].commit()
 		print('成功插入', connect['cur'].rowcount, '条数据')
 
+		market_ticker_url = "https://dncapi.feixiaohao.com/api/coin/market_ticker?page=1&pagesize=1000&code="+code+"&token=&webp=1"
+		market_ticker_rs = get_requests(market_ticker_url, 'json')
+		if market_ticker_rs == False:
+			print("list列表失败\n")
+			continue
+		if 'code' not in market_ticker_rs or market_ticker_rs['code']!='200' or 'data' not in market_ticker_rs or len(market_ticker_rs['data'])==0:
+			print(market_ticker_url)
+			print("json数据异常\n")
+			continue
+		market_ticker_data = market_ticker_rs['data']
+		for market_ticker_record in market_ticker_data:
+			write(connect['con'],'coin_market_ticker',market_ticker_record)
+
 	# f = open('./abc.html', 'w', encoding='utf-8')
 	# f.write(rs.text)
 	# f.close()
