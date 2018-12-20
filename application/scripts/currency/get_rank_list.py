@@ -11,6 +11,7 @@ from rank_data import *
 def get_rank_list():
 	rs = get_requests("https://info.binance.com/cn/all", 'text')
 	if rs == False:
+		print("aaaa")
 		print("list列表失败\n")
 		return False
 	m_tr =  re.findall(r'"initialState":(.*?),"initialProps"', rs, re.S|re.M)
