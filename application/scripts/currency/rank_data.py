@@ -37,6 +37,7 @@ def main():
 		print('成功插入', connect['cur'].rowcount, '条数据')
 
 		market_ticker_url = "https://dncapi.feixiaohao.com/api/coin/market_ticker?page=1&pagesize=1000&code="+code+"&token=&webp=1"
+		print(market_ticker_url)
 		market_ticker_rs = get_requests(market_ticker_url, 'json')
 		if market_ticker_rs == False:
 			print("list列表失败\n")
