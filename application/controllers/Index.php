@@ -145,6 +145,30 @@ class IndexController extends Yaf_Controller_Abstract {
 	}
 
 
+		/**
+     * 交易所交易对
+     */
+	public function exchangecoinpairsAction() {
+		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
+			exit(json_encode(array('status' => 0, 'msg' => 'no code')));
+		}
+		if(!isset($_REQUEST['page']) || !$page = $_REQUEST['page']){
+			$page=1;
+		}
+		if(!isset($_REQUEST['pagesize']) || !$pagesize = $_REQUEST['pagesize']){
+			$pagesize=100;
+		}
+		$start = ((int)$page - 1) * $pagesize;
+		$total = IvyDb::query("select count(*) as num from `coin_pairs` where code='$code'");
+		$rs = IvyDb::query("select * from coin_pairs where code='$code' order by `volume` desc limit $start,$pagesize");
+
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=>$rs,'total'=>$total[0]['num']]));
+	}
+
+
 
 
 
