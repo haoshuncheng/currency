@@ -63,7 +63,6 @@ def get_list(url,isinnovation):
 			print(exchangeinfo_url)
 			print("json数据异常\n")
 			continue
-		# print(exchangeinfo['data'])
 		exchangeinfo = exchangeinfo['data']
 		exchangeinfo['description'] = exchangeinfo['desc']
 		del exchangeinfo['desc']
