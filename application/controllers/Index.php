@@ -156,8 +156,7 @@ class IndexController extends Yaf_Controller_Abstract {
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
-		echo $rs[0]['description'];
-		// exit(json_encode(['status'=>1, 'data'=> $rs]));
+		exit(json_encode(['status'=>1, 'data'=> $rs]));
 	}
 
 		/**
