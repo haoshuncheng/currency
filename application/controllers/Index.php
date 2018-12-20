@@ -158,10 +158,19 @@ class IndexController extends Yaf_Controller_Abstract {
 		if(!isset($_REQUEST['pagesize']) || !$pagesize = $_REQUEST['pagesize']){
 			$pagesize=100;
 		}
+		if(!isset($_REQUEST['type']) || !$type = $_REQUEST['type']){
+			$type='';
+		}
 		$start = ((int)$page - 1) * $pagesize;
-		$total = IvyDb::query("select count(*) as num from `coin_pairs` where code='$code'");
-		$rs = IvyDb::query("select * from coin_pairs where code='$code' order by `volume` desc limit $start,$pagesize");
+		if (!$type) {
+			$total = IvyDb::query("select count(*) as num from `coin_pairs` where code='$code'");
+			$rs = IvyDb::query("select * from coin_pairs where code='$code' order by `volume` desc limit $start,$pagesize");
+		}else {
+			$total = IvyDb::query("select count(*) as num from `coin_pairs` where code='$code' and pairs2='$type'");
+			$rs = IvyDb::query("select * from coin_pairs where code='$code' and pairs2='$type' order by `volume` desc limit $start,$pagesize");
+		}
 
+	
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
