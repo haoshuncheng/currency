@@ -146,6 +146,20 @@ class IndexController extends Yaf_Controller_Abstract {
 
 
 		/**
+     * 交易所信息
+     */
+	public function exchangeinfoAction() {
+		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
+			exit(json_encode(array('status' => 0, 'msg' => 'no code')));
+		}
+		$rs = IvyDb::query("select * from exchangeinfo where platform='$code'");
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=> $rs]));
+	}
+
+		/**
      * 交易所交易对
      */
 	public function exchangecoinpairsAction() {
