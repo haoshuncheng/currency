@@ -51,7 +51,7 @@ def get_list(url,isinnovation):
 		coin_pairs_data = coin_pairs_rs['data']
 		for coin_record in coin_pairs_data:
 			coin_record['code'] = record['id']
-			print(coin_record)
+			# print(coin_record)
 			write(connect['con'],'coin_pairs',coin_record)
 
 		exchangeinfo_url = "https://dncapi.feixiaohao.com/api/exchange/exchangeinfo?code="+record['id']+"&webp=1"
@@ -63,7 +63,7 @@ def get_list(url,isinnovation):
 			print(exchangeinfo_url)
 			print("json数据异常\n")
 			continue
-		
+		print(exchangeinfo['data'])
 		write(connect['con'],'exchangeinfo',exchangeinfo['data'])
 
 
