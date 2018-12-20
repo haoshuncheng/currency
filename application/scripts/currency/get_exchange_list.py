@@ -63,8 +63,8 @@ def get_list(url,isinnovation):
 			print(exchangeinfo_url)
 			print("json数据异常\n")
 			continue
-		for exchangeinfo_record in exchangeinfo['data']:
-			write(connect['con'],'exchangeinfo',exchangeinfo_record)
+		
+		write(connect['con'],'exchangeinfo',exchangeinfo['data'])
 
 
 
