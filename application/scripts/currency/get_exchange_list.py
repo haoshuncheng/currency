@@ -54,6 +54,17 @@ def get_list(url,isinnovation):
 			print(coin_record)
 			write(connect['con'],'coin_pairs',coin_record)
 
+		exchangeinfo_url = "https://dncapi.feixiaohao.com/api/exchange/exchangeinfo?code="+record['id']+"&webp=1"
+		exchangeinfo = get_requests(exchangeinfo_url, 'json')
+		if exchangeinfo == False:
+			print("list列表失败\n")
+			continue
+		if 'code' not in exchangeinfo or exchangeinfo['code']!='200' or 'data' not in exchangeinfo or len(exchangeinfo['data'])==0:
+			print(exchangeinfo_url)
+			print("json数据异常\n")
+			continue
+		for exchangeinfo_record in exchangeinfo['data']:
+			write(connect['con'],'exchangeinfo',exchangeinfo_record)
 
 
 
