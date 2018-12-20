@@ -5,6 +5,7 @@ import sys
 import time
 import json
 import re
+import cgi
 from rank_data import *
 
 def get_list(url,isinnovation):
@@ -64,7 +65,7 @@ def get_list(url,isinnovation):
 			print("json数据异常\n")
 			continue
 		exchangeinfo = exchangeinfo['data']
-		exchangeinfo['description'] = exchangeinfo['desc']
+		exchangeinfo['description'] = cgi.escape(exchangeinfo['desc'])
 		del exchangeinfo['desc']
 		write(connect['con'],'exchangeinfo',exchangeinfo)
 		
