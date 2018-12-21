@@ -25,6 +25,7 @@ class IndexController extends Yaf_Controller_Abstract {
 		$date = date("Y-m-d");
 		if($type == 1){
 			$total = IvyDb::query("select count(*) as num from `rank` ");
+			$sum = IvyDb::query("select sum(marketCap) as sum_mark from `rank` ");
 			$rs = IvyDb::query("select pic,name,code,price,marketCap,volumeGlobal,circulatingSupply,kline,dayChange from `rank` order by `marketCap` desc limit $start,$pageSize ");
 		} else {
 			$rs = [];
@@ -32,7 +33,7 @@ class IndexController extends Yaf_Controller_Abstract {
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
-		exit(json_encode(['status'=>1, 'data'=>$rs, 'total'=>$total[0]['num']]));
+		exit(json_encode(['status'=>1, 'data'=>$rs, 'total'=>$total[0]['num'], 'sum' => $sum[0]['sum_mark']]));
 	}
 
 	/**
