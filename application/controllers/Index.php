@@ -71,9 +71,6 @@ class IndexController extends Yaf_Controller_Abstract {
 			$pagesize=100;
 		}
 		$start = ((int)$page - 1) * $pagesize;
-
-		print($start);
-		print($pagesize);
 		$total = IvyDb::query("select count(*) as num from `coin_market_ticker` where `coin_code`='$code' ");
 		$rs = IvyDb::query("select * from `coin_market_ticker` where `coin_code`='$code' order by `volume` desc limit $start,$pagesize ");
 		if(!$rs || !count($rs)){
