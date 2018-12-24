@@ -16,7 +16,7 @@ def run(time_type):
 		end = record[-1]
 		mx = max(record)
 		mn = min(record)
-		sql = "replace into line_data_sp (epochSecond,type,high,low,open,close,from) values('"+str(st_time)+"','"+time_type+"','"+str(mx)+"','"+str(mn)+"','"+str(st)+"','"+str(end)+"',1)"
+		sql = "replace into line_data_sp (`epochSecond`,`type`,`high`,`low`,`open`,`close`,`from`) values('"+str(st_time)+"','"+time_type+"','"+str(mx)+"','"+str(mn)+"','"+str(st)+"','"+str(end)+"',1)"
 		print(sql)
 		cursor.execute(sql)
 		connect.commit()
