@@ -1,11 +1,12 @@
 import requests
+import numpy as np
 
 def run():
 	global baseurl
 	rs = requests.get(baseurl)
 	rs = rs.json()
-	x = [x['price'] for x in rs]
-	print(x)
+	x = np.mean([x['price'] for x in rs])
+
 
 
 
