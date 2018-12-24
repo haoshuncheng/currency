@@ -12,7 +12,6 @@ def run(time_type):
 		cursor.execute(sql)
 		rs = cursor.fetchall()
 		record = [float(x['price']) for x in rs]
-		print(record)
 		st = record[0]
 		end = record[-1]
 		mx = max(record)
