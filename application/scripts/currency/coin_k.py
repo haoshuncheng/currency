@@ -5,9 +5,9 @@ import time
 from rank_data import *
 
 def run(time_type):
-	if time_type == '1m':
+	if time_type == 'MIN':
 		end_time = int(time.time())
-		st_time = end_time-600
+		st_time = end_time-60
 		sql = "select price from coin_price where second > '"+str(st_time)+"' and second < '"+str(end_time)+"' order by second asc"
 		cursor.execute(sql)
 		rs = cursor.fetchall()
@@ -16,12 +16,15 @@ def run(time_type):
 		end = record[-1]
 		mx = max(record)
 		mn = min(record)
-		price = np.mean(record)
-		print([st,end,mx,mn,price])
+		sql = "replace into line_data_sp (epochSecond,type,high,low,open,close,from) values('"+str(st_time)+"','"+time_type+"','"+str(mx)+"','"+str(mn)+"','"+str(st)+"','"+str(end)+"',1)"
+		cursor.execute(sql)
+		connect.commit()
+		
+		
 
 
 if __name__ == '__main__':
-	time_type = sys.argv[1] if len(sys.argv) >1 else '1m'
+	time_type = sys.argv[1] if len(sys.argv) >1 else 'MIN'
 	connect = connect1()
 	cursor = connect['cur']
 	connect = connect['con']
