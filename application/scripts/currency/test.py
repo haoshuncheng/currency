@@ -5,7 +5,7 @@ def run():
 	global baseurl
 	rs = requests.get(baseurl)
 	data = rs.json()
-	record = [float(x['price']) for x in rs]
+	record = [float(x['price']) for x in data]
 	avg = np.mean(record)
 	print(avg)
 
