@@ -21,7 +21,7 @@ def run(time_type):
 
 
 if __name__ == '__main__':
-	time_type = sys.argv[1] if len(sys.argv) >1 elese '1m'
+	time_type = sys.argv[1] if len(sys.argv) >1 else '1m'
 	connect = connect1()
 	cursor = connect['cur']
 	connect = connect['con']
