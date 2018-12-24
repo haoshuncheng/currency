@@ -19,7 +19,7 @@ def run():
 
 def get_json(url):
 	rs = requests.get(url)
-	if rs.status == requests.status_code:
+	if rs.status_code == requests.codes.ok:
 		return rs.json()
 
 
