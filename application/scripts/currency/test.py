@@ -3,6 +3,7 @@ import requests
 def run():
 	global baseurl
 	rs = requests.get(baseurl)
+	rs = rs.json()
 	x = [x['price'] for x in rs]
 	print(x)
 
