@@ -13,6 +13,7 @@ def run():
 	coin_avg = np.mean([float(x['price']) for x in data])
 	coin_type = 1
 	coint_second = time.time()
+	print([coin_type,coin_avg,coint_second])
 	sql = "insert into coin_price(type,price,second) values(%s,%s,%s)"
 	cursor.execute(sql,[coin_type,coin_avg,coint_second])
 	connect.commit()
