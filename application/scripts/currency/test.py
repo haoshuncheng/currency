@@ -14,7 +14,7 @@ def run():
 	coin_type = 1
 	coint_second = time.time()
 	sql = "insert into coin_price(type,price,second) values(%s,%s,%s)"
-	cursor.execute(sql,[coin_type,coin_price,coint_second])
+	cursor.execute(sql,[coin_type,coin_avg,coint_second])
 	connect.commit()
 
 def get_json(url):
