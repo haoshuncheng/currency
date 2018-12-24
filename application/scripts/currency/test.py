@@ -10,9 +10,9 @@ def run():
 	data = get_json(url)
 	if not data:
 		return
-	coin_avg = np.mean([float(x['price']) for x in data])
+	coin_avg = str(np.mean([float(x['price']) for x in data]))
 	coin_type = 1
-	coint_second = time.time()
+	coint_second = str(int(time.time()))
 	print([coin_type,coin_avg,coint_second])
 	sql = "insert into coin_price(type,price,second) values("+str(coin_type)+",'"+coin_avg+"','"+coint_second+"')"
 	cursor.execute(sql)
