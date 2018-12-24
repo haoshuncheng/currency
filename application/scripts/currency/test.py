@@ -5,8 +5,10 @@ def run():
 	global baseurl
 	rs = requests.get(baseurl)
 	rs = rs.json()
-	x = np.mean([x['price'] for x in rs])
-
+	rs = [x['price'] for x in rs]
+	print(rs)
+	x = np.mean(rs)
+	print(x)
 
 
 
