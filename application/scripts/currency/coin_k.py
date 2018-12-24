@@ -11,7 +11,7 @@ def run(time_type):
 		sql = "select price from coin_price where second > '"+str(st_time)+"' and second < '"+str(end_time)+"' order by second asc"
 		cursor.execute(sql)
 		rs = cursor.fetchall()
-		record = [x['price'] for x in rs]
+		record = [float(x['price']) for x in rs]
 		print(record)
 		st = record[0]
 		end = record[-1]
