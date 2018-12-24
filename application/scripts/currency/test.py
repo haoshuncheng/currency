@@ -3,10 +3,6 @@ import numpy as np
 import time
 from rank_data import *
 def run():
-	connect = connect1()
-	cursor = connect['cur']
-	connect = connect['con']
-	url = 'https://api.binance.com/api/v1/ticker/price'
 	data = get_json(url)
 	if not data:
 		return
@@ -18,6 +14,7 @@ def run():
 	cursor.execute(sql)
 	connect.commit()
 
+
 def get_json(url):
 	rs = requests.get(url)
 	if rs.status_code == requests.codes.ok:
@@ -26,4 +23,10 @@ def get_json(url):
 
 
 if __name__ == '__main__':
-	run()
+	connect = connect1()
+	cursor = connect['cur']
+	connect = connect['con']
+	url = 'https://api.binance.com/api/v1/ticker/price'
+	while True:
+		run()
+		time.sleep(1)
