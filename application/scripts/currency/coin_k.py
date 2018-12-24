@@ -17,7 +17,7 @@ def run(time_type):
 		mx = max(record)
 		mn = min(record)
 		price = np.mean(record)
-		sql = "replace into line_data_sp (`epochSecond`,`type`,`high`,`low`,`open`,`close`,`from`,`price`) values('"+str(st_time)+"','"+time_type+"','"+str(mx)+"','"+str(mn)+"','"+str(st)+"','"+str(end)+"',1,'"+price+"')"
+		sql = "replace into line_data_sp (`epochSecond`,`type`,`high`,`low`,`open`,`close`,`from`,`price`) values('"+str(st_time)+"','"+time_type+"','"+str(mx)+"','"+str(mn)+"','"+str(st)+"','"+str(end)+"',1,'"+str(price)+"')"
 		print(sql)
 		cursor.execute(sql)
 		connect.commit()
