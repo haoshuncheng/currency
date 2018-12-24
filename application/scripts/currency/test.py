@@ -10,7 +10,7 @@ def run():
 	coint_second = str(int(time.time()))
 	coin_avg = str(np.mean([float(x['price']) for x in data]))
 	print([coin_type,coin_avg,coint_second])
-	sql = "insert into coin_price(type,price,second) values("+str(coin_type)+",'"+coin_avg+"','"+coint_second+"')"
+	sql = "replace into coin_price(type,price,second) values("+str(coin_type)+",'"+coin_avg+"','"+coint_second+"')"
 	cursor.execute(sql)
 	connect.commit()
 
