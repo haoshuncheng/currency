@@ -2,6 +2,7 @@ import requests
 import numpy as np
 import time
 from rank_data import *
+########获取 币 安  综合 币 价格 /每秒
 def run():
 	data = get_json(url)
 	if not data:
