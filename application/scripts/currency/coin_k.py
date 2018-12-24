@@ -7,11 +7,12 @@ from rank_data import *
 def run(time_type):
 	if time_type == '1m':
 		end_time = int(time.time())
-		st_time = end_time-60
+		st_time = end_time-600
 		sql = "select price from coin_price where second > '"+str(st_time)+"' and second < '"+str(end_time)+"' order by second asc"
 		cursor.execute(sql)
 		rs = cursor.fetchall()
 		record = [x['price'] for x in rs]
+		print(record)
 		st = record[0]
 		end = record[-1]
 		mx = max(record)
