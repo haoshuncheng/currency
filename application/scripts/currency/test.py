@@ -14,7 +14,7 @@ def run():
 	coin_type = 1
 	coint_second = time.time()
 	print([coin_type,coin_avg,coint_second])
-	sql = "insert into coin_price(type,price,second) values("+coin_type+",'"+coin_avg+"','"+coint_second+"')"
+	sql = "insert into coin_price(type,price,second) values("+str(coin_type)+",'"+coin_avg+"','"+coint_second+"')"
 	cursor.execute(sql)
 	connect.commit()
 
