@@ -28,4 +28,4 @@ if __name__ == '__main__':
 	url = 'https://api.binance.com/api/v1/ticker/price'
 	while True:
 		run()
-		time.sleep(3)
+		
