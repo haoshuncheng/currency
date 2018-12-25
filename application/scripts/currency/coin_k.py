@@ -88,7 +88,7 @@ def run(time_type):
 	if time_type == 'H2':
 		end_time = int(time.time())
 		st_time = end_time-120*60
-		sql = "select price from line_data where `from`='ALL' and epochSecond > '"+str(st_time)+"' and epochSecond < '"+str(end_time)+"' type='MIN' order by epochSecond asc"
+		sql = "select price from line_data where `from`='ALL' and epochSecond > '"+str(st_time)+"' and epochSecond < '"+str(end_time)+"' and type='MIN' order by epochSecond asc"
 		cursor.execute(sql)
 		rs = cursor.fetchall()
 		record = [float(x['price']) for x in rs]
@@ -104,7 +104,7 @@ def run(time_type):
 	if time_type == 'H4':
 		end_time = int(time.time())
 		st_time = end_time-4*60*60
-		sql = "select price from line_data where `from`='ALL' and epochSecond > '"+str(st_time)+"' and epochSecond < '"+str(end_time)+"' type='MIN' order by epochSecond asc"
+		sql = "select price from line_data where `from`='ALL' and epochSecond > '"+str(st_time)+"' and epochSecond < '"+str(end_time)+"' and type='MIN' order by epochSecond asc"
 		cursor.execute(sql)
 		rs = cursor.fetchall()
 		record = [float(x['price']) for x in rs]
@@ -120,7 +120,7 @@ def run(time_type):
 	if time_type == 'H6':
 		end_time = int(time.time())
 		st_time = end_time-60*60*6
-		sql = "select price from line_data where `from`='ALL' and epochSecond > '"+str(st_time)+"' and epochSecond < '"+str(end_time)+"' type='MIN' order by epochSecond asc"
+		sql = "select price from line_data where `from`='ALL' and epochSecond > '"+str(st_time)+"' and epochSecond < '"+str(end_time)+"' and type='MIN' order by epochSecond asc"
 		cursor.execute(sql)
 		rs = cursor.fetchall()
 		record = [float(x['price']) for x in rs]
@@ -136,7 +136,7 @@ def run(time_type):
 	if time_type == 'H12':
 		end_time = int(time.time())
 		st_time = end_time-60*60*12
-		sql = "select price from line_data where `from`='ALL' and epochSecond > '"+str(st_time)+"' and epochSecond < '"+str(end_time)+"' type='MIN' order by epochSecond asc"
+		sql = "select price from line_data where `from`='ALL' and epochSecond > '"+str(st_time)+"' and epochSecond < '"+str(end_time)+"' and type='MIN' order by epochSecond asc"
 		cursor.execute(sql)
 		rs = cursor.fetchall()
 		record = [float(x['price']) for x in rs]
@@ -152,7 +152,7 @@ def run(time_type):
 	if time_type == 'DAY':
 		end_time = int(time.time())
 		st_time = end_time-60*60*24
-		sql = "select price from line_data where from=1 and epochSecond > '"+str(st_time)+"' and epochSecond < '"+str(end_time)+"' type='HOUR' order by epochSecond asc"
+		sql = "select price from line_data where from=1 and epochSecond > '"+str(st_time)+"' and epochSecond < '"+str(end_time)+"' and type='HOUR' order by epochSecond asc"
 		cursor.execute(sql)
 		rs = cursor.fetchall()
 		record = [float(x['price']) for x in rs]
