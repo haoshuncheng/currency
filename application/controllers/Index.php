@@ -32,8 +32,8 @@ class IndexController extends Yaf_Controller_Abstract {
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
 
-		$rs_all = IvyDb::query("select avg(`price`),avg(`dayChange`) from rank");
-		$rs_top100 = IvyDb::query("select avg(`price`),avg(`dayChange`) from rank order by marketCap desc limit 0,100");
+		$rs_all = IvyDb::query("select avg(`price`) as price,avg(`dayChange`) as dayChange from rank");
+		$rs_top100 = IvyDb::query("select avg(`price`) as price,avg(`dayChange`) as dayChange from rank order by marketCap desc limit 0,100");
 		$rs_hb10 = IvyDb::query("select close,open from market_detail where coin='HB10'");
 		$rs_all = $rs_all[0];
 		$rs_top100 = $rs_top100[0];
