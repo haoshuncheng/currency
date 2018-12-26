@@ -164,6 +164,6 @@ if __name__ == "__main__":
     'cache-control': "no-cache",
     'postman-token': "fb7926b7-3550-ff0a-9514-044e4e2db8ee"
     }
-    fund_url = "https://www.aicoin.net.cn/api/coin-profile/fund"
-    fund_querystring = {"coin_type":"adcoin","currency":"cny"}
+	fund_url = "https://www.aicoin.net.cn/api/coin-profile/fund"
+	fund_querystring = {"coin_type":"adcoin","currency":"cny"}
 	main()
