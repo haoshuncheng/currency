@@ -42,11 +42,15 @@ def main(time_type):
 		sql = "select avg(`high`) as high,avg(`low`) as low,avg(`open`) as open,avg(`close`) as close from line_data where type='MIN' and epochSecond >= '"+str(st_time)+"' and epochSecond <= '"+str(end_time)+"'"
 		cursor.execute(sql)
 		rs = cursor.fetchone()
+		if not rs or not len(rs):
+			return
 		high,low,s_open,close = [rs[x] for x in rs]
 	else:
-		sql = "select `close` from line_data where type='"+time_type2+"' and epochSecond >= '"+str(st_time)+"' and epochSecond <= '"+str(end_time)+"'"
+		sql = "select `close` from line_data where `from` ='ALL' type='"+time_type2+"' and epochSecond >= '"+str(st_time)+"' and epochSecond <= '"+str(end_time)+"'"
 		cursor.execute(sql)
 		rs = cursor.fetchall()
+		if not rs or not len(rs):
+			return
 		record = [float(x['price']) for x in rs]
 		s_open = record[0]
 		close = record[-1]

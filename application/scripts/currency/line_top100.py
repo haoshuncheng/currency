@@ -51,12 +51,16 @@ def main(time_type):
 		print(sql)
 		cursor.execute(sql)
 		rs = cursor.fetchone()
+		if not rs or not len(rs):
+			return
 		high,low,s_open,close = [rs[x] for x in rs]
 	else:
-		sql = "select `close` from line_data where `from` in "+rs_str+" and type='"+time_type2+"' and epochSecond >= '"+str(st_time)+"' and epochSecond <= '"+str(end_time)+"'"
+		sql = "select `close` from line_data where `from` ='TOP100' and type='"+time_type2+"' and epochSecond >= '"+str(st_time)+"' and epochSecond <= '"+str(end_time)+"'"
 		print(sql)
 		cursor.execute(sql)
 		rs = cursor.fetchall()
+		if not rs or not len(rs):
+			return
 		record = [float(x['price']) for x in rs]
 		s_open = record[0]
 		close = record[-1]
