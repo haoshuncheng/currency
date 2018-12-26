@@ -27,14 +27,41 @@ class IndexController extends Yaf_Controller_Abstract {
 		$total = IvyDb::query("select count(*) as num from `rank` ");
 		$sum = IvyDb::query("select sum(marketCap) as sum_mark from `rank` ");
 		$rs = IvyDb::query("select pic,name,code,price,marketCap,volumeGlobal,circulatingSupply,kline,dayChange from `rank` order by `marketCap` desc limit $start,$pageSize ");
-
-
-		
 		
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
-		exit(json_encode(['status'=>1, 'data'=>$rs, 'total'=>$total[0]['num'], 'sum' => $sum[0]['sum_mark'],'top' => ]));
+
+		$rs_all = IvyDb::query("select avg(`price`),avg(`dayChange`) from rank");
+		$rs_top100 = IvyDb::query("select avg(`price`),avg(`dayChange`) from rank order by marketCap desc limit 0,100");
+		$rs_hb10 = IvyDb::query("select close,open from market_detail where coin='HB10'");
+		$rs_all = $rs_all[0];
+		$rs_top100 = $rs_top100[0];
+		$rs_hb10 = $rs_hb10[0];
+		$rs_hb10_dayChange = strval(($rs_hb10['close']/$rs_hb10['open'])*100);
+		$time = time()-24*3600;
+		
+		$all_kline = $this->handleRs(IvyDb::query("select `close` from `line_data` where `epochSecond` > '$time' and `type`='HOUR' and from ='ALL' order by epochSecond desc"));
+		$top100_kline = $this->handleRs(IvyDb::query("select `close` from `line_data` where `epochSecond` > '$time' and `type`='HOUR' and from ='TOP100' order by epochSecond desc"));
+		$hb10_kline = $this->handleRs(IvyDb::query("select `close` from `line_data` where `epochSecond` > '$time' and `type`='HOUR' and from ='HB10' order by epochSecond desc"));
+		$all = array('coin' => 'ALL',"price" => $rs_all['price'],'dayChange' => $rs_all['dayChange'],'kline' => $all_kline);
+		$top100 = array('coin' => 'TOP100',"price" => $rs_top100['price'],'dayChange' => $rs_top100['dayChange'],'kline' => $top100_kline);
+		$hb10 = array('coin' => 'HB10',"price" => $rs_hb10['close'],'dayChange' => $rs_hb10_dayChange,'kline' => $hb10_kline);
+
+
+		exit(json_encode(['status'=>1, 'data'=>$rs, 'total'=>$total[0]['num'], 'sum' => $sum[0]['sum_mark'],'top' => array($all,$top100,$hb10)]));
+	}
+
+
+	private function handleRs($rs) {
+		if (empty($rs)) {
+			return array();
+		}
+		$rec = array();
+		foreach ($rs as $key => $r) {
+			$rec[] = $r['close'];
+		}
+		return implode(",", $rec);
 	}
 
 	/**
