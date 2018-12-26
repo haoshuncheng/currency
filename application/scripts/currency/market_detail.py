@@ -8,8 +8,9 @@ def main():
 	url = "https://api.huobipro.com/market/detail?symbol=hb10usdt"
 	rs = get_requests(url,"json")
 	ts = rs['ts']
-	amount = rs['amount']
+	
 	tick = ts['tick']
+	amount = tick['amount']
 	s_open = tick['open']
 	close = tick['close']
 	high = tick['high']
