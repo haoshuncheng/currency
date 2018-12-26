@@ -11,31 +11,50 @@ def main(time_type):
 		st_time = end_time-60
 	elif time_type == 'M5':
 		st_time = end_time-60*5
+		time_type2 = 'MIN'
 	elif time_type == 'M15':
 		st_time = end_time-60*15
+		time_type2 = 'MIN'
 	elif time_type == 'M30':
 		st_time = end_time-60*30
+		time_type2 = 'MIN'
 	elif time_type == 'HOUR':
 		st_time = end_time-60*60
+		time_type2 = 'M5'
 	elif time_type == 'H2':
 		st_time = end_time-60*120
+		time_type2 = 'M5'
 	elif time_type == 'H4':
 		st_time = end_time-60*240
+		time_type2 = 'M5'
 	elif time_type == 'H6':
 		st_time = end_time-60*360
+		time_type2 = 'M15'
 	elif time_type == 'H12':
 		st_time = end_time-60*720
+		time_type2 = 'M30'
 	elif time_type == 'DAY':
 		st_time = end_time-60*1240
+		time_type2 = 'HOUR'
 	else:
 		return
 	if time_type == 'MIN':
 		sql = "select avg(`high`) as high,avg(`low`) as low,avg(`open`) as open,avg(`close`) as close from line_data where type='MIN' and epochSecond >= '"+str(st_time)+"' and epochSecond <= '"+str(end_time)+"'"
-		print(sql)
 		cursor.execute(sql)
-		print(cursor.fetchone())
-
-
+		rs = cursor.fetchone()
+		high,low,s_open,close = [rs[x] for x in rs]
+	else:
+		sql = "select `close` from line_data where type='"+time_type2+"' and epochSecond >= '"+str(st_time)+"' and epochSecond <= '"+str(end_time)+"'"
+		cursor.execute(sql)
+		rs = cursor.fetchall()
+		record = [float(x['price']) for x in rs]
+		s_open = record[0]
+		close = record[-1]
+		high = max(record)
+		low = min(record)
+	sql = "replace into line_data (`epochSecond`,`type`,`high`,`low`,`open`,`close`,`from`,`to`) values('"+str(st_time)+"','"+time_type+"','"+str(high)+"','"+str(low)+"','"+str(s_open)+"','"+str(close)+"','ALL','USD')"
+	cursor.execute(sql)
+	connect.commit()
 
 def connect1():
 	connect = pymysql.Connect(
