@@ -17,6 +17,7 @@ def main(time_type):
 	s_open = data['open']
 	close = data['close']
 	sql = "replace into line_data (`epochSecond`,`type`,`high`,`low`,`open`,`close`,`from`,`to`) values('"+str(epochSecond)+"','"+time_type+"','"+str(high)+"','"+str(low)+"','"+str(s_open)+"','"+str(close)+"','HB10','USDT')"
+	print(sql)
 	cursor.execute(sql)
 	connect.commit()
 
