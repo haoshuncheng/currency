@@ -20,6 +20,7 @@ def main():
 			sql = "replace into coin_fund (code,fund) value('"+code+"','"+json.dumps(data)+"')"
 			cursor.execute(sql)
 			connect.commit()
+			print(code+" ok\n")
 		except:
 			continue
 
