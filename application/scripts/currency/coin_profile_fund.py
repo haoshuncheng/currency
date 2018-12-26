@@ -12,6 +12,7 @@ from get_rank_list import *
 def main():
 	codes = get_all_codes()
 	for code in codes:
+		code = code['code']
 		querystring['coin_type'] = code
 		response = requests.request("GET", url, headers=headers, params=querystring)
 		try:
