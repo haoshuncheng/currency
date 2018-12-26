@@ -8,7 +8,7 @@ import time
 def main(time_type):
 	sql = "select `name` from rank order by marketCap desc limit 0,100"
 	cursor.execute(sql)
-	rs = cursor.fetchone()
+	rs = cursor.fetchall()
 	print(rs)
 	return
 	# rs = 
