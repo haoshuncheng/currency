@@ -98,6 +98,23 @@ class IndexController extends Yaf_Controller_Abstract {
 
 
 	/**
+     * 获取资金流向数据
+     */
+	public function coin_profile_fundAction() {
+		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find code']));
+		}
+		$rs = IvyDb::query("select * from `coin_fund` where `code`='$code'");
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+
+		$data = json_decode($rs[0]['fund'],true);
+		exit(json_encode(['status'=>1, 'data'=>$data]));
+	}
+
+
+	/**
      * 获取折线图数据 http://116.62.118.136/Index/get_line_data?name=BTC&type=DAY&start=1515737886&end=1518416286
      */
 	public function get_line_dataAction() {
