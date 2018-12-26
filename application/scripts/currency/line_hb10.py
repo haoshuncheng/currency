@@ -8,9 +8,18 @@ def main(time_type):
 	if time_type not in time_types:
 		return
 	time_type = time_types[time_type]
-	url = "https://api.huobipro.com/market/history/kline?size=200&symbol=hb10usdt&period="+time_type
+	url = "https://api.huobipro.com/market/history/kline?symbol=hb10usdt&period="+time_type+"&size=1"
 	rs = get_requests(url,'json')
-	print(rs)
+	data = rs['data'][0]
+	epochSecond = data['id']
+	high = data['high']
+	low = data['low']
+	s_open = data['open']
+	close = data['close']
+	sql = "replace into line_data (`epochSecond`,`type`,`high`,`low`,`open`,`close`,`from`,`to`) values('"+str(epochSecond)+"','"+time_type+"','"+str(high)+"','"+str(low)+"','"+str(s_open)+"','"+str(close)+"','HB10','USDT')"
+	cursor.execute(sql)
+	connect.commit()
+
 
 def connect1():
 	connect = pymysql.Connect(
