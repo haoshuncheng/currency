@@ -4,10 +4,10 @@ from lxml import etree
 import pymysql.cursors
 import sys
 import time
-def main(time_type):
-	if time_type not in time_types:
+def main(time_type_r):
+	if time_type_r not in time_types:
 		return
-	time_type = time_types[time_type]
+	time_type = time_types[time_type_r]
 	url = "https://api.huobipro.com/market/history/kline?symbol=hb10usdt&period="+time_type+"&size=1"
 	rs = get_requests(url,'json')
 	data = rs['data'][0]
@@ -16,7 +16,7 @@ def main(time_type):
 	low = data['low']
 	s_open = data['open']
 	close = data['close']
-	sql = "replace into line_data (`epochSecond`,`type`,`high`,`low`,`open`,`close`,`from`,`to`) values('"+str(epochSecond)+"','"+time_type+"','"+str(high)+"','"+str(low)+"','"+str(s_open)+"','"+str(close)+"','HB10','USDT')"
+	sql = "replace into line_data (`epochSecond`,`type`,`high`,`low`,`open`,`close`,`from`,`to`) values('"+str(epochSecond)+"','"+time_type_r+"','"+str(high)+"','"+str(low)+"','"+str(s_open)+"','"+str(close)+"','HB10','USDT')"
 	print(sql)
 	cursor.execute(sql)
 	connect.commit()
