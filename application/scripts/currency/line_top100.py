@@ -9,6 +9,9 @@ def main(time_type):
 	sql = "select `name` from rank order by marketCap desc limit 0,100"
 	cursor.execute(sql)
 	rs = cursor.fetchone()
+	print(rs)
+	return
+	# rs = 
 	rs_str = "("+",".join(rs)+")"
 	end_time = int(time.time())
 	if time_type == 'MIN':
