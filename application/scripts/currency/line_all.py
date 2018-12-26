@@ -31,8 +31,9 @@ def main(time_type):
 		return
 	if time_type == 'MIN':
 		sql = "select avg(`high`) as high,avg(`low`) as low,avg(`open`) as open,avg(`close`) as close from line_data where type='MIN' and epochSecond >= '"+str(st_time)+"' and epochSecond <= '"+str(end_time)+"'"
+		print(sql)
 		cursor.execute(sql)
-		print(cursor.fetone())
+		print(cursor.fetchone())
 
 
 
