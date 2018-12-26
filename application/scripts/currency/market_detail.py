@@ -17,7 +17,7 @@ def main():
 	count = tick['count']
 	vol = tick['vol']
 	coin = 'HB10'
-	sql = "replace into market_detail (ts,amount,open,close,high,low,count,vol,coin) values('"+ts+"','"+amount+"','"+s_open+"','"+close+"','"+high+"','"+low+"','"+count+"','"+vol+"','"+coin+"')"
+	sql = "replace into market_detail (ts,amount,open,close,high,low,count,vol,coin) values('"+str(ts)+"','"+str(amount)+"','"+str(s_open)+"','"+str(close)+"','"+str(high)+"','"+str(low)+"','"+str(count)+"','"+str(vol)+"','"+str(coin)+"')"
 	cursor.execute(sql)
 	connect.commit()
 
