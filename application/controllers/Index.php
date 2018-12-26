@@ -38,7 +38,7 @@ class IndexController extends Yaf_Controller_Abstract {
 		$rs_all = $rs_all[0];
 		$rs_top100 = $rs_top100[0];
 		$rs_hb10 = $rs_hb10[0];
-		$rs_hb10_dayChange = strval(($rs_hb10['close']/$rs_hb10['open'])*100);
+		$rs_hb10_dayChange = strval($rs_hb10['close']/$rs_hb10['open']);
 		$time = time()-24*3600;
 		
 		$all_kline = $this->handleRs(IvyDb::query("select `close` from `line_data` where `epochSecond` > '$time' and `type`='HOUR' and from ='ALL' order by epochSecond desc"));
