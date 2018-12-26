@@ -9,7 +9,7 @@ def main(time_type):
 	sql = "select `name` from rank order by marketCap desc limit 0,100"
 	cursor.execute(sql)
 	rs = cursor.fetchall()
-	rs = [x['name'] for x in rs]
+	rs = ["'"+x['name']+"'" for x in rs]
 	# print(rs)
 	# return
 	# rs = 
