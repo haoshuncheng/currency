@@ -17,6 +17,6 @@ headers = {
     # 'postman-token': "fb7926b7-3550-ff0a-9514-044e4e2db8ee"
     }
 
-response = requests.request("GET", url, headers=headers, params=querystring)
+response = requests.request("GET", url,  params=querystring)
 
 print(response.text)
