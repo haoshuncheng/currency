@@ -34,7 +34,6 @@ def main(script_type):
 
 #储存数据
 def insert(rs):
-	#print(rs)
 	if 'code' not in rs or rs['code']!=0 or 'result' not in rs or 'total' not in rs['result'] or rs['result']['total']==0 or 'data' not in rs['result']:
 		print("接口返回数据异常或数据长度为0\n")
 		return

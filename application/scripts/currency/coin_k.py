@@ -1,3 +1,4 @@
+#废弃
 ####综合 币 k趋势
 #
 import numpy as np
