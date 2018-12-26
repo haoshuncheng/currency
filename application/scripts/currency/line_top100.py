@@ -6,6 +6,10 @@ import sys
 import time
 
 def main(time_type):
+	sql = "select `name` from rank order by marketCap desc limit 0,100"
+	cursor.execute(sql)
+	rs = cursor.fetchone()
+	rs_str = "("+",".join(rs)+")"
 	end_time = int(time.time())
 	if time_type == 'MIN':
 		st_time = end_time-60
@@ -39,13 +43,13 @@ def main(time_type):
 	else:
 		return
 	if time_type == 'MIN':
-		sql = "select avg(`high`) as high,avg(`low`) as low,avg(`open`) as open,avg(`close`) as close from line_data where `from` in (select `name` from rank order by marketCap desc limit 0,100) and type='MIN' and epochSecond >= '"+str(st_time)+"' and epochSecond <= '"+str(end_time)+"'"
+		sql = "select avg(`high`) as high,avg(`low`) as low,avg(`open`) as open,avg(`close`) as close from line_data where `from` in "+rs_str+" and type='MIN' and epochSecond >= '"+str(st_time)+"' and epochSecond <= '"+str(end_time)+"'"
 		print(sql)
 		cursor.execute(sql)
 		rs = cursor.fetchone()
 		high,low,s_open,close = [rs[x] for x in rs]
 	else:
-		sql = "select `close` from line_data where `from` in (select `name` from rank order by marketCap desc limit 0,100) and type='"+time_type2+"' and epochSecond >= '"+str(st_time)+"' and epochSecond <= '"+str(end_time)+"'"
+		sql = "select `close` from line_data where `from` in "+rs_str+" and type='"+time_type2+"' and epochSecond >= '"+str(st_time)+"' and epochSecond <= '"+str(end_time)+"'"
 		print(sql)
 		cursor.execute(sql)
 		rs = cursor.fetchall()
