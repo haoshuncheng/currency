@@ -22,6 +22,7 @@ def main():
 			connect.commit()
 			print(code+" ok\n")
 		except:
+			print(sys.exc_info())
 			continue
 
 def get_all_codes():
