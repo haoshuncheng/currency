@@ -30,7 +30,6 @@ def get_all_codes():
 	cursor.execute("select code from rank")
 	return cursor.fetchall()
 
-
 if __name__ == "__main__":
 	db = connect1()
 	connect,cursor = [db[x] for x in db]
