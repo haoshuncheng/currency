@@ -27,6 +27,13 @@ class IndexController extends Yaf_Controller_Abstract {
 		$total = IvyDb::query("select count(*) as num from `rank` ");
 		$sum = IvyDb::query("select sum(marketCap) as sum_mark from `rank` ");
 		$rs = IvyDb::query("select pic,name,code,price,marketCap,volumeGlobal,circulatingSupply,kline,dayChange from `rank` order by `marketCap` desc limit $start,$pageSize ");
+		$rs2 = array();
+		$i = ($page-1)*100;
+		foreach ($rs as $key => $value) {
+			$value['num'] = $i+1;
+			$rs2[] = $value;
+		}
+		$rs  = $rs2;
 		
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
