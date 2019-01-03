@@ -32,6 +32,7 @@ class IndexController extends Yaf_Controller_Abstract {
 		foreach ($rs as $key => $value) {
 			$value['num'] = $i+1;
 			$rs2[] = $value;
+			$i++;
 		}
 		$rs  = $rs2;
 		
