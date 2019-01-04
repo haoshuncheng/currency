@@ -82,7 +82,7 @@ class IndexController extends Yaf_Controller_Abstract {
 		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
 			exit(json_encode(['status'=>0, 'msg'=>'not find code']));
 		}
-		$rs = IvyDb::query("select pic,name,code,price,marketCap,volumeGlobal,circulatingSupply,kline,dayChange from `rank` where `code`='$code'");
+		$rs = IvyDb::query("select pic,name,code,price,marketCap,volumeGlobal,circulatingSupply,dayChange from `rank` where `code`='$code'");
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
