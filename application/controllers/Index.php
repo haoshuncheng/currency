@@ -31,6 +31,9 @@ class IndexController extends Yaf_Controller_Abstract {
 		$i = ($page-1)*$pageSize;
 		foreach ($rs as $key => $value) {
 			$value['num'] = $i+1;
+		        $kline = $value['kline'];
+ 	                $value['max'] = max(explode(",",$kline));
+	       		$value['min'] = min(explode(",",$kline));
 			$rs2[] = $value;
 			$i++;
 		}
@@ -52,9 +55,9 @@ class IndexController extends Yaf_Controller_Abstract {
 		$all_kline = $this->handleRs(IvyDb::query("select `close` from `line_data` where `epochSecond` > '$time' and `type`='HOUR' and from ='ALL' order by epochSecond desc"));
 		$top100_kline = $this->handleRs(IvyDb::query("select `close` from `line_data` where `epochSecond` > '$time' and `type`='HOUR' and from ='TOP100' order by epochSecond desc"));
 		$hb10_kline = $this->handleRs(IvyDb::query("select `close` from `line_data` where `epochSecond` > '$time' and `type`='HOUR' and from ='HB10' order by epochSecond desc"));
-		$all = array('coin' => 'ALL',"price" => $rs_all['price'],'dayChange' => $rs_all['dayChange'],'kline' => $all_kline);
-		$top100 = array('coin' => 'TOP100',"price" => $rs_top100['price'],'dayChange' => $rs_top100['dayChange'],'kline' => $top100_kline);
-		$hb10 = array('coin' => 'HB10',"price" => $rs_hb10['close'],'dayChange' => $rs_hb10_dayChange,'kline' => $hb10_kline);
+		$all = array('code' => 'ALL',"price" => $rs_all['price'],'dayChange' => $rs_all['dayChange'],'kline' =>implode(",", $all_kline),'max'=> empty($all_kline)?"": max($all_kline) ,'min' => empty($all_kline)?"": min($all_kline));
+		$top100 = array('code' => 'TOP100',"price" => $rs_top100['price'],'dayChange' => $rs_top100['dayChange'],'kline' => implode(",",$top100_kline),'max'=>  empty($top100_kline)?"":max($top100_kline),'min' => empty($top100_kline)?"": min($top100_kline));
+		$hb10 = array('code' => 'HB10',"price" => $rs_hb10['close'],'dayChange' => $rs_hb10_dayChange,'kline' => implode(",",$hb10_kline),'max'=>  empty($hb10_kline)?"":max($hb10_kline),'min' => empty($hb10_kline)?"": min($hb10_kline));
 
 
 		exit(json_encode(['status'=>1, 'data'=>$rs, 'total'=>$total[0]['num'], 'sum' => $sum[0]['sum_mark'],'top' => array($all,$top100,$hb10)]));
