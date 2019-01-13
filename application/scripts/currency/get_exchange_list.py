@@ -99,6 +99,7 @@ def get_list(url,isinnovation):
 			pairData = re.findall(r"pairData\:\[(.*)\]\,basePairData",t)
 			pairData = [r for r in pairData[0].split(",")]
 			for rec in pairData:
+				print(rec)
 				rec = {r.split(":")[0]:r.split(":")[1] for r in rec.split(",")}
 				print(rec)
 		except:
