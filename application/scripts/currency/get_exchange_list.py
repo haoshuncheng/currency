@@ -85,7 +85,7 @@ def get_list(url,isinnovation):
 			params2 = params2[0].split(",")
 			score = re.findall(r"score\:\{(.*)\}\,Currencies",t)
 			score ={r.split(":")[0]:r.split(":")[1]  for r in  score[0].split(",")}
-			del score['withdraw_remarks']
+			del score['withdraw_remarks'] if 'withdraw_remarks' in score else pass
 			# print(score)
 			for k,y in score.items():
 				if y in params:
