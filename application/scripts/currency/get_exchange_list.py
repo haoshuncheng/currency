@@ -104,8 +104,11 @@ def get_list(url,isinnovation):
 				for k,y in rec.items():
 					if y in params:
 						rec[k] = params2[params.index(y)]
+					if k == 'y':
+						rec[params2[params.index(k)]] = y
 				tt.append(rec)
 			print(tt)
+
 
 		except:
 			s=sys.exc_info()
