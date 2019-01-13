@@ -75,7 +75,7 @@ def get_list(url,isinnovation):
 			print
 			rs = requests.get(exchangescore_url)
 			text =rs.text
-			print(text)
+			# print(text)
 			content = re.findall(r"<script>window.__NUXT__=(.*);</script>",text)
 			t = content[0]
 			params = re.findall(r"^\(function\((.*)\)\{return",t)
@@ -87,6 +87,7 @@ def get_list(url,isinnovation):
 			for k,y in score.items():
 				if y in params:
 					score[k] = params2[params.index(y)]
+			print(score)
 			write(connect['con'],'exchangescore',score)
 		except:
 			s=sys.exc_info()
