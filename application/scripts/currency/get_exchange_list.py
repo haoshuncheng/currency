@@ -85,14 +85,14 @@ def get_list(url,isinnovation):
 			params2 = params2[0].split(",")
 			score = re.findall(r"score\:\{(.*)\}\,Currencies",t)
 			score ={r.split(":")[0]:r.split(":")[1]  for r in  score[0].split(",")}
-			print(score)
+			# print(score)
 			for k,y in score.items():
 				if y in params:
 					score[k] = params2[params.index(y)]
 			print(score)
-			# cursor = connect['cur']
-			# cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+json.dumps(score)+"')")
-			# connect['con'].commit()
+			cursor = connect['cur']
+			cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+json.dumps(score)+"')")
+			connect['con'].commit()
 		except:
 			s=sys.exc_info()
 			print ("Error '%s' happened on line %d" % (s[1],s[2].tb_lineno))
