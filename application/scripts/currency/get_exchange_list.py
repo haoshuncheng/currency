@@ -107,6 +107,7 @@ def get_list(url,isinnovation):
 					else:
 						rec[k] = y.replace('"','')
 				tt.append(rec)
+			print(tt)
 			cursor = connect['cur']
 			cursor.execute("REPLACE INTO exchangepairdata(code,info) values('"+record['id']+"','"+json.dumps(tt)+"')")
 			connect['con'].commit()
@@ -122,6 +123,7 @@ def get_list(url,isinnovation):
 					if y in params:
 						rec[k] = params2[params.index(y)]
 				tt.append(rec)
+			print(tt)
 			cursor = connect['cur']
 			cursor.execute("REPLACE INTO exchangebasepairdata(code,info) values('"+record['id']+"','"+json.dumps(tt)+"')")
 			connect['con'].commit()
