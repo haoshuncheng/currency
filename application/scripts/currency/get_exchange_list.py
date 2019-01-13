@@ -89,7 +89,7 @@ def get_list(url,isinnovation):
 					score[k] = params2[params.index(y)]
 			print(score)
 			cursor = connect['cur']
-			cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+score+"')")
+			cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+json.dumps(score)+"')")
 			connect['con'].commit()
 		except:
 			s=sys.exc_info()
