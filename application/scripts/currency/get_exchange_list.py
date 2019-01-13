@@ -21,70 +21,73 @@ def get_list(url,isinnovation):
 #		print("json数据异常\n")
 #		return False
 	for record in rs['data']:
-		record['isinnovation'] = isinnovation
-		record['labels_id'] = 0 if not record['labels_id'] else record['labels_id']
-		record['isfocus'] = 0 if not record['isfocus'] else 1
-		record['isshare'] = 0 if not record['isshare'] else 1
-		write(connect['con'],'exchange',record)
-		exchangeTrades_url = "https://dncapi.feixiaohao.com/api/exchange/exchangetrades?code="+record['id']+"&webp=1"
-		exchange_rs = get_requests(exchangeTrades_url, 'json')
-		if exchange_rs == False:
-			print("list列表失败\n")
-			continue
-		if 'code' not in exchange_rs or exchange_rs['code']!='200' or 'data' not in exchange_rs or len(exchange_rs['data'])==0:
-			print(exchangeTrades_url)
-			print("json数据异常\n")
-			continue
-		exchangetrades_data = json.dumps(exchange_rs['data'])
-		cursor = connect['cur']
-		cursor.execute("REPLACE INTO exchangetrades(code,info) values('"+record['id']+"','"+exchangetrades_data+"')")
-		connect['con'].commit()
+		try:
+			record['isinnovation'] = isinnovation
+			record['labels_id'] = 0 if not record['labels_id'] else record['labels_id']
+			record['isfocus'] = 0 if not record['isfocus'] else 1
+			record['isshare'] = 0 if not record['isshare'] else 1
+			write(connect['con'],'exchange',record)
+			exchangeTrades_url = "https://dncapi.feixiaohao.com/api/exchange/exchangetrades?code="+record['id']+"&webp=1"
+			exchange_rs = get_requests(exchangeTrades_url, 'json')
+			if exchange_rs == False:
+				print("list列表失败\n")
+				continue
+			if 'code' not in exchange_rs or exchange_rs['code']!='200' or 'data' not in exchange_rs or len(exchange_rs['data'])==0:
+				print(exchangeTrades_url)
+				print("json数据异常\n")
+				continue
+			exchangetrades_data = json.dumps(exchange_rs['data'])
+			cursor = connect['cur']
+			cursor.execute("REPLACE INTO exchangetrades(code,info) values('"+record['id']+"','"+exchangetrades_data+"')")
+			connect['con'].commit()
 
-		coin_pairs_url = "https://dncapi.feixiaohao.com/api/exchange/coinpair_list"
-		data = {"code":record['id'],"page":1,"pagesize":1000,"webp":1}
-		coin_pairs_rs = post_requests(coin_pairs_url,json.dumps(data))
-		if coin_pairs_rs == False:
-			print("list列表失败\n")
-			continue
-		if 'code' not in coin_pairs_rs or coin_pairs_rs['code']!='200' or 'data' not in coin_pairs_rs or len(coin_pairs_rs['data'])==0:
-			print(data)
-			print("json数据异常\n")
-			continue
-		coin_pairs_data = coin_pairs_rs['data']
-		for coin_record in coin_pairs_data:
-			coin_record['code'] = record['id']
-			# print(coin_record)
-			write(connect['con'],'coin_pairs',coin_record)
+			coin_pairs_url = "https://dncapi.feixiaohao.com/api/exchange/coinpair_list"
+			data = {"code":record['id'],"page":1,"pagesize":1000,"webp":1}
+			coin_pairs_rs = post_requests(coin_pairs_url,json.dumps(data))
+			if coin_pairs_rs == False:
+				print("list列表失败\n")
+				continue
+			if 'code' not in coin_pairs_rs or coin_pairs_rs['code']!='200' or 'data' not in coin_pairs_rs or len(coin_pairs_rs['data'])==0:
+				print(data)
+				print("json数据异常\n")
+				continue
+			coin_pairs_data = coin_pairs_rs['data']
+			for coin_record in coin_pairs_data:
+				coin_record['code'] = record['id']
+				# print(coin_record)
+				write(connect['con'],'coin_pairs',coin_record)
 
-		exchangeinfo_url = "https://dncapi.feixiaohao.com/api/exchange/exchangeinfo?code="+record['id']+"&webp=1"
-		exchangeinfo = get_requests(exchangeinfo_url, 'json')
-		if exchangeinfo == False:
-			print("list列表失败\n")
-			continue
-		if 'code' not in exchangeinfo or exchangeinfo['code']!='200' or 'data' not in exchangeinfo or len(exchangeinfo['data'])==0:
-			print(exchangeinfo_url)
-			print("json数据异常\n")
-			continue
-		exchangeinfo = exchangeinfo['data']
-		exchangeinfo['description'] = html.escape(exchangeinfo['desc'])
-		del exchangeinfo['desc']
-		write(connect['con'],'exchangeinfo',exchangeinfo)
-		
-		exchangescore_info = "url = https://mifengcha.com/exchange/"+reocrd['id']
-		rs = requests.get(url)
-		text =rs.text
-		content = re.findall(r"<script>window.__NUXT__=(.*);</script>",text)
-		t = content[0]
-		params = re.findall(r"^\(function\((.*)\)\{return",t)
-		params = params[0].split(",")
-		params2 = re.findall(r"\}\}\((.*)\)\)$",t)
-		params2 = params2[0].split(",")
-		score = re.findall(r"score\:(\{.*\})\,Currencies",t)
-		score ={r.split(":")[0]:r.split(":")[1]  for r in  score[0].split(",")}
-		for k,y in score.items():
-			if y in params:
-				score[k] = params2[params.index(y)]
-		write(connect['con'],'exchangescore',json.loads(score))
+			exchangeinfo_url = "https://dncapi.feixiaohao.com/api/exchange/exchangeinfo?code="+record['id']+"&webp=1"
+			exchangeinfo = get_requests(exchangeinfo_url, 'json')
+			if exchangeinfo == False:
+				print("list列表失败\n")
+				continue
+			if 'code' not in exchangeinfo or exchangeinfo['code']!='200' or 'data' not in exchangeinfo or len(exchangeinfo['data'])==0:
+				print(exchangeinfo_url)
+				print("json数据异常\n")
+				continue
+			exchangeinfo = exchangeinfo['data']
+			exchangeinfo['description'] = html.escape(exchangeinfo['desc'])
+			del exchangeinfo['desc']
+			write(connect['con'],'exchangeinfo',exchangeinfo)
+			
+			exchangescore_info = "url = https://mifengcha.com/exchange/"+reocrd['id']
+			rs = requests.get(url)
+			text =rs.text
+			content = re.findall(r"<script>window.__NUXT__=(.*);</script>",text)
+			t = content[0]
+			params = re.findall(r"^\(function\((.*)\)\{return",t)
+			params = params[0].split(",")
+			params2 = re.findall(r"\}\}\((.*)\)\)$",t)
+			params2 = params2[0].split(",")
+			score = re.findall(r"score\:(\{.*\})\,Currencies",t)
+			score ={r.split(":")[0]:r.split(":")[1]  for r in  score[0].split(",")}
+			for k,y in score.items():
+				if y in params:
+					score[k] = params2[params.index(y)]
+			write(connect['con'],'exchangescore',json.loads(score))
+		except:
+			print(sys.exc_info())
 
 
 if __name__ == "__main__":
