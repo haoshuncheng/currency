@@ -87,7 +87,7 @@ def get_list(url,isinnovation):
 			for k,y in score.items():
 				if y in params:
 					score[k] = params2[params.index(y)]
-			write(connect['con'],'exchangescore',json.loads(score))
+			write(connect['con'],'exchangescore',score)
 		except:
 			s=sys.exc_info()
 			print ("Error '%s' happened on line %d" % (s[1],s[2].tb_lineno))
