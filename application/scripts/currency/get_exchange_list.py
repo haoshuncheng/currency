@@ -102,10 +102,10 @@ def get_list(url,isinnovation):
 			print(pairData)
 
 			# continue
-			# for rec in pairData:
-			# 	print(rec)
-			# 	rec = {r.split(":")[0]:r.split(":")[1] for r in rec.split(",")}
-			# 	print(rec)
+			for rec in pairData:
+				# print(rec)
+				rec = {r.split(":")[0].replace("{",""):r.split(":")[1].replace("}","") for r in rec.split(",")}
+				print(rec)
 		except:
 			s=sys.exc_info()
 			print ("Error '%s' happened on line %d" % (s[1],s[2].tb_lineno))
