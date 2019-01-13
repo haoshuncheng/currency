@@ -73,7 +73,7 @@ def get_list(url,isinnovation):
 			# write(connect['con'],'exchangeinfo',exchangeinfo)
 			
 			exchangescore_url = "https://mifengcha.com/exchange/"+record['id']
-			print(coin_pairs_url)
+			print(exchangescore_url)
 			rs = requests.get(exchangescore_url)
 			text =rs.text
 			# print(text)
@@ -88,7 +88,7 @@ def get_list(url,isinnovation):
 			for k,y in score.items():
 				if y in params:
 					score[k] = params2[params.index(y)]
-			# print(score)
+			print(score)
 			cursor = connect['cur']
 			cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+json.dumps(score)+"')")
 			connect['con'].commit()
