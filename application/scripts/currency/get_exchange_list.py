@@ -97,7 +97,7 @@ def get_list(url,isinnovation):
 			# connect['con'].commit()
 
 			pairData = re.findall(r"pairData\:\[(.*)\]\,basePairData",t)
-			pairData = [r for r in pairData.split(",")]
+			pairData = [r for r in pairData[0].split(",")]
 			print(pairData)
 			
 
