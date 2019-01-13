@@ -98,28 +98,10 @@ def get_list(url,isinnovation):
 			# cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+json.dumps(score)+"')")
 			# connect['con'].commit()
 
-			pairData = re.findall(r"pairData\:\[(.*)\]\,basePairData",t)
-			pairData = [r for r in pairData[0].split("},")]
-			tt = []
-			for rec in pairData:
-				rec = {r.split(":")[0].replace("{",""):r.split(":")[1].replace("}","") for r in rec.split(",")}
-				for k,y in rec.items():
-					if y in params:
-						rec[k] = params2[params.index(y)].replace('"','')
-					else:
-						rec[k] = y.replace('"','')
-				tt.append(rec)
-			print(tt)
-			cursor = connect['cur']
-			cursor.execute("REPLACE INTO exchangepairdata(code,info) values('"+record['id']+"','"+json.dumps(tt)+"')")
-			connect['con'].commit()
-			# print(tt)
-
-
-			# basepairData = re.findall(r"basePairData\:\[(.*)\]\,hasKline",t)
-			# basepairData = [r for r in basepairData[0].split("},")]
+			# pairData = re.findall(r"pairData\:\[(.*)\]\,basePairData",t)
+			# pairData = [r for r in pairData[0].split("},")]
 			# tt = []
-			# for rec in basepairData:
+			# for rec in pairData:
 			# 	rec = {r.split(":")[0].replace("{",""):r.split(":")[1].replace("}","") for r in rec.split(",")}
 			# 	for k,y in rec.items():
 			# 		if y in params:
@@ -129,8 +111,26 @@ def get_list(url,isinnovation):
 			# 	tt.append(rec)
 			# print(tt)
 			# cursor = connect['cur']
-			# cursor.execute("REPLACE INTO exchangebasepairdata(code,info) values('"+record['id']+"','"+json.dumps(tt)+"')")
+			# cursor.execute("REPLACE INTO exchangepairdata(code,info) values('"+record['id']+"','"+json.dumps(tt)+"')")
 			# connect['con'].commit()
+			# print(tt)
+
+
+			basepairData = re.findall(r"basePairData\:\[(.*)\]\,hasKline",t)
+			basepairData = [r for r in basepairData[0].split("},")]
+			tt = []
+			for rec in basepairData:
+				rec = {r.split(":")[0].replace("{",""):r.split(":")[1].replace("}","") for r in rec.split(",")}
+				for k,y in rec.items():
+					if y in params:
+						rec[k] = params2[params.index(y)].replace('"','')
+					else:
+						rec[k] = y.replace('"','')
+				tt.append(rec)
+			print(tt)
+			cursor = connect['cur']
+			cursor.execute("REPLACE INTO exchangebasepairdata(code,info) values('"+record['id']+"','"+json.dumps(tt)+"')")
+			connect['con'].commit()
 			# print(tt)
 			
 
