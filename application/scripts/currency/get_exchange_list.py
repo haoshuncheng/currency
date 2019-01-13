@@ -109,7 +109,7 @@ def get_list(url,isinnovation):
 
 
 			basepairData = re.findall(r"basePairData\:\[(.*)\]\,hasKline",t)
-			basepairData = [r for r in pairData[0].split("},")]
+			basepairData = [r for r in basepairData[0].split("},")]
 			tt = []
 			for rec in basepairData:
 				rec = {r.split(":")[0].replace("{",""):r.split(":")[1].replace("}","") for r in rec.split(",")}
