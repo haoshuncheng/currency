@@ -88,7 +88,9 @@ def get_list(url,isinnovation):
 				if y in params:
 					score[k] = params2[params.index(y)]
 			print(score)
-			write(connect['con'],'exchangescore',score)
+			cursor = connect['cur']
+			cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+score+"')")
+			connect['con'].commit()
 		except:
 			s=sys.exc_info()
 			print ("Error '%s' happened on line %d" % (s[1],s[2].tb_lineno))
