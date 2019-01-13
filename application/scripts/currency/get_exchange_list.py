@@ -88,7 +88,7 @@ def get_list(url,isinnovation):
 			write(connect['con'],'exchangescore',json.loads(score))
 		except:
 			s=sys.exc_info()
-        	print ("Error '%s' happened on line %d" % (s[1],s[2].tb_lineno))
+			print ("Error '%s' happened on line %d" % (s[1],s[2].tb_lineno))
 
 if __name__ == "__main__":
 	connect = connect1()
