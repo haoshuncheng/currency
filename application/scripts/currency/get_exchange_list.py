@@ -98,14 +98,15 @@ def get_list(url,isinnovation):
 
 			pairData = re.findall(r"pairData\:\[(.*)\]\,basePairData",t)
 			pairData = [r for r in pairData[0].split("},")]
-
-			print(pairData)
-
-			# continue
+			tt = []
 			for rec in pairData:
-				# print(rec)
 				rec = {r.split(":")[0].replace("{",""):r.split(":")[1].replace("}","") for r in rec.split(",")}
-				print(rec)
+				for k,y in rec.items():
+					if y in params:
+						rec[k] = params2[params.index(y)]
+				tt.append(rec)
+			print(tt)
+
 		except:
 			s=sys.exc_info()
 			print ("Error '%s' happened on line %d" % (s[1],s[2].tb_lineno))
