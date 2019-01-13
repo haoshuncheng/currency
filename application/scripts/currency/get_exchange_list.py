@@ -15,11 +15,10 @@ def get_list(url,isinnovation):
 	if rs == False:
 		print("list列表失败\n")
 		return False
-#	print(rs)
-#	if 'code' not in rs or rs['code']!='200' or 'data' not in rs or len(rs['data'])==0:
-#		print(url+"asasasasasa")
-#		print("json数据异常\n")
-#		return False
+	if 'code' not in rs or str(rs['code'])!='200' or 'data' not in rs or len(rs['data'])==0:
+		print(url+"asasasasasa")
+		print("json数据异常\n")
+		return False
 	for record in rs['data']:
 		try:
 
@@ -34,10 +33,10 @@ def get_list(url,isinnovation):
 			if exchange_rs == False:
 				print("list列表失败\n")
 				continue
-			# if 'code' not in exchange_rs or exchange_rs['code']!='200' or 'data' not in exchange_rs or len(exchange_rs['data'])==0:
-			# 	print(exchangeTrades_url)
-			# 	print("json数据异常\n")
-			# 	continue
+			if 'code' not in exchange_rs or exchange_rs['code']!='200' or 'data' not in exchange_rs or len(exchange_rs['data'])==0:
+				print(exchangeTrades_url)
+				print("json数据异常\n")
+				continue
 			exchangetrades_data = json.dumps(exchange_rs['data'])
 			cursor = connect['cur']
 			cursor.execute("REPLACE INTO exchangetrades(code,info) values('"+record['id']+"','"+exchangetrades_data+"')")
@@ -49,10 +48,10 @@ def get_list(url,isinnovation):
 			if coin_pairs_rs == False:
 				print("list列表失败\n")
 				continue
-			# if 'code' not in coin_pairs_rs or coin_pairs_rs['code']!='200' or 'data' not in coin_pairs_rs or len(coin_pairs_rs['data'])==0:
-			# 	print(data)
-			# 	print("json数据异常\n")
-			# 	continue
+			if 'code' not in coin_pairs_rs or str(coin_pairs_rs['code'])!='200' or 'data' not in coin_pairs_rs or len(coin_pairs_rs['data'])==0:
+				print(data)
+				print("json数据异常\n")
+				continue
 			coin_pairs_data = coin_pairs_rs['data']
 			for coin_record in coin_pairs_data:
 				coin_record['code'] = record['id']
@@ -63,10 +62,10 @@ def get_list(url,isinnovation):
 			if exchangeinfo == False:
 				print("list列表失败\n")
 				continue
-			# if 'code' not in exchangeinfo or exchangeinfo['code']!='200' or 'data' not in exchangeinfo or len(exchangeinfo['data'])==0:
-			# 	print(exchangeinfo_url)
-			# 	print("json数据异常\n")
-			# 	continue
+			if 'code' not in exchangeinfo or str(exchangeinfo['code'])!='200' or 'data' not in exchangeinfo or len(exchangeinfo['data'])==0:
+				print(exchangeinfo_url)
+				print("json数据异常\n")
+				continue
 			exchangeinfo = exchangeinfo['data']
 			exchangeinfo['description'] = html.escape(exchangeinfo['desc'])
 			del exchangeinfo['desc']
@@ -88,8 +87,8 @@ def get_list(url,isinnovation):
 					score[k] = params2[params.index(y)]
 			write(connect['con'],'exchangescore',json.loads(score))
 		except:
-			print(sys.exc_info())
-
+			s=sys.exc_info()
+        	print ("Error '%s' happened on line %d" % (s[1],s[2].tb_lineno))
 
 if __name__ == "__main__":
 	connect = connect1()
