@@ -85,12 +85,12 @@ def get_list(url,isinnovation):
 			params2 = params2[0].split(",")
 			score = re.findall(r"score\:\{(.*)\}\,Currencies",t)
 			score ={r.split(":")[0]:r.split(":")[1]  for r in  score[0].split(",")}
-			if 'withdraw_remarks' in score:
-				del score['withdraw_remarks'] 
-			# print(score)
+
 			for k,y in score.items():
 				if y in params:
-					score[k] = params2[params.index(y)]
+					score[k] = params2[params.index(y)].replace('"','')
+				else:
+					score[k] = y.replace('"','')
 			print(score)
 			cursor = connect['cur']
 			cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+json.dumps(score)+"')")
