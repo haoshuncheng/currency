@@ -71,8 +71,9 @@ def get_list(url,isinnovation):
 			# del exchangeinfo['desc']
 			# write(connect['con'],'exchangeinfo',exchangeinfo)
 			
-			exchangescore_info = "url = https://mifengcha.com/exchange/"+record['id']
-			rs = requests.get(url)
+			exchangescore_url = "https://mifengcha.com/exchange/"+record['id']
+			print
+			rs = requests.get(exchangescore_url)
 			text =rs.text
 			print(text)
 			content = re.findall(r"<script>window.__NUXT__=(.*);</script>",text)
