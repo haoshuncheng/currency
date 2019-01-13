@@ -83,10 +83,7 @@ def get_list(url,isinnovation):
 			params = params[0].split(",")
 			params2 = re.findall(r"\}\}\((.*)\)\)$",t)
 			params2 = params2[0].split(",")
-			score = re.findall(r"score\:(\{.*\})\,Currencies",t)
-			
-			print(score[0])
-			continue
+			score = re.findall(r"score\:\{(.*)\}\,Currencies",t)
 			score ={r.split(":")[0]:r.split(":")[1]  for r in  score[0].split(",")}
 			print(score)
 			for k,y in score.items():
