@@ -15,10 +15,11 @@ def get_list(url,isinnovation):
 	if rs == False:
 		print("list列表失败\n")
 		return False
-	if 'code' not in rs or rs['code']!='200' or 'data' not in rs or len(rs['data'])==0:
-		print(url)
-		print("json数据异常\n")
-		return False
+#	print(rs)
+#	if 'code' not in rs or rs['code']!='200' or 'data' not in rs or len(rs['data'])==0:
+#		print(url+"asasasasasa")
+#		print("json数据异常\n")
+#		return False
 	for record in rs['data']:
 		record['isinnovation'] = isinnovation
 		record['labels_id'] = 0 if not record['labels_id'] else record['labels_id']
@@ -69,7 +70,21 @@ def get_list(url,isinnovation):
 		del exchangeinfo['desc']
 		write(connect['con'],'exchangeinfo',exchangeinfo)
 		
-
+		exchangescore_info = "url = https://mifengcha.com/exchange/"+reocrd['id']
+		rs = requests.get(url)
+		text =rs.text
+		content = re.findall(r"<script>window.__NUXT__=(.*);</script>",text)
+		t = content[0]
+		params = re.findall(r"^\(function\((.*)\)\{return",t)
+		params = params[0].split(",")
+		params2 = re.findall(r"\}\}\((.*)\)\)$",t)
+		params2 = params2[0].split(",")
+		score = re.findall(r"score\:(\{.*\})\,Currencies",t)
+		score ={r.split(":")[0]:r.split(":")[1]  for r in  score[0].split(",")}
+		for k,y in score.items():
+			if y in params:
+				score[k] = params2[params.index(y)]
+		write(connect['con'],'exchangescore',json.loads(score))
 
 
 if __name__ == "__main__":
