@@ -137,6 +137,7 @@ def write(conn, table_name, info_dict):
 				(table_name, sql_key[:-1], sql_value[:-1]))
 			conn.commit()  # 提交当前事务
 		else:
+			conn.commit() 
 			raise
 
 
