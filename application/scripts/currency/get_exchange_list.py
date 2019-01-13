@@ -34,10 +34,10 @@ def get_list(url,isinnovation):
 			if exchange_rs == False:
 				print("list列表失败\n")
 				continue
-			if 'code' not in exchange_rs or exchange_rs['code']!='200' or 'data' not in exchange_rs or len(exchange_rs['data'])==0:
-				print(exchangeTrades_url)
-				print("json数据异常\n")
-				continue
+			# if 'code' not in exchange_rs or exchange_rs['code']!='200' or 'data' not in exchange_rs or len(exchange_rs['data'])==0:
+			# 	print(exchangeTrades_url)
+			# 	print("json数据异常\n")
+			# 	continue
 			exchangetrades_data = json.dumps(exchange_rs['data'])
 			cursor = connect['cur']
 			cursor.execute("REPLACE INTO exchangetrades(code,info) values('"+record['id']+"','"+exchangetrades_data+"')")
