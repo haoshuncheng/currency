@@ -27,20 +27,20 @@ def get_list(url,isinnovation):
 			del record['desc']
 			record['isshare'] = 0 if not record['isshare'] else 1
 			write(connect['con'],'exchange',record)
-			exchangeTrades_url = "https://dncapi.feixiaohao.com/api/exchange/exchangetrades?code="+record['id']+"&webp=1"
-			print(exchangeTrades_url)
-			exchange_rs = get_requests(exchangeTrades_url, 'json')
-			if exchange_rs == False:
-				print("list列表失败\n")
-				continue
-			if 'code' not in exchange_rs or str(exchange_rs['code'])!='200' or 'data' not in exchange_rs or len(exchange_rs['data'])==0:
-				print(exchangeTrades_url)
-				print("json数据异常\n")
-				continue
-			exchangetrades_data = json.dumps(exchange_rs['data'])
-			cursor = connect['cur']
-			cursor.execute("REPLACE INTO exchangetrades(code,info) values('"+record['id']+"','"+exchangetrades_data+"')")
-			connect['con'].commit()
+			# exchangeTrades_url = "https://dncapi.feixiaohao.com/api/exchange/exchangetrades?code="+record['id']+"&webp=1"
+			# print(exchangeTrades_url)
+			# exchange_rs = get_requests(exchangeTrades_url, 'json')
+			# if exchange_rs == False:
+			# 	print("list列表失败\n")
+			# 	continue
+			# if 'code' not in exchange_rs or str(exchange_rs['code'])!='200' or 'data' not in exchange_rs or len(exchange_rs['data'])==0:
+			# 	print(exchangeTrades_url)
+			# 	print("json数据异常\n")
+			# 	continue
+			# exchangetrades_data = json.dumps(exchange_rs['data'])
+			# cursor = connect['cur']
+			# cursor.execute("REPLACE INTO exchangetrades(code,info) values('"+record['id']+"','"+exchangetrades_data+"')")
+			# connect['con'].commit()
 
 			# coin_pairs_url = "https://dncapi.feixiaohao.com/api/exchange/coinpair_list"
 			# print(coin_pairs_url)
@@ -84,7 +84,9 @@ def get_list(url,isinnovation):
 			params2 = re.findall(r"\}\}\((.*)\)\)$",t)
 			params2 = params2[0].split(",")
 			score = re.findall(r"score\:(\{.*\})\,Currencies",t)
+			score = json.loads(score[0])
 			print(score)
+			continue
 			score ={r.split(":")[0]:r.split(":")[1]  for r in  score[0].split(",")}
 			print(score)
 			for k,y in score.items():
