@@ -97,8 +97,9 @@ def get_list(url,isinnovation):
 			# connect['con'].commit()
 
 			pairData = re.findall(r"pairData\:\[(.*)\]\,basePairData",t)
-			pairData =[{z.split(":")[0]:z.split(":")[1]} for z in r.replace("{","").replace("}","").split(",")  for r in  score[0].split(",")]
+			pairData = [r,for r in pairData.split(",")]
 			print(pairData)
+			
 
 		except:
 			s=sys.exc_info()
