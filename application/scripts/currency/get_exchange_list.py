@@ -84,8 +84,8 @@ def get_list(url,isinnovation):
 			params2 = re.findall(r"\}\}\((.*)\)\)$",t)
 			params2 = params2[0].split(",")
 			score = re.findall(r"score\:(\{.*\})\,Currencies",t)
-			score = json.loads(score[0])
-			print(score)
+			
+			print(score[0])
 			continue
 			score ={r.split(":")[0]:r.split(":")[1]  for r in  score[0].split(",")}
 			print(score)
