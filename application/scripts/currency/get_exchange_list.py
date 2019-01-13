@@ -21,12 +21,12 @@ def get_list(url,isinnovation):
 		return False
 	for record in rs['data']:
 		try:
-			record['isinnovation'] = isinnovation
-			record['labels_id'] = 0 if not record['labels_id'] else record['labels_id']
-			record['isfocus'] = 0 if not record['isfocus'] else 1
-			del record['desc']
-			record['isshare'] = 0 if not record['isshare'] else 1
-			write(connect['con'],'exchange',record)
+			# record['isinnovation'] = isinnovation
+			# record['labels_id'] = 0 if not record['labels_id'] else record['labels_id']
+			# record['isfocus'] = 0 if not record['isfocus'] else 1
+			# del record['desc']
+			# record['isshare'] = 0 if not record['isshare'] else 1
+			# write(connect['con'],'exchange',record)
 			# exchangeTrades_url = "https://dncapi.feixiaohao.com/api/exchange/exchangetrades?code="+record['id']+"&webp=1"
 			# print(exchangeTrades_url)
 			# exchange_rs = get_requests(exchangeTrades_url, 'json')
@@ -83,18 +83,23 @@ def get_list(url,isinnovation):
 			params = params[0].split(",")
 			params2 = re.findall(r"\}\}\((.*)\)\)$",t)
 			params2 = params2[0].split(",")
-			score = re.findall(r"score\:\{(.*)\}\,Currencies",t)
-			score ={r.split(":")[0]:r.split(":")[1]  for r in  score[0].split(",")}
+			# score = re.findall(r"score\:\{(.*)\}\,Currencies",t)
+			# score ={r.split(":")[0]:r.split(":")[1]  for r in  score[0].split(",")}
 
-			for k,y in score.items():
-				if y in params:
-					score[k] = params2[params.index(y)].replace('"','')
-				else:
-					score[k] = y.replace('"','')
-			print(score)
-			cursor = connect['cur']
-			cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+json.dumps(score)+"')")
-			connect['con'].commit()
+			# for k,y in score.items():
+			# 	if y in params:
+			# 		score[k] = params2[params.index(y)].replace('"','')
+			# 	else:
+			# 		score[k] = y.replace('"','')
+			# print(score)
+			# cursor = connect['cur']
+			# cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+json.dumps(score)+"')")
+			# connect['con'].commit()
+
+			pairData = re.findall(r"pairData\:\[(.*)\]\,basePairData",t)
+			pairData =[{z.split(":")[0]:z.split(":")[1]} for z in r.replace("{","").replace("}","").split(",")  for r in  score[0].split(",")]
+			print(pairData)
+
 		except:
 			s=sys.exc_info()
 			print ("Error '%s' happened on line %d" % (s[1],s[2].tb_lineno))
