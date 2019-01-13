@@ -21,7 +21,6 @@ def get_list(url,isinnovation):
 		return False
 	for record in rs['data']:
 		try:
-
 			record['isinnovation'] = isinnovation
 			record['labels_id'] = 0 if not record['labels_id'] else record['labels_id']
 			record['isfocus'] = 0 if not record['isfocus'] else 1
@@ -29,6 +28,7 @@ def get_list(url,isinnovation):
 			record['isshare'] = 0 if not record['isshare'] else 1
 			write(connect['con'],'exchange',record)
 			exchangeTrades_url = "https://dncapi.feixiaohao.com/api/exchange/exchangetrades?code="+record['id']+"&webp=1"
+			print(exchangeTrades_url)
 			exchange_rs = get_requests(exchangeTrades_url, 'json')
 			if exchange_rs == False:
 				print("list列表失败\n")
@@ -43,6 +43,7 @@ def get_list(url,isinnovation):
 			connect['con'].commit()
 
 			coin_pairs_url = "https://dncapi.feixiaohao.com/api/exchange/coinpair_list"
+			print(coin_pairs_url)
 			data = {"code":record['id'],"page":1,"pagesize":1000,"webp":1}
 			coin_pairs_rs = post_requests(coin_pairs_url,json.dumps(data))
 			if coin_pairs_rs == False:
@@ -72,7 +73,7 @@ def get_list(url,isinnovation):
 			# write(connect['con'],'exchangeinfo',exchangeinfo)
 			
 			exchangescore_url = "https://mifengcha.com/exchange/"+record['id']
-			print
+			print(coin_pairs_url)
 			rs = requests.get(exchangescore_url)
 			text =rs.text
 			# print(text)
@@ -87,7 +88,7 @@ def get_list(url,isinnovation):
 			for k,y in score.items():
 				if y in params:
 					score[k] = params2[params.index(y)]
-			print(score)
+			# print(score)
 			cursor = connect['cur']
 			cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+json.dumps(score)+"')")
 			connect['con'].commit()
