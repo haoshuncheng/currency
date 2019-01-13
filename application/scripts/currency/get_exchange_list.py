@@ -103,7 +103,9 @@ def get_list(url,isinnovation):
 				rec = {r.split(":")[0].replace("{",""):r.split(":")[1].replace("}","") for r in rec.split(",")}
 				for k,y in rec.items():
 					if y in params:
-						rec[k] = params2[params.index(y)]
+						rec[k] = params2[params.index(y)].replace('"','')
+					else:
+						rec[k] = y.replace('"','')
 				tt.append(rec)
 			cursor = connect['cur']
 			cursor.execute("REPLACE INTO exchangepairdata(code,info) values('"+record['id']+"','"+json.dumps(tt)+"')")
