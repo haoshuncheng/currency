@@ -103,12 +103,9 @@ def get_list(url,isinnovation):
 				rec = {r.split(":")[0].replace("{",""):r.split(":")[1].replace("}","") for r in rec.split(",")}
 				for k,y in rec.items():
 					if y in params:
-						y = params2[params.index(y)]
-					if k in params:
-						k = params2[params.index(k)]
-					rec[k] = y
+						rec[k] = params2[params.index(y)]
 				tt.append(rec)
-			# print(tt)
+			print(tt)
 
 		except:
 			s=sys.exc_info()
