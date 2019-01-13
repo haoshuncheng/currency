@@ -22,9 +22,11 @@ def get_list(url,isinnovation):
 #		return False
 	for record in rs['data']:
 		try:
+
 			record['isinnovation'] = isinnovation
 			record['labels_id'] = 0 if not record['labels_id'] else record['labels_id']
 			record['isfocus'] = 0 if not record['isfocus'] else 1
+			del record['desc']
 			record['isshare'] = 0 if not record['isshare'] else 1
 			write(connect['con'],'exchange',record)
 			exchangeTrades_url = "https://dncapi.feixiaohao.com/api/exchange/exchangetrades?code="+record['id']+"&webp=1"
@@ -54,7 +56,6 @@ def get_list(url,isinnovation):
 			coin_pairs_data = coin_pairs_rs['data']
 			for coin_record in coin_pairs_data:
 				coin_record['code'] = record['id']
-				# print(coin_record)
 				write(connect['con'],'coin_pairs',coin_record)
 
 			exchangeinfo_url = "https://dncapi.feixiaohao.com/api/exchange/exchangeinfo?code="+record['id']+"&webp=1"
