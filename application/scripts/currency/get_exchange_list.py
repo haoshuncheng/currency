@@ -92,9 +92,9 @@ def get_list(url,isinnovation):
 				else:
 					score[k] = y.replace('"','')
 			print(score)
-			# cursor = connect['cur']
-			# cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+json.dumps(score)+"')")
-			# connect['con'].commit()
+			cursor = connect['cur']
+			cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+json.dumps(score)+"')")
+			connect['con'].commit()
 
 			pairData = re.findall(r"pairData\:\[(.*)\]\,basePairData",t)
 			pairData = [r for r in pairData[0].split("},")]
@@ -105,7 +105,10 @@ def get_list(url,isinnovation):
 					if y in params:
 						rec[k] = params2[params.index(y)]
 				tt.append(rec)
-			print(tt)
+			cursor = connect['cur']
+			cursor.execute("REPLACE INTO exchangepairdata(code,info) values('"+record['id']+"','"+json.dumps(tt)+"')")
+			connect['con'].commit()
+			# print(tt)
 
 
 			basepairData = re.findall(r"basePairData\:\[(.*)\]\,hasKline",t)
@@ -117,7 +120,10 @@ def get_list(url,isinnovation):
 					if y in params:
 						rec[k] = params2[params.index(y)]
 				tt.append(rec)
-			print(tt)
+			cursor = connect['cur']
+			cursor.execute("REPLACE INTO exchangebasepairdata(code,info) values('"+record['id']+"','"+json.dumps(tt)+"')")
+			connect['con'].commit()
+			# print(tt)
 			
 
 
