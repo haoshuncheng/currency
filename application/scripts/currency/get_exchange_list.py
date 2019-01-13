@@ -78,6 +78,8 @@ def get_list(url,isinnovation):
 			text =rs.text
 			# print(text)
 			content = re.findall(r"<script>window.__NUXT__=(.*);</script>",text)
+			if not len(content):
+				continue
 			t = content[0]
 			params = re.findall(r"^\(function\((.*)\)\{return",t)
 			params = params[0].split(",")
