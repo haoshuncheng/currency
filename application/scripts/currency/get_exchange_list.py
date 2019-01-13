@@ -49,10 +49,10 @@ def get_list(url,isinnovation):
 			if coin_pairs_rs == False:
 				print("list列表失败\n")
 				continue
-			if 'code' not in coin_pairs_rs or coin_pairs_rs['code']!='200' or 'data' not in coin_pairs_rs or len(coin_pairs_rs['data'])==0:
-				print(data)
-				print("json数据异常\n")
-				continue
+			# if 'code' not in coin_pairs_rs or coin_pairs_rs['code']!='200' or 'data' not in coin_pairs_rs or len(coin_pairs_rs['data'])==0:
+			# 	print(data)
+			# 	print("json数据异常\n")
+			# 	continue
 			coin_pairs_data = coin_pairs_rs['data']
 			for coin_record in coin_pairs_data:
 				coin_record['code'] = record['id']
@@ -63,10 +63,10 @@ def get_list(url,isinnovation):
 			if exchangeinfo == False:
 				print("list列表失败\n")
 				continue
-			if 'code' not in exchangeinfo or exchangeinfo['code']!='200' or 'data' not in exchangeinfo or len(exchangeinfo['data'])==0:
-				print(exchangeinfo_url)
-				print("json数据异常\n")
-				continue
+			# if 'code' not in exchangeinfo or exchangeinfo['code']!='200' or 'data' not in exchangeinfo or len(exchangeinfo['data'])==0:
+			# 	print(exchangeinfo_url)
+			# 	print("json数据异常\n")
+			# 	continue
 			exchangeinfo = exchangeinfo['data']
 			exchangeinfo['description'] = html.escape(exchangeinfo['desc'])
 			del exchangeinfo['desc']
