@@ -57,19 +57,19 @@ def get_list(url,isinnovation):
 				coin_record['code'] = record['id']
 				write(connect['con'],'coin_pairs',coin_record)
 
-			exchangeinfo_url = "https://dncapi.feixiaohao.com/api/exchange/exchangeinfo?code="+record['id']+"&webp=1"
-			exchangeinfo = get_requests(exchangeinfo_url, 'json')
-			if exchangeinfo == False:
-				print("list列表失败\n")
-				continue
-			if 'code' not in exchangeinfo or str(exchangeinfo['code'])!='200' or 'data' not in exchangeinfo or len(exchangeinfo['data'])==0:
-				print(exchangeinfo_url)
-				print("json数据异常\n")
-				continue
-			exchangeinfo = exchangeinfo['data']
-			exchangeinfo['description'] = html.escape(exchangeinfo['desc'])
-			del exchangeinfo['desc']
-			write(connect['con'],'exchangeinfo',exchangeinfo)
+			# exchangeinfo_url = "https://dncapi.feixiaohao.com/api/exchange/exchangeinfo?code="+record['id']+"&webp=1"
+			# exchangeinfo = get_requests(exchangeinfo_url, 'json')
+			# if exchangeinfo == False:
+			# 	print("list列表失败\n")
+			# 	continue
+			# if 'code' not in exchangeinfo or str(exchangeinfo['code'])!='200' or 'data' not in exchangeinfo or len(exchangeinfo['data'])==0:
+			# 	print(exchangeinfo_url)
+			# 	print("json数据异常\n")
+			# 	continue
+			# exchangeinfo = exchangeinfo['data']
+			# exchangeinfo['description'] = html.escape(exchangeinfo['desc'])
+			# del exchangeinfo['desc']
+			# write(connect['con'],'exchangeinfo',exchangeinfo)
 			
 			exchangescore_info = "url = https://mifengcha.com/exchange/"+reocrd['id']
 			rs = requests.get(url)
