@@ -83,15 +83,15 @@ def get_list(url,isinnovation):
 			params = params[0].split(",")
 			params2 = re.findall(r"\}\}\((.*)\)\)$",t)
 			params2 = params2[0].split(",")
-			# score = re.findall(r"score\:\{(.*)\}\,Currencies",t)
-			# score ={r.split(":")[0]:r.split(":")[1]  for r in  score[0].split(",")}
+			score = re.findall(r"score\:\{(.*)\}\,Currencies",t)
+			score ={r.split(":")[0]:r.split(":")[1]  for r in  score[0].split(",")}
 
-			# for k,y in score.items():
-			# 	if y in params:
-			# 		score[k] = params2[params.index(y)].replace('"','')
-			# 	else:
-			# 		score[k] = y.replace('"','')
-			# print(score)
+			for k,y in score.items():
+				if y in params:
+					score[k] = params2[params.index(y)].replace('"','')
+				else:
+					score[k] = y.replace('"','')
+			print(score)
 			# cursor = connect['cur']
 			# cursor.execute("REPLACE INTO exchangescore(code,info) values('"+record['id']+"','"+json.dumps(score)+"')")
 			# connect['con'].commit()
@@ -104,10 +104,21 @@ def get_list(url,isinnovation):
 				for k,y in rec.items():
 					if y in params:
 						rec[k] = params2[params.index(y)]
-					if k == 'y':
-						rec[params2[params.index(k)]] = y
 				tt.append(rec)
 			print(tt)
+
+
+			basepairData = re.findall(r"basePairData\:\[(.*)\]\,hasKline",t)
+			basepairData = [r for r in pairData[0].split("},")]
+			tt = []
+			for rec in basepairData:
+				rec = {r.split(":")[0].replace("{",""):r.split(":")[1].replace("}","") for r in rec.split(",")}
+				for k,y in rec.items():
+					if y in params:
+						rec[k] = params2[params.index(y)]
+				tt.append(rec)
+			print(tt)
+			
 
 
 		except:
