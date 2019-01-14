@@ -272,6 +272,46 @@ class IndexController extends Yaf_Controller_Abstract {
 		exit(json_encode(['status'=>1, 'data'=>$rs,'total'=>$total[0]['num']]));
 	}
 
+	public function exchangecoinscoreAction() {
+		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
+			exit(json_encode(array('status' => 0, 'msg' => 'no code')));
+		}
+
+		$rs = IvyDb::query("select info from exchangescore where code='$code'");
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=>json_decode($rs[0]['info'],true)]));
+
+
+	｝
+
+
+	public function exchangecoinbasepairdataAction() {
+		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
+			exit(json_encode(array('status' => 0, 'msg' => 'no code')));
+		}
+
+		$rs = IvyDb::query("select info from exchangebasepairdata where code='$code'");
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=>json_decode($rs[0]['info'],true)]));
+
+	｝
+
+
+	public function exchangecoinpairdataAction() {
+		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
+			exit(json_encode(array('status' => 0, 'msg' => 'no code')));
+		}
+
+		$rs = IvyDb::query("select info from exchangepairdata where code='$code'");
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+		exit(json_encode(['status'=>1, 'data'=>json_decode($rs[0]['info'],true)]));
+	｝
 
 
 
