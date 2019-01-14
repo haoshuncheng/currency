@@ -296,6 +296,8 @@ class IndexController extends Yaf_Controller_Abstract {
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
+
+		$data = json_decode($rs[0]['info'],true);
 		$sum = 0;
 		foreach ($data as $key => $value) {
 			$sum += round(floatval($value['y']),6);
