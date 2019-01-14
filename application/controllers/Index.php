@@ -284,7 +284,7 @@ class IndexController extends Yaf_Controller_Abstract {
 		exit(json_encode(['status'=>1, 'data'=>json_decode($rs[0]['info'],true)]));
 
 
-	｝
+	}
 
 
 	public function exchangecoinbasepairdataAction() {
@@ -298,7 +298,7 @@ class IndexController extends Yaf_Controller_Abstract {
 		}
 		exit(json_encode(['status'=>1, 'data'=>json_decode($rs[0]['info'],true)]));
 
-	｝
+	}
 
 
 	public function exchangecoinpairdataAction() {
@@ -311,7 +311,7 @@ class IndexController extends Yaf_Controller_Abstract {
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
 		exit(json_encode(['status'=>1, 'data'=>json_decode($rs[0]['info'],true)]));
-	｝
+	}
 
 
 
