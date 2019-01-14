@@ -296,8 +296,17 @@ class IndexController extends Yaf_Controller_Abstract {
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
-		exit(json_encode(['status'=>1, 'data'=>json_decode($rs[0]['info'],true)]));
+		$sum = 0;
+		foreach ($data as $key => $value) {
+			$sum += floatval($value['y']);
+		}
 
+		foreach ($data as $key => $value) {
+			$value['percent'] = floatval($value)/$sum;
+			$data[$key] = $value;
+		}
+
+		exit(json_encode(['status'=>1, 'data'=>$data]));
 	}
 
 
@@ -310,7 +319,20 @@ class IndexController extends Yaf_Controller_Abstract {
 		if(!$rs || !count($rs)){
 			exit(json_encode(['status'=>0, 'msg'=>'no data']));
 		}
-		exit(json_encode(['status'=>1, 'data'=>json_decode($rs[0]['info'],true)]));
+
+		$data = json_decode($rs[0]['info'],true);
+
+		$sum = 0;
+		foreach ($data as $key => $value) {
+			$sum += floatval($value['y']);
+		}
+
+		foreach ($data as $key => $value) {
+			$value['percent'] = floatval($value)/$sum;
+			$data[$key] = $value;
+		}
+
+		exit(json_encode(['status'=>1, 'data'=>$data]));
 	}
 
 
