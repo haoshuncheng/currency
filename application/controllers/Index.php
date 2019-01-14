@@ -326,7 +326,7 @@ class IndexController extends Yaf_Controller_Abstract {
 		foreach ($data as $key => $value) {
 			$sum += round(floatval($value['y']),2);
 		}
-
+		print($sum);
 		foreach ($data as $key => $value) {
 			$value['percent'] = round(floatval($value)/$sum,2);
 			$data[$key] = $value;
