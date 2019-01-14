@@ -298,11 +298,11 @@ class IndexController extends Yaf_Controller_Abstract {
 		}
 		$sum = 0;
 		foreach ($data as $key => $value) {
-			$sum += floatval($value['y']);
+			$sum += round(floatval($value['y']),2);
 		}
 
 		foreach ($data as $key => $value) {
-			$value['percent'] = floatval($value)/$sum;
+			$value['percent'] = round(floatval($value)/$sum,2);
 			$data[$key] = $value;
 		}
 
@@ -324,11 +324,11 @@ class IndexController extends Yaf_Controller_Abstract {
 
 		$sum = 0;
 		foreach ($data as $key => $value) {
-			$sum += floatval($value['y']);
+			$sum += round(floatval($value['y']),2);
 		}
 
 		foreach ($data as $key => $value) {
-			$value['percent'] = floatval($value)/$sum;
+			$value['percent'] = round(floatval($value)/$sum,2);
 			$data[$key] = $value;
 		}
 
