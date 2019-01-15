@@ -63,6 +63,8 @@ def main():
 			return False
 		html = etree.HTML(rs)
 
+		print(html)
+
 		turnover = html.xpath("//dd[@class='last-dd'][1]/span/text()")[0]
 		flow_rate = html.xpath("//dd[@class='last-dd'][2]/span/text()")[0]
 
