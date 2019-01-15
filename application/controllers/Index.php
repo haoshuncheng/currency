@@ -152,6 +152,31 @@ class IndexController extends Yaf_Controller_Abstract {
 		exit(json_encode(['status'=>1, 'data'=>$data]));
 	}
 
+		/**
+     * 获取资金流向数据
+     */
+	public function coin_profileAction() {
+		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
+			exit(json_encode(['status'=>0, 'msg'=>'not find code']));
+		}
+		$sum = IvyDb::query("select sum(`marketCap`) from `rank`")[0]['sum'];
+
+		$rs = IvyDb::query("select marketCap,turnover,flow_rate from `rank` where `code`='$code'");
+
+
+		if(!$rs || !count($rs)){
+			exit(json_encode(['status'=>0, 'msg'=>'no data']));
+		}
+
+		$rs = $rs[0];
+		$rs['sum'] = $sum;
+
+		$rs['percent'] = $rs['marketCap']/$sum;
+
+		
+		exit(json_encode(['status'=>1, 'data'=>$rs]));
+	}
+
 
 	/**
      * 获取折线图数据 http://116.62.118.136/Index/get_line_data?name=BTC&type=DAY&start=1515737886&end=1518416286
