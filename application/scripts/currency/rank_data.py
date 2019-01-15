@@ -57,6 +57,7 @@ def main():
 
 		coin_turnover_url = "http://mifengcha.com/coin/"+code
 		rs = get_requests(coin_turnover_url,'text')
+		print(rs)
 		if rs == False:
 			print("aaaa")
 			print("list列表失败\n")
