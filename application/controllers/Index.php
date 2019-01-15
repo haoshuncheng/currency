@@ -171,7 +171,7 @@ class IndexController extends Yaf_Controller_Abstract {
 		$rs = $rs[0];
 		$rs['sum'] = $sum;
 
-		$rs['percent'] = $rs['marketCap']/$sum;
+		$rs['percent'] = round($rs['marketCap']/$sum,2);
 
 		
 		exit(json_encode(['status'=>1, 'data'=>$rs]));
