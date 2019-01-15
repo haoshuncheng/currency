@@ -57,19 +57,19 @@ def main():
 
 		coin_turnover_url = "http://mifengcha.com/coin/"+code
 		rs = get_requests(coin_turnover_url,'text')
-		# print(rs)
 		if rs == False:
-			print("aaaa")
-			print("list列表失败\n")
-			return False
+			continue
+
 		html = etree.HTML(rs)
-		# print(html)
 		tt = html.xpath("//dd[@class='last-dd']")
 		print(tt)
 		turnover = tt[0].xpath("./span/text()")[0]
 		flow_rate = tt[1].xpath("./span/text()")[0]
+		sql = "update `rank` set `turnover` = '"+turnover+"', flow_rate = '"+flow_rate+"' where code = '"+code+"'"
+		connect['cur'].execute(sql)
+		connect['con'].commit()
 
-		print([turnover,flow_rate])
+		# print([turnover,flow_rate])
 		# print(coin_turnover_url)
 
 
