@@ -24,32 +24,51 @@ def main():
 			pic = ''
 		name = res['name'] if 'name' in res else ''
 		code = res['url'] if 'url' in res else ''
-		price = res['price'] if 'price' in res else 0 													#价格
-		dayChange = res['dayChange'] if 'dayChange' in res else 0 										#24h涨跌
-		marketCap = round(res['marketCap'], 2) if 'marketCap' in res and res['marketCap']!='' and res['marketCap']!=None else 0#市值
-		volumeGlobal = res['volumeGlobal'] if 'volumeGlobal' in res else 0  							#24h成交量 全球
-		circulatingSupply = res['circulatingSupply'] if 'circulatingSupply' in res else 0  				#流通数量
-		kline = '' if kline_data==False or code not in kline_data else kline_data[code] 				#折线图
-		rec = "('"+pic+"','"+name+"','"+code+"','"+str(price)+"','"+str(dayChange)+"',"+str(marketCap)+",'"+str(volumeGlobal)+"','"+str(circulatingSupply)+"','"+kline+"')"
-		#data = ","+rec if data!='' else rec
-		sql = "REPLACE INTO `rank` (`pic`,`name`,`code`,`price`,`dayChange`,`marketCap`,`volumeGlobal`,`circulatingSupply`,`kline`) VALUES "+rec
-		connect['cur'].execute(sql)
-		connect['con'].commit()
-		print('成功插入', connect['cur'].rowcount, '条数据')
+		# price = res['price'] if 'price' in res else 0 													#价格
+		# dayChange = res['dayChange'] if 'dayChange' in res else 0 										#24h涨跌
+		# marketCap = round(res['marketCap'], 2) if 'marketCap' in res and res['marketCap']!='' and res['marketCap']!=None else 0#市值
+		# volumeGlobal = res['volumeGlobal'] if 'volumeGlobal' in res else 0  							#24h成交量 全球
+		# circulatingSupply = res['circulatingSupply'] if 'circulatingSupply' in res else 0  				#流通数量
+		# kline = '' if kline_data==False or code not in kline_data else kline_data[code] 				#折线图
+		# rec = "('"+pic+"','"+name+"','"+code+"','"+str(price)+"','"+str(dayChange)+"',"+str(marketCap)+",'"+str(volumeGlobal)+"','"+str(circulatingSupply)+"','"+kline+"')"
+		# #data = ","+rec if data!='' else rec
+		# sql = "REPLACE INTO `rank` (`pic`,`name`,`code`,`price`,`dayChange`,`marketCap`,`volumeGlobal`,`circulatingSupply`,`kline`) VALUES "+rec
+		# connect['cur'].execute(sql)
+		# connect['con'].commit()
+		# print('成功插入', connect['cur'].rowcount, '条数据')
 
-		market_ticker_url = "https://dncapi.feixiaohao.com/api/coin/market_ticker?page=1&pagesize=1000&code="+code+"&token=&webp=1"
-		print(market_ticker_url)
-		market_ticker_rs = get_requests(market_ticker_url, 'json')
-		if market_ticker_rs == False:
+
+
+
+		# market_ticker_url = "https://dncapi.feixiaohao.com/api/coin/market_ticker?page=1&pagesize=1000&code="+code+"&token=&webp=1"
+		# print(market_ticker_url)
+		# market_ticker_rs = get_requests(market_ticker_url, 'json')
+		# if market_ticker_rs == False:
+		# 	print("list列表失败\n")
+		# 	continue
+		# if 'code' not in market_ticker_rs or market_ticker_rs['code']!='200' or 'data' not in market_ticker_rs or len(market_ticker_rs['data'])==0:
+		# 	print(market_ticker_url)
+		# 	print("json数据异常\n")
+		# 	continue
+		# market_ticker_data = market_ticker_rs['data']
+		# for market_ticker_record in market_ticker_data:
+		# 	write(connect['con'],'coin_market_ticker',market_ticker_record)
+
+
+		coin_turnover_url = "http://mifengcha.com/coin/"+code
+		rs = get_requests(coin_turnover_url,'text')
+		if rs == False:
+			print("aaaa")
 			print("list列表失败\n")
-			continue
-		if 'code' not in market_ticker_rs or market_ticker_rs['code']!='200' or 'data' not in market_ticker_rs or len(market_ticker_rs['data'])==0:
-			print(market_ticker_url)
-			print("json数据异常\n")
-			continue
-		market_ticker_data = market_ticker_rs['data']
-		for market_ticker_record in market_ticker_data:
-			write(connect['con'],'coin_market_ticker',market_ticker_record)
+			return False
+		html = etree.HTML(rs)
+
+		turnover = html.xpath("//dd [@class='last-dd'][1]/span/text()")[0]
+		flow_rate = html.xpath("//dd [@class='last-dd'][2]/span/text()")[0]
+
+		print([turnover,flow_rate])
+		# print(coin_turnover_url)
+
 
 
 	# f = open('./abc.html', 'w', encoding='utf-8')
