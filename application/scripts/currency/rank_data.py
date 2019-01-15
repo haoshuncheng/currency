@@ -64,8 +64,10 @@ def main():
 			return False
 		html = etree.HTML(rs)
 		print(html)
-		turnover = html.xpath("//dd[@class='last-dd'][1]/span/text()")[0]
-		flow_rate = html.xpath("//dd[@class='last-dd'][2]/span/text()")[0]
+		tt = html.xpath("//dd[@class='last-dd']")
+		
+		turnover = t[0].xpath("./span/text()")[0]
+		flow_rate = t[1].xpath("./span/text()")[0]
 
 		print([turnover,flow_rate])
 		# print(coin_turnover_url)
