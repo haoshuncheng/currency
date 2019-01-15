@@ -159,7 +159,7 @@ class IndexController extends Yaf_Controller_Abstract {
 		if(!isset($_REQUEST['code']) || !$code = $_REQUEST['code']){
 			exit(json_encode(['status'=>0, 'msg'=>'not find code']));
 		}
-		$sum = IvyDb::query("select sum(`marketCap`) from `rank`")[0]['sum'];
+		$sum = IvyDb::query("select sum(`marketCap`) as c from `rank`")[0]['c'];
 
 		$rs = IvyDb::query("select marketCap,turnover,flow_rate from `rank` where `code`='$code'");
 
