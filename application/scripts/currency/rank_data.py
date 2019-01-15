@@ -15,7 +15,7 @@ def main():
 		sys.exit()
 	#data = ''
 	for res in m_tr:
-		print(res)
+		# print(res)
 		if 'thumbUrl' in res and res['thumbUrl'] != '':
 			pic = host_url+res['thumbUrl']
 		elif 'imageUrl' in res and res['imageUrl'] != '':
@@ -56,21 +56,18 @@ def main():
 
 
 		coin_turnover_url = "http://mifengcha.com/coin/"+code
+
 		rs = get_requests(coin_turnover_url,'text')
 		if rs == False:
+			print(coin_turnover_url)
 			continue
-
 		html = etree.HTML(rs)
 		tt = html.xpath("//dd[@class='last-dd']")
-		print(tt)
 		turnover = tt[0].xpath("./span/text()")[0]
 		flow_rate = tt[1].xpath("./span/text()")[0]
 		sql = "update `rank` set `turnover` = '"+turnover+"', flow_rate = '"+flow_rate+"' where code = '"+code+"'"
 		connect['cur'].execute(sql)
 		connect['con'].commit()
-
-		# print([turnover,flow_rate])
-		# print(coin_turnover_url)
 
 
 
